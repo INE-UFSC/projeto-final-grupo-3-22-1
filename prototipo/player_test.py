@@ -32,10 +32,10 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit
-    
+
     DISPLAY_SURF.fill((255, 255, 255))
     DISPLAY_SURF.blit(player.sprite, player.rect)
     player.mover()
-    
+
     pygame.display.update()
     FPS.tick(FPS_VALUE)
