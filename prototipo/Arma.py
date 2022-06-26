@@ -3,7 +3,7 @@ from Melhoria import Melhoria
 
 class Arma:
     def __init__(
-        self, dano: int, preco: int, velocidade_projetil: float, cadencia_tiro: float
+        self, dano: int, preco: int, velocidade_projetil: int, cadencia_tiro: int
     ):
         self.__dano = dano
         self.__preco = preco
@@ -19,11 +19,11 @@ class Arma:
         return self.__preco
 
     @property
-    def velocidade_projetil(self) -> float:
+    def velocidade_projetil(self) -> int:
         return self.__velocidade_projetil
 
     @property
-    def cadencia_tiro(self) -> float:
+    def cadencia_tiro(self) -> int:
         return self.__cadencia_tiro
 
     def aplicar_melhoria(self, melhoria: Melhoria):
