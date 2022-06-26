@@ -25,6 +25,10 @@ class Jogador(pygame.sprite.Sprite):
     def vida(self) -> int:
         return self.__vida
 
+    @vida.setter
+    def vida(self, vida):
+        self.__vida = vida
+    
     @property
     def velocidade_movimento(self) -> int:
         return self.__velocidade_movimento
