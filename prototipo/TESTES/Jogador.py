@@ -23,7 +23,7 @@ class Jogador(pygame.sprite.Sprite):
 
     # ---- Arthur (start)
     def set_sprite(self, sprite):
-        self.__sprite = pygame.image.load("ChicoCunhaMorte.png")
+        self.__sprite = pygame.image.load(sprite)
     # ---- Arthur (end)
 
     @property
