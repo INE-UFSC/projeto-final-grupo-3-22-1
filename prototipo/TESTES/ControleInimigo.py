@@ -11,4 +11,6 @@ class ControladorInimigo():
     def checar_sofreu_dano(self, inimigo, lista_balas):
         for bala in lista_balas:
             if bala.rect.colliderect(inimigo.rect):
+                
                 inimigo.vida -= bala.dano
+                print("dano")

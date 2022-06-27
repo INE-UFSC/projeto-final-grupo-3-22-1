@@ -9,8 +9,8 @@ class Bullet(pygame.sprite.Sprite):
         self.__speed_x = int(speed_x)
         self.__speed_y = int(speed_y)
         self.__sprite = pygame.image.load(sprite)
-        self.__rect = self.__sprite.get_rect(center=(self.pos_x, self.pos_y))
-        self.__dano = dano
+        self.__rect = self.__sprite.get_rect(center=(self.__pos_x, self.__pos_y))
+        self.__dano = int(dano)
     
     @property
     def pos_x(self):
@@ -47,6 +47,10 @@ class Bullet(pygame.sprite.Sprite):
     @property
     def sprite(self):
         return self.__sprite
+    
+    @property
+    def dano(self):
+        return self.__dano
     
     def desenhar(self, window):
         window.blit(self.__sprite, (self.x, self.y))
