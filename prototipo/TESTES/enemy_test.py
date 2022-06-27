@@ -64,7 +64,7 @@ while True:
 
     for inimigo in lista_inimigos:
         inimigo.desenhar(DISPLAY_SURF)
-        inimigo.mover(rd.choice(['x', 'y']), rd.choice([-1, 1]))
+        inimigo.mover()
         controleInimigo.checar_colisao(jogador=jogador, inimigo=inimigo) # checa colisão para diminuir da vida do jogador
                                          # nesse ControleInimigo, eu usei tanto uma instância de Jogador qnto uma lista de inimigos
                                          # provavelmente tem que mudar isso, acho q n seria legal o ControleInimigo ter um Jogador...

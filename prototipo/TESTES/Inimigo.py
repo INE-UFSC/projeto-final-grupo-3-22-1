@@ -24,7 +24,9 @@ class Inimigo():
     def atacar(self):
         pass
 
-    def mover(self, direcao, sentido):
+    def mover(self):
+        direcao = rd.choice(['x', 'y'])
+        sentido = rd.choice([1, -1])
         if direcao == 'x':
             self.__rect.x += sentido * self.__velocidade
         elif direcao == 'y':
