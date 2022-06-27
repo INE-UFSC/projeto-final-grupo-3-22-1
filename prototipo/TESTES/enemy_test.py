@@ -32,11 +32,11 @@ VIDA = 20
 MOV_SPEED = 10
 arma_inicial = Arma(4, 0, 20, 5)
 
-lista_inimigos = [Inimigo(350, 350, 15, 2, "tilapia.png"),
-                  Inimigo(200, 470, 15, 2, "bacalhau_radioativo.png"),
-                  Inimigo(120, 330, 15, 2, "tilapia.png"),
-                  Inimigo(405, 250, 15, 2, "bacalhau_radioativo.png"),
-                  Inimigo(370, 100, 15, 2, "tilapia.png")]
+lista_inimigos = [Inimigo(350, 350, 15, 2, "tilapia.png", SCREEN_WIDTH),
+                  Inimigo(200, 470, 15, 2, "bacalhau_radioativo.png", SCREEN_WIDTH),
+                  Inimigo(120, 330, 15, 2, "tilapia.png", SCREEN_WIDTH),
+                  Inimigo(405, 250, 15, 2, "bacalhau_radioativo.png", SCREEN_WIDTH),
+                  Inimigo(370, 100, 15, 2, "tilapia.png", SCREEN_WIDTH)]
 jogador = Jogador(VIDA, MOV_SPEED, arma_inicial, DISPLAY_SURF, SCREEN_WIDTH)
 controleInimigo = ControladorInimigo()
 controleJogador = ControleJogador(jogador=jogador)
