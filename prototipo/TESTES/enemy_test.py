@@ -88,7 +88,7 @@ while True:
                                          # provavelmente tem que mudar isso, acho q n seria legal o ControleInimigo ter um Jogador...
                                          # talvez uma classe associativa binária pra checar colisão e comunicações entre os 2? 
     if jogador.vida <= 0:
-        jogador.set_sprite("ChicoCunhaMorte.png")
+        jogador.set_sprite("ChicoCunhaMorto.png")
         DISPLAY_SURF.fill((255, 255, 255))
         DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         morto = True
