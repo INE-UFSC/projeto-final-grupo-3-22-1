@@ -83,7 +83,7 @@ class Jogador(pygame.sprite.Sprite):
         speed_x = self.arma.velocidade_projetil * cos(angulo)
         speed_y = self.arma.velocidade_projetil * sin(angulo)
 
-        nova_bala = Bullet(self.rect.x, self.rect.y, speed_x, speed_y, "anzol.png")
+        nova_bala = Bullet(self.rect.x, self.rect.y, speed_x, speed_y, "anzol.png", self.__arma.dano)
         
         return nova_bala
 

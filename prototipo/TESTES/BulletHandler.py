@@ -8,6 +8,10 @@ class BulletHandler:
     def __init__(self):
         self.__lista_bullets = []
     
+    @property
+    def lista_bullets(self):
+        return self.__lista_bullets
+    
     def nova_bala(self, bala: Bullet):
         self.__lista_bullets.append(bala)
         

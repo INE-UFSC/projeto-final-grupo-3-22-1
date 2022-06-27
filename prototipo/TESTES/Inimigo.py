@@ -6,8 +6,8 @@ import random as rd
 pygame.init()
 
 class Inimigo():
-    def __init__(self, x, y, velocidade, dano, sprite, largura_tela):
-        #self.vida = vida
+    def __init__(self, x, y, velocidade, dano, sprite, largura_tela, vida=10):
+        self.__vida = vida
         #self.velocidade = velocidade
         #self.tipo_ataque = tipo_ataque
         #self.dano = dano
@@ -65,3 +65,12 @@ class Inimigo():
     @property
     def rect(self):
         return self.__rect
+    
+    @property
+    def vida(self):
+        return self.__vida
+    
+    @vida.setter
+    def vida(self, vida):
+        self.__vida = vida
+    

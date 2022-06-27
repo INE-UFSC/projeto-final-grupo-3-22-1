@@ -86,7 +86,9 @@ while True:
         controleInimigo.checar_colisao(jogador=jogador, inimigo=inimigo) # checa colisão para diminuir da vida do jogador
                                          # nesse ControleInimigo, eu usei tanto uma instância de Jogador qnto uma lista de inimigos
                                          # provavelmente tem que mudar isso, acho q n seria legal o ControleInimigo ter um Jogador...
-                                         # talvez uma classe associativa binária pra checar colisão e comunicações entre os 2? 
+                                         # talvez uma classe associativa binária pra checar colisão e comunicações entre os 2?                                         
+        controleInimigo.checar_sofreu_dano(inimigo, bulletHandler.lista_bullets)
+        print(bulletHandler.lista_bullets)
     if jogador.vida <= 0:
         jogador.set_sprite("ChicoCunhaMorto.png")
         DISPLAY_SURF.fill((255, 255, 255))
