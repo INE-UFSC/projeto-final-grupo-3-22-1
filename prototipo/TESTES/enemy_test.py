@@ -10,6 +10,7 @@ from InterfaceMorte import InterfaceMorte
 from Jogador import Jogador
 from Inimigo import Inimigo
 from Arma import Arma
+from BulletHandler import BulletHandler
 import numpy as np
 
 #######################################
@@ -38,6 +39,12 @@ controleInimigo = ControladorInimigo(lista_inimigos=[inimigo], jogador=jogador)
 controleJogador = ControleJogador(jogador=jogador)
 interfaceMorte = InterfaceMorte(SCREEN_WIDTH, SCREEN_HEIGHT)
 
+bulletHandler = BulletHandler()
+
+# sprites = pygame.sprite.Group()
+# sprites.add(inimigo)
+# sprites.add(jogador)
+
 morto = False
 while True:    
     if morto:
@@ -51,9 +58,19 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit
-
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            tiro = jogador.atirar(mouse_x, mouse_y)
+            bulletHandler.nova_bala(tiro)
+            
 
     DISPLAY_SURF.fill((255, 255, 255))
+    
+    # laço que percorre todos inimigos e jogador e redesenha
+    # for entity in sprites:
+    #     DISPLAY_SURF.blit(entity.image, entity.rect)
+    #     entity.mover()
+    
     jogador.mover()
     inimigo.desenhar(DISPLAY_SURF)
     inimigo.mover(rd.choice(['x', 'y']), rd.choice([-1, 1]))
@@ -62,15 +79,14 @@ while True:
                                      # provavelmente tem que mudar isso, acho q n seria legal o ControleInimigo ter um Jogador
                                      # talvez uma classe associativa binária pra checar colisão e comunicações entre os 2?
     DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
-
+    bulletHandler.desenhar(DISPLAY_SURF)
 
     if jogador.vida <= 0:
-        jogador.set_sprite("ChicoCunhaMorto.png")
+        jogador.set_sprite("ChicoCunhaMorte.png")
         DISPLAY_SURF.fill((255, 255, 255))
         inimigo.desenhar(DISPLAY_SURF)
         DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         morto = True
-
 
     pygame.display.update()
     FPS.tick(FPS_VALUE)
