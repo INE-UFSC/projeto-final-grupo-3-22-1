@@ -5,7 +5,6 @@ import random as rd
 
 from ControleInimigo import ControladorInimigo
 from ControleJogador import ControleJogador
-from InterfaceMorte import InterfaceMorte
 
 from Jogador import Jogador
 from Inimigo import Inimigo
@@ -33,11 +32,14 @@ VIDA = 20
 MOV_SPEED = 10
 arma_inicial = Arma(4, 0, 20, 5)
 
-inimigo = Inimigo(350, 350, 15, 2, "tilapia.png")
+lista_inimigos = [Inimigo(350, 350, 15, 2, "tilapia.png"),
+                  Inimigo(200, 470, 15, 2, "bacalhau_radioativo.png"),
+                  Inimigo(120, 330, 15, 2, "tilapia.png"),
+                  Inimigo(405, 250, 15, 2, "bacalhau_radioativo.png"),
+                  Inimigo(370, 100, 15, 2, "tilapia.png")]
 jogador = Jogador(VIDA, MOV_SPEED, arma_inicial, DISPLAY_SURF, SCREEN_WIDTH)
-controleInimigo = ControladorInimigo(lista_inimigos=[inimigo], jogador=jogador)
+controleInimigo = ControladorInimigo()
 controleJogador = ControleJogador(jogador=jogador)
-interfaceMorte = InterfaceMorte(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 bulletHandler = BulletHandler()
 
@@ -48,9 +50,12 @@ bulletHandler = BulletHandler()
 morto = False
 while True:    
     if morto:
-        interfaceMorte.mostrar_tela(DISPLAY_SURF) # por algum motivo ele n sobrescreve a tela, 
-                                                  # e ai esse método só mostra a caption da janela
+        pygame.display.set_caption("Chico Cunha está morto. Reflita sobre suas ações.")
         DISPLAY_SURF.blit(jogador.sprite, jogador.rect) # isso aqui era só pra deixar a imagem do Chico Cunha morto lá na tela de morte
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
         continue # continue faz com que se esse if seja ativado, o while loop vai continuar aqui dentro e não passar pros próximos
     
 
@@ -72,19 +77,19 @@ while True:
     #     entity.mover()
     
     jogador.mover()
-    inimigo.desenhar(DISPLAY_SURF)
-    inimigo.mover(rd.choice(['x', 'y']), rd.choice([-1, 1]))
-    controleInimigo.checar_colisao() # checa colisão para diminuir da vida do jogador
-                                     # nesse ControleInimigo, eu usei tanto uma instância de Jogador qnto uma lista de inimigos
-                                     # provavelmente tem que mudar isso, acho q n seria legal o ControleInimigo ter um Jogador
-                                     # talvez uma classe associativa binária pra checar colisão e comunicações entre os 2?
     DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
     bulletHandler.desenhar(DISPLAY_SURF)
 
+    for inimigo in lista_inimigos:
+        inimigo.desenhar(DISPLAY_SURF)
+        inimigo.mover()
+        controleInimigo.checar_colisao(jogador=jogador, inimigo=inimigo) # checa colisão para diminuir da vida do jogador
+                                         # nesse ControleInimigo, eu usei tanto uma instância de Jogador qnto uma lista de inimigos
+                                         # provavelmente tem que mudar isso, acho q n seria legal o ControleInimigo ter um Jogador...
+                                         # talvez uma classe associativa binária pra checar colisão e comunicações entre os 2? 
     if jogador.vida <= 0:
         jogador.set_sprite("ChicoCunhaMorte.png")
         DISPLAY_SURF.fill((255, 255, 255))
-        inimigo.desenhar(DISPLAY_SURF)
         DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         morto = True
 
