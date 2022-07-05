@@ -40,17 +40,21 @@ lista_inimigos = [
     Inimigo(405, 250, 15, 2, "assets/bacalhau_radioativo.png", SCREEN_WIDTH),
     Inimigo(370, 100, 15, 2, "assets/tilapia.png", SCREEN_WIDTH),
 ]
+
 jogador = Jogador(VIDA, MOV_SPEED, arma_inicial, DISPLAY_SURF, SCREEN_WIDTH)
+
 controleInimigo = ControladorInimigo()
 controleJogador = ControleJogador(jogador=jogador)
-
 bulletHandler = BulletHandler()
 collisionHandler = CollisionHandler()
 
 sprites = pygame.sprite.Group()
 sprites.add(jogador)
 
+grupo_inimigos = pygame.sprite.Group()
+
 for inimigo in lista_inimigos:
+    grupo_inimigos.add(inimigo)
     sprites.add(inimigo)
 
 morto = False
@@ -84,9 +88,9 @@ while True:
         DISPLAY_SURF.blit(entity.sprite, entity.rect)
         entity.mover()
 
-    bulletHandler.desenhar(DISPLAY_SURF)
+    bulletHandler.desenhar(DISPLAY_SURF, SCREEN_WIDTH)
     collisionHandler.verificar_colisoes(
-        lista_inimigos, jogador, bulletHandler.lista_balas
+        grupo_inimigos, jogador, bulletHandler.grupo_balas
     )
 
     if jogador.vida <= 0:

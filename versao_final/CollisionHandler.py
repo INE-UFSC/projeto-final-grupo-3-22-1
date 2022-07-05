@@ -5,21 +5,23 @@ import pygame
 from pygame.locals import *
 
 
-class CollisionHandler:
-    def verificar_colisoes(self, lista_inimigos, jogador, lista_balas):
-        self.colisao_jogador_inimigo(lista_inimigos, jogador)
-        self.colisao_bala_inimigo(lista_inimigos, lista_balas)
+class CollisionHandler(pygame.sprite.Sprite):
+    # funcao que chama todas verificaoes de colisao necessarias
+    def verificar_colisoes(self, grupo_inimigos, jogador, grupo_balas):
+        self.colisao_jogador_inimigo(grupo_inimigos, jogador)
 
-    def colisao_jogador_inimigo(self, lista_inimigos, jogador):
-        for inimigo in lista_inimigos:
+        self.colisao_bala_inimigo(grupo_inimigos, grupo_balas)
+
+    # colisao entre jogador e inimigos
+    def colisao_jogador_inimigo(self, grupo_inimigos, jogador):
+        for inimigo in grupo_inimigos:
             if jogador.rect.colliderect(inimigo.rect):
                 jogador.vida -= inimigo.dano
 
-    def colisao_bala_inimigo(self, lista_inimigos, lista_balas):
-        for bala in lista_balas:
-            for inimigo in lista_inimigos:
-                if bala.rect.colliderect(inimigo.rect):
-                    print("colidiu")
-                    inimigo.vida -= bala.dano
-                    if inimigo.vida <= 0:
-                        print("morto")
+    # colisao entre balas disparadas pelo jogador e inimigos
+    def colisao_bala_inimigo(self, grupo_inimigos, grupo_balas):
+        for inimigo in grupo_inimigos:
+            hits = pygame.sprite.spritecollide(inimigo, grupo_balas, False)
+            if hits:
+                print("colidiu")
+                # inimigo.vida -= bala.dano
