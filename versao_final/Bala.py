@@ -8,9 +8,12 @@ class Bala(pygame.sprite.Sprite):
         self.__pos_y = int(pos_y)
         self.__speed_x = int(speed_x)
         self.__speed_y = int(speed_y)
-        self.__sprite = pygame.image.load(sprite)
-        self.__rect = self.__sprite.get_rect(center=(self.__pos_x, self.__pos_y))
         self.__dano = int(dano)
+        
+        self.__sprite = pygame.image.load(sprite)
+        self.__rect = self.__sprite.get_rect()
+        self.__rect.center = (7, 7)
+        
 
     @property
     def pos_x(self):
