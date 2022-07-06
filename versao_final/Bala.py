@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
 
+from Settings import Settings
+
 
 class Bala(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, speed_x, speed_y, sprite, dano):
@@ -16,6 +18,8 @@ class Bala(pygame.sprite.Sprite):
         self.__rect.center = (7, 7)
 
         self.__hitbox = (self.__pos_x, self.__pos_y, 20, 20)
+
+        self.__settings = Settings()
 
     @property
     def rect(self):
@@ -64,11 +68,15 @@ class Bala(pygame.sprite.Sprite):
     @property
     def hitbox(self):
         return self.__hitbox
+    
+    @property
+    def settings(self) -> Settings:
+        return self.__settings
 
     @hitbox.setter
     def hitbox(self, hitbox):
         self.__hitbox = hitbox
 
-    def desenhar(self, window):
-        pygame.draw.rect(window, (0, 255, 0), self.__hitbox, 1)
-        window.blit(self.__sprite, (self.rect.x, self.rect.y))
+    def desenhar(self):
+        pygame.draw.rect(self.settings.DISPLAY_SURF, (0, 255, 0), self.__hitbox, 1)
+        self.settings.DISPLAY_SURF.blit(self.__sprite, (self.rect.x, self.rect.y))

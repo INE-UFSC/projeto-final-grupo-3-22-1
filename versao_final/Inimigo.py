@@ -1,13 +1,12 @@
-from re import X
 import pygame
 from pygame.locals import *
-import random as rd
 
-pygame.init()
+import random as rd
+from Settings import Settings
 
 
 class Inimigo(pygame.sprite.Sprite):
-    def __init__(self, x, y, velocidade, dano, sprite, largura_tela, vida=10):
+    def __init__(self, x, y, velocidade, dano, sprite, vida=10):
         # self.__tipo_ataque = tipo_ataque
         # self.__pontos_concedidos = pontos_concedidos
         # self.__comprimento = comprimento
@@ -18,8 +17,9 @@ class Inimigo(pygame.sprite.Sprite):
         self.__dano = dano
         self.__sprite = pygame.image.load(sprite)
         self.__rect = self.__sprite.get_rect(center=(self.__x, self.__y))
-        self.__largura_tela = largura_tela
         self.__vida = vida
+        
+        self.__settings = Settings()
 
     def atacar(self):
         pass
@@ -30,9 +30,9 @@ class Inimigo(pygame.sprite.Sprite):
 
         if self.rect.left <= 0:
             self.__rect.x += self.__velocidade
-        elif self.rect.right >= self.__largura_tela:
+        elif self.rect.right >= self.settings.largura_tela:
             self.__rect.x -= self.__velocidade
-        elif self.rect.bottom >= self.__largura_tela:
+        elif self.rect.bottom >= self.settings.largura_tela:
             self.__rect.y -= self.__velocidade
         elif self.rect.top <= 0:
             self.__rect.y += self.__velocidade
@@ -42,8 +42,8 @@ class Inimigo(pygame.sprite.Sprite):
             elif direcao == "y":
                 self.__rect.y += sentido * self.__velocidade
 
-    def desenhar(self, win):
-        win.blit(self.__sprite, (self.x, self.y))
+    def desenhar(self):
+        self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))
 
     @property
     def x(self) -> int:
@@ -72,6 +72,10 @@ class Inimigo(pygame.sprite.Sprite):
     @vida.setter
     def vida(self, vida):
         self.__vida = vida
+        
+    @property
+    def settings(self) -> Settings:
+        return self.__settings
 
     def receber_dano(self, dano):
         self.vida -= dano

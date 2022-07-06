@@ -1,7 +1,8 @@
-import sys
 import pygame
 from pygame.locals import *
+import sys
 import random as rd
+import numpy as np
 
 from ControleInimigo import ControladorInimigo
 from ControleJogador import ControleJogador
@@ -9,42 +10,44 @@ from ControleJogador import ControleJogador
 from Jogador import Jogador
 from Inimigo import Inimigo
 from Arma import Arma
+
 from BulletHandler import BulletHandler
 from CollisionHandler import CollisionHandler
-import numpy as np
+
+from Settings import Settings
 
 #######################################
 # parte do pygame (ficara no app.py)
 pygame.init()
-FPS_VALUE = 15
+settings = Settings()
+
+settings.FPS_VALUE = 20
+
 FPS = pygame.time.Clock()
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 800
+settings.largura_tela = 800
+settings.altura_tela = 800
 
 # tela
-DISPLAY_SURF = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-DISPLAY_SURF.fill((255, 255, 255))
+settings.DISPLAY_SURF = pygame.display.set_mode((settings.largura_tela, settings.altura_tela))
+settings.DISPLAY_SURF.fill((255, 255, 255))
 pygame.display.set_caption("Game")
 
 #######################################
-# propriedades iniciais do jogador
-VIDA = 20
-MOV_SPEED = 10
-arma_inicial = Arma(4, 0, 20, 5)
 
 lista_inimigos = [
-    Inimigo(350, 350, 15, 2, "assets/tilapia.png", SCREEN_WIDTH),
-    Inimigo(200, 470, 15, 2, "assets/bacalhau_radioativo.png", SCREEN_WIDTH),
-    Inimigo(120, 330, 15, 2, "assets/tilapia.png", SCREEN_WIDTH),
-    Inimigo(405, 250, 15, 2, "assets/bacalhau_radioativo.png", SCREEN_WIDTH),
-    Inimigo(370, 100, 15, 2, "assets/tilapia.png", SCREEN_WIDTH),
+    Inimigo(350, 350, 15, 2, "assets/tilapia.png"),
+    Inimigo(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
+    Inimigo(120, 330, 15, 2, "assets/tilapia.png"),
+    Inimigo(405, 250, 15, 2, "assets/bacalhau_radioativo.png"),
+    Inimigo(370, 100, 15, 2, "assets/tilapia.png"),
 ]
 
-jogador = Jogador(VIDA, MOV_SPEED, arma_inicial, DISPLAY_SURF, SCREEN_WIDTH)
+arma_inicial = Arma(4, 0, 20, 5)
+jogador = Jogador(vida=20, velocidade_movimento=10, arma=arma_inicial)
 
 controleInimigo = ControladorInimigo()
-controleJogador = ControleJogador(jogador=jogador)
+controleJogador = ControleJogador(jogador)
 bulletHandler = BulletHandler()
 collisionHandler = CollisionHandler()
 
@@ -61,7 +64,7 @@ morto = False
 while True:
     if morto:
         pygame.display.set_caption("Chico Cunha está morto. Reflita sobre suas ações.")
-        DISPLAY_SURF.blit(
+        settings.DISPLAY_SURF.blit(
             jogador.sprite, jogador.rect
         )  # isso aqui era só pra deixar a imagem do Chico Cunha morto na tela de morte
         for event in pygame.event.get():
@@ -81,23 +84,23 @@ while True:
             bulletHandler.nova_bala(tiro)
 
     # fundo branco
-    DISPLAY_SURF.fill((255, 255, 255))
+    settings.DISPLAY_SURF.fill((255, 255, 255))
 
     # laço que percorre todos inimigos e jogador e redesenha
     for entity in sprites:
-        DISPLAY_SURF.blit(entity.sprite, entity.rect)
+        settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
         entity.mover()
 
-    bulletHandler.desenhar(DISPLAY_SURF, SCREEN_WIDTH)
+    bulletHandler.desenhar()
     collisionHandler.verificar_colisoes(
         grupo_inimigos, jogador, bulletHandler.grupo_balas
     )
 
     if jogador.vida <= 0:
         jogador.set_sprite("assets/ChicoCunhaMorto.png")
-        DISPLAY_SURF.fill((255, 255, 255))
-        DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
+        settings.DISPLAY_SURF.fill((255, 255, 255))
+        settings.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         morto = True
 
     pygame.display.update()
-    FPS.tick(FPS_VALUE)
+    FPS.tick(settings.FPS_VALUE)

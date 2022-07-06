@@ -6,10 +6,11 @@ from Arma import Arma
 from Bala import Bala
 from Melhoria import Melhoria
 
+from Settings import Settings
 
 class Jogador(pygame.sprite.Sprite):
     def __init__(
-        self, vida: int, velocidade_movimento: int, arma: Arma, surface, largura_tela
+        self, vida: int, velocidade_movimento: int, arma: Arma
     ):
         super().__init__()
         self.__vida = vida
@@ -20,9 +21,8 @@ class Jogador(pygame.sprite.Sprite):
         self.__sprite = pygame.image.load("assets/ChicoCunha.png")
         self.__rect = self.__sprite.get_rect()
         self.__rect.center = (32, 32)
-
-        self.__surface = surface
-        self.__largura_tela = largura_tela
+        
+        self.__settings = Settings()
 
     @property
     def vida(self) -> int:
@@ -50,6 +50,10 @@ class Jogador(pygame.sprite.Sprite):
     @property
     def rect(self):
         return self.__rect
+    
+    @property
+    def settings(self) -> Settings:
+        return self.__settings
 
     def mover(self):
         self.__andando = False
@@ -60,12 +64,12 @@ class Jogador(pygame.sprite.Sprite):
                 self.rect.move_ip(-(self.velocidade_movimento), 0)
                 self.__andando = True
 
-        if self.rect.right < self.__largura_tela:
+        if self.rect.right < self.settings.largura_tela:
             if pressed_keys[K_RIGHT] or pressed_keys[K_d]:
                 self.rect.move_ip(self.velocidade_movimento, 0)
                 self.__andando = True
 
-        if self.rect.bottom < self.__largura_tela:
+        if self.rect.bottom < self.settings.largura_tela:
             if pressed_keys[K_DOWN] or pressed_keys[K_s]:
                 self.rect.move_ip(0, self.velocidade_movimento)
                 self.__andando = True
