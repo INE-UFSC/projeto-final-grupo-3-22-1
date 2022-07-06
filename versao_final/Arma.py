@@ -2,17 +2,11 @@ from Melhoria import Melhoria
 
 
 class Arma:
-    def __init__(
-        self, dano: int, preco: int, velocidade_projetil: int, cadencia_tiro: int
-    ):
-        self.__dano = dano
+    def __init__(self, preco: int, velocidade_projetil: int, dano: int, nome_sprite: str):
         self.__preco = preco
         self.__velocidade_projetil = velocidade_projetil
-        self.__cadencia_tiro = cadencia_tiro
-
-    @property
-    def dano(self) -> int:
-        return self.__dano
+        self.__dano = dano
+        self.__nome_sprite = "assets/" + nome_sprite + ".png"
 
     @property
     def preco(self) -> int:
@@ -21,13 +15,17 @@ class Arma:
     @property
     def velocidade_projetil(self) -> int:
         return self.__velocidade_projetil
+    
+    @property
+    def nome_sprite(self) -> str:
+        return self.__nome_sprite
 
     @property
-    def cadencia_tiro(self) -> int:
-        return self.__cadencia_tiro
+    def dano(self) -> int:
+        return self.__dano
 
     def aplicar_melhoria(self, melhoria: Melhoria):
         ...
-    
+
     def remover_melhoria(self):
         ...

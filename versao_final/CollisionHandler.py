@@ -23,5 +23,4 @@ class CollisionHandler(pygame.sprite.Sprite):
         for inimigo in grupo_inimigos:
             hits = pygame.sprite.spritecollide(inimigo, grupo_balas, True)
             if hits:
-                print(hits[0].dano)
                 inimigo.receber_dano(hits[0].dano)

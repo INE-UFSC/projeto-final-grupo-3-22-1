@@ -8,26 +8,24 @@ from Melhoria import Melhoria
 
 from Settings import Settings
 
+
 class Jogador(pygame.sprite.Sprite):
-    def __init__(
-        self, vida: int, velocidade_movimento: int, arma: Arma
-    ):
+    def __init__(self, vida: int, velocidade_movimento: int, arma: Arma):
         super().__init__()
         self.__vida = vida
         self.__velocidade_movimento = velocidade_movimento
         self.__arma = arma
 
-        # (left, top), (width, height)
         self.__sprite = pygame.image.load("assets/ChicoCunha.png")
         self.__rect = self.__sprite.get_rect()
-        self.__rect.center = (32, 32)
-        
+        self.__rect.center = (self.sprite.get_width(), self.sprite.get_height())
+
         self.__settings = Settings()
 
     @property
     def vida(self) -> int:
         return self.__vida
-    
+
     @vida.setter
     def vida(self, valor):
         self.__vida = valor
@@ -43,14 +41,14 @@ class Jogador(pygame.sprite.Sprite):
     @property
     def sprite(self):
         return self.__sprite
-    
+
     def set_sprite(self, sprite):
         self.__sprite = pygame.image.load(sprite)
 
     @property
     def rect(self):
         return self.__rect
-    
+
     @property
     def settings(self) -> Settings:
         return self.__settings
@@ -88,8 +86,15 @@ class Jogador(pygame.sprite.Sprite):
         speed_x = self.arma.velocidade_projetil * cos(angulo)
         speed_y = self.arma.velocidade_projetil * sin(angulo)
 
-        nova_bala = Bala(self.rect.x, self.rect.y, speed_x, speed_y, "assets/anzol.png", self.__arma.dano)
-        
+        nova_bala = Bala(
+            self.rect.x,
+            self.rect.y,
+            speed_x,
+            speed_y,
+            self.arma.nome_sprite,
+            self.__arma.dano,
+        )
+
         return nova_bala
 
     def usar_melhoria(self, melhoria: Melhoria):

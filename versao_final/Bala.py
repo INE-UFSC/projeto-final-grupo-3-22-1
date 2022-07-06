@@ -15,9 +15,9 @@ class Bala(pygame.sprite.Sprite):
 
         self.__sprite = pygame.image.load(sprite)
         self.__rect = self.__sprite.get_rect()
-        self.__rect.center = (7, 7)
+        self.__rect.center = (self.sprite.get_width(), self.sprite.get_height())
 
-        self.__hitbox = (self.__pos_x, self.__pos_y, 20, 20)
+        # self.__hitbox = (self.__pos_x, self.__pos_y, 20, 20)
 
         self.__settings = Settings()
 
@@ -32,14 +32,6 @@ class Bala(pygame.sprite.Sprite):
     @property
     def pos_y(self):
         return self.__pos_y
-
-    @property
-    def speed_x(self):
-        return self.__speed_x
-
-    @property
-    def speed_y(self):
-        return self.__speed_y
 
     @property
     def sprite(self):
@@ -64,19 +56,27 @@ class Bala(pygame.sprite.Sprite):
     @property
     def dano(self):
         return self.__dano
+    
+    @property
+    def speed_x(self):
+        return self.__speed_x
 
     @property
-    def hitbox(self):
-        return self.__hitbox
+    def speed_y(self):
+        return self.__speed_y
+
+    # @property
+    # def hitbox(self):
+    #     return self.__hitbox
     
     @property
     def settings(self) -> Settings:
         return self.__settings
 
-    @hitbox.setter
-    def hitbox(self, hitbox):
-        self.__hitbox = hitbox
+    # @hitbox.setter
+    # def hitbox(self, hitbox):
+    #     self.__hitbox = hitbox
 
     def desenhar(self):
-        pygame.draw.rect(self.settings.DISPLAY_SURF, (0, 255, 0), self.__hitbox, 1)
+        # pygame.draw.rect(self.settings.DISPLAY_SURF, (0, 255, 0), self.__hitbox, 1)
         self.settings.DISPLAY_SURF.blit(self.__sprite, (self.rect.x, self.rect.y))

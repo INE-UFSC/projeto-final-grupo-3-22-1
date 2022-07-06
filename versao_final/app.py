@@ -3,6 +3,7 @@ from pygame.locals import *
 import sys
 import random as rd
 import numpy as np
+from ControleArmas import ControleArmas
 
 from ControleInimigo import ControladorInimigo
 from ControleJogador import ControleJogador
@@ -11,7 +12,7 @@ from Jogador import Jogador
 from Inimigo import Inimigo
 from Arma import Arma
 
-from BulletHandler import BulletHandler
+from ControleBalas import ControleBalas
 from CollisionHandler import CollisionHandler
 
 from Settings import Settings
@@ -29,7 +30,9 @@ settings.largura_tela = 800
 settings.altura_tela = 800
 
 # tela
-settings.DISPLAY_SURF = pygame.display.set_mode((settings.largura_tela, settings.altura_tela))
+settings.DISPLAY_SURF = pygame.display.set_mode(
+    (settings.largura_tela, settings.altura_tela)
+)
 settings.DISPLAY_SURF.fill((255, 255, 255))
 pygame.display.set_caption("Game")
 
@@ -42,13 +45,16 @@ lista_inimigos = [
     Inimigo(405, 250, 15, 2, "assets/bacalhau_radioativo.png"),
     Inimigo(370, 100, 15, 2, "assets/tilapia.png"),
 ]
-
-arma_inicial = Arma(4, 0, 20, 5)
-jogador = Jogador(vida=20, velocidade_movimento=10, arma=arma_inicial)
-
 controleInimigo = ControladorInimigo()
+
+# mudar para ControleArmas
+controleArmas = ControleArmas()
+jogador = Jogador(
+    vida=20, velocidade_movimento=10, arma=controleArmas.trocar_arma("anzol")
+)
 controleJogador = ControleJogador(jogador)
-bulletHandler = BulletHandler()
+controleBalas = ControleBalas()
+
 collisionHandler = CollisionHandler()
 
 sprites = pygame.sprite.Group()
@@ -59,6 +65,8 @@ grupo_inimigos = pygame.sprite.Group()
 for inimigo in lista_inimigos:
     grupo_inimigos.add(inimigo)
     sprites.add(inimigo)
+
+#######################################
 
 morto = False
 while True:
@@ -81,7 +89,7 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             tiro = jogador.atirar(mouse_x, mouse_y)
-            bulletHandler.nova_bala(tiro)
+            controleBalas.nova_bala(tiro)
 
     # fundo branco
     settings.DISPLAY_SURF.fill((255, 255, 255))
@@ -91,9 +99,9 @@ while True:
         settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
         entity.mover()
 
-    bulletHandler.desenhar()
+    controleBalas.desenhar()
     collisionHandler.verificar_colisoes(
-        grupo_inimigos, jogador, bulletHandler.grupo_balas
+        grupo_inimigos, jogador, controleBalas.grupo_balas
     )
 
     if jogador.vida <= 0:
