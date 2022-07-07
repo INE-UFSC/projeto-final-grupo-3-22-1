@@ -19,6 +19,8 @@ class Jogador(pygame.sprite.Sprite):
         self.__sprite = pygame.image.load("assets/ChicoCunha.png")
         self.__rect = self.__sprite.get_rect()
         self.__rect.center = (self.sprite.get_width(), self.sprite.get_height())
+        
+        self.__tempo_ultimo_tiro = 0
 
         self.__settings = Settings()
 
@@ -50,6 +52,14 @@ class Jogador(pygame.sprite.Sprite):
         return self.__rect
 
     @property
+    def tempo_ultimo_tiro(self) -> int:
+        return self.__tempo_ultimo_tiro
+    
+    @tempo_ultimo_tiro.setter
+    def tempo_ultimo_tiro(self, tempo):
+        self.__tempo_ultimo_tiro = tempo
+
+    @property
     def settings(self) -> Settings:
         return self.__settings
 
@@ -78,24 +88,29 @@ class Jogador(pygame.sprite.Sprite):
                 self.__andando = True
 
     def atirar(self, mouse_x, mouse_y):
-        distancia_x = mouse_x - self.rect.x
-        distancia_y = mouse_y - self.rect.y
+        tempo_agora = pygame.time.get_ticks()
+        
+        if tempo_agora - self.__tempo_ultimo_tiro > self.arma.cadencia:
+            self.__tempo_ultimo_tiro = tempo_agora
+        
+            distancia_x = mouse_x - self.rect.x
+            distancia_y = mouse_y - self.rect.y
 
-        angulo = atan2(distancia_y, distancia_x)
+            angulo = atan2(distancia_y, distancia_x)
 
-        speed_x = self.arma.velocidade_projetil * cos(angulo)
-        speed_y = self.arma.velocidade_projetil * sin(angulo)
+            speed_x = self.arma.velocidade_projetil * cos(angulo)
+            speed_y = self.arma.velocidade_projetil * sin(angulo)
 
-        nova_bala = Bala(
-            self.rect.x,
-            self.rect.y,
-            speed_x,
-            speed_y,
-            self.arma.nome_sprite,
-            self.__arma.dano,
-        )
+            nova_bala = Bala(
+                self.rect.x,
+                self.rect.y,
+                speed_x,
+                speed_y,
+                self.arma.nome_sprite,
+                self.__arma.dano,
+            )
 
-        return nova_bala
+            return nova_bala
 
     def usar_melhoria(self, melhoria: Melhoria):
         ...

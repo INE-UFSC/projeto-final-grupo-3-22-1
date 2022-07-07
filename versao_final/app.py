@@ -50,7 +50,7 @@ controleInimigo = ControladorInimigo()
 # mudar para ControleArmas
 controleArmas = ControleArmas()
 jogador = Jogador(
-    vida=20, velocidade_movimento=10, arma=controleArmas.trocar_arma("anzol")
+    vida=20, velocidade_movimento=10, arma=controleArmas.trocar_arma("isca")
 )
 controleJogador = ControleJogador(jogador)
 controleBalas = ControleBalas()
@@ -89,7 +89,9 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             tiro = jogador.atirar(mouse_x, mouse_y)
-            controleBalas.nova_bala(tiro)
+            # pode não ter respeitado tempo da cadencia e não atirar
+            if tiro:
+                controleBalas.nova_bala(tiro)
 
     # fundo branco
     settings.DISPLAY_SURF.fill((255, 255, 255))

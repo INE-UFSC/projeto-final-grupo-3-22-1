@@ -22,6 +22,7 @@ class ControleBalas(pygame.sprite.Sprite):
 
     def nova_bala(self, bala: Bala):
         self.__grupo_balas.add(bala)
+    
 
     def desenhar(self):
         # atualiza posicoes
