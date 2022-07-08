@@ -41,20 +41,20 @@ pygame.display.set_caption("Game")
 #######################################
 
 lista_inimigos = [
-    #Inimigo(350, 350, 15, 2, "assets/tilapia.png"),
-    #Inimigo(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
-   # Inimigo(120, 330, 15, 2, "assets/tilapia.png"),
+    # Inimigo(350, 350, 15, 2, "assets/tilapia.png"),
+    # Inimigo(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
+    # Inimigo(120, 330, 15, 2, "assets/tilapia.png"),
     InimigoAtirador(405, 250, 5, 20, "assets/lulaAtiradora.png"),
-   #Inimigo(370, 100, 15, 2, "assets/tilapia.png"),
-    #InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png")
+    # Inimigo(370, 100, 15, 2, "assets/tilapia.png"),
+    # InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png")
 ]
 controleInimigo = ControladorInimigo()
 
 # mudar para ControleArmas
 controleArmas = ControleArmas()
-jogador = Jogador(
-    vida=20, velocidade_movimento=10, arma=controleArmas.trocar_arma("isca")
-)
+jogador = Jogador(vida=20, velocidade_movimento=10)
+# controleArmas.trocar_arma(jogador, "rede")
+
 controleJogador = ControleJogador(jogador)
 controleBalasJogador = ControleBalasJogador()
 
@@ -100,14 +100,15 @@ while True:
     settings.DISPLAY_SURF.fill((255, 255, 255))
 
     # laço que percorre todos inimigos e jogador e redesenha
-    
-    
-    #for entity in sprites:
-        #settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
-        #x, y = controleInimigo.caminho_atirador(inimigo, jogador.x, jogador.y, 5)
-        #entity.mover(x, y)
 
-    x, y = controleInimigo.caminho_atirador(lista_inimigos[0], jogador.x, jogador.y, 250)
+    # for entity in sprites:
+    # settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
+    # x, y = controleInimigo.caminho_atirador(inimigo, jogador.x, jogador.y, 5)
+    # entity.mover(x, y)
+
+    x, y = controleInimigo.caminho_atirador(
+        lista_inimigos[0], jogador.x, jogador.y, 250
+    )
 
     tiro_inimigo = inimigo.atacar(x, y)
     if tiro_inimigo:
