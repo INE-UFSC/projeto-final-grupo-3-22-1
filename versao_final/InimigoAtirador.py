@@ -3,6 +3,7 @@ from pygame.locals import *
 
 import random as rd
 from Settings import Settings
+from Bala import Bala
 
 
 class InimigoAtirador(pygame.sprite.Sprite):
@@ -18,11 +19,26 @@ class InimigoAtirador(pygame.sprite.Sprite):
         self.__sprite = pygame.image.load(sprite)
         self.__rect = self.__sprite.get_rect(center=(self.__x, self.__y))
         self.__vida = vida
+        self.__tempo_ultimo_tiro = 0
         
         self.__settings = Settings()
 
-    def atacar(self):
-        pass
+    def atacar(self, x, y):
+        tempo_agora = pygame.time.get_ticks()
+        
+        if tempo_agora - self.__tempo_ultimo_tiro > 5000:
+            self.__tempo_ultimo_tiro = tempo_agora
+        
+            nova_bala = Bala(
+                self.rect.x,
+                self.rect.y,
+                x,
+                y,
+                "assets/isca.png",
+                5
+            )
+
+            return nova_bala
 
     def mover(self, x, y):
         self.__rect.x += x*self.__velocidade

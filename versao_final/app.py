@@ -14,7 +14,7 @@ from Arma import Arma
 from InimigoRastreador import InimigoRastreador
 from InimigoAtirador import InimigoAtirador
 
-from ControleBalas import ControleBalas
+from ControleBalasJogador import ControleBalasJogador
 from CollisionHandler import CollisionHandler
 
 from Settings import Settings
@@ -56,7 +56,7 @@ jogador = Jogador(vida=20, velocidade_movimento=10)
 # controleArmas.trocar_arma(jogador, "rede")
 
 controleJogador = ControleJogador(jogador)
-controleBalas = ControleBalas()
+controleBalasJogador = ControleBalasJogador()
 
 collisionHandler = CollisionHandler()
 
@@ -94,7 +94,7 @@ while True:
             tiro = jogador.atirar(mouse_x, mouse_y)
             # pode não ter respeitado tempo da cadencia e não atirar
             if tiro:
-                controleBalas.nova_bala(tiro)
+                controleBalasJogador.nova_bala(tiro)
 
     # fundo branco
     settings.DISPLAY_SURF.fill((255, 255, 255))
@@ -106,17 +106,23 @@ while True:
     # x, y = controleInimigo.caminho_atirador(inimigo, jogador.x, jogador.y, 5)
     # entity.mover(x, y)
 
-    jogador.mover()
     x, y = controleInimigo.caminho_atirador(
         lista_inimigos[0], jogador.x, jogador.y, 250
     )
+
+    tiro_inimigo = inimigo.atacar(x, y)
+    if tiro_inimigo:
+        controleBalasJogador.nova_bala(tiro_inimigo)
+    
+    jogador.mover()
     inimigo.mover(x, y)
+
+    controleBalasJogador.desenhar()    
     for entity in sprites:
         settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
 
-    controleBalas.desenhar()
     collisionHandler.verificar_colisoes(
-        grupo_inimigos, jogador, controleBalas.grupo_balas
+        grupo_inimigos, jogador, controleBalasJogador.grupo_balas
     )
 
     if jogador.vida <= 0:
