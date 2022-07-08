@@ -1,3 +1,4 @@
+from ControleBalasInimigo import ControleBalasInimigo
 import pygame
 from pygame.locals import *
 import sys
@@ -15,6 +16,7 @@ from InimigoRastreador import InimigoRastreador
 from InimigoAtirador import InimigoAtirador
 
 from ControleBalasJogador import ControleBalasJogador
+from ControleBalasInimigo import ControleBalasInimigo
 from CollisionHandler import CollisionHandler
 
 from Settings import Settings
@@ -120,7 +122,7 @@ while True:
         settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
 
     collisionHandler.verificar_colisoes(
-        grupo_inimigos, jogador, controleBalasJogador.grupo_balas
+        grupo_inimigos, jogador, controleBalasJogador.grupo_balas, ControleBalasInimigo.grupo_balas
     )
 
     if jogador.vida <= 0:

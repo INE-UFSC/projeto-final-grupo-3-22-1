@@ -7,9 +7,10 @@ from pygame.locals import *
 
 class CollisionHandler(pygame.sprite.Sprite):
     # funcao que chama todas verificaoes de colisao necessarias
-    def verificar_colisoes(self, grupo_inimigos, jogador, grupo_balas):
+    def verificar_colisoes(self, grupo_inimigos, jogador, grupo_balas_jogador, grupo_balas_inimigos):
         self.colisao_jogador_inimigo(grupo_inimigos, jogador)
-        self.colisao_bala_inimigo(grupo_inimigos, grupo_balas)
+        self.colisao_bala_inimigo(grupo_inimigos, grupo_balas_jogador)
+        self.colisao_bala_jogador(grupo_balas_inimigos, jogador)
 
     # colisao entre jogador e inimigos
     def colisao_jogador_inimigo(self, grupo_inimigos, jogador):
@@ -24,3 +25,8 @@ class CollisionHandler(pygame.sprite.Sprite):
             if hits:
                 hits[0].reduzir_durabilidade()
                 inimigo.receber_dano(hits[0].dano)
+    
+    def colisao_bala_jogador(self, grupo_balas_inimigos, jogador):
+        hits = pygame.sprite.spritecollide(grupo_balas_inimigos, jogador, False)
+        if hits:
+            jogador.receber_dano(hits[0].dano)

@@ -135,5 +135,8 @@ class Jogador(pygame.sprite.Sprite):
 
             return nova_bala
 
+    def receber_dano(self, dano: int):
+        self.__vida -= dano
+    
     def usar_melhoria(self, melhoria: Melhoria):
         ...
