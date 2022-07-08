@@ -14,7 +14,7 @@ class Jogador(pygame.sprite.Sprite):
         self,
         vida: int,
         velocidade_movimento: int,
-        arma: Arma = Arma(0, 20, 4, 250, "isca"),
+        arma: Arma = Arma(0, 20, 4, 250, "isca", 1),
     ):
         super().__init__()
         self.__vida = vida
@@ -125,7 +125,8 @@ class Jogador(pygame.sprite.Sprite):
                 speed_x,
                 speed_y,
                 self.arma.nome_sprite,
-                self.__arma.dano,
+                self.arma.dano,
+                self.arma.durabilidade_bala
             )
 
             return nova_bala

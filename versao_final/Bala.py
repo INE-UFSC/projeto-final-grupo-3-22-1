@@ -5,13 +5,14 @@ from Settings import Settings
 
 
 class Bala(pygame.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, speed_x, speed_y, sprite, dano):
+    def __init__(self, pos_x, pos_y, speed_x, speed_y, sprite, dano, durabilidade):
         super().__init__()
         self.__pos_x = int(pos_x)
         self.__pos_y = int(pos_y)
         self.__speed_x = int(speed_x)
         self.__speed_y = int(speed_y)
         self.__dano = int(dano)
+        self.__durabilidade = durabilidade
 
         self.__sprite = pygame.image.load(sprite)
         self.__rect = self.__sprite.get_rect()
@@ -64,6 +65,15 @@ class Bala(pygame.sprite.Sprite):
     @property
     def speed_y(self):
         return self.__speed_y
+    
+    @property
+    def durabilidade(self):
+        return self.__durabilidade
+    
+    @durabilidade.setter
+    def durabilidade(self, valor):
+        self.__durabilidade = valor
+        
 
     # @property
     # def hitbox(self):
@@ -80,3 +90,9 @@ class Bala(pygame.sprite.Sprite):
     def desenhar(self):
         # pygame.draw.rect(self.settings.DISPLAY_SURF, (0, 255, 0), self.__hitbox, 1)
         self.settings.DISPLAY_SURF.blit(self.__sprite, (self.rect.x, self.rect.y))
+        
+    def reduzir_durabilidade(self):
+        self.durabilidade -= 1
+        
+        if self.durabilidade < 1:
+            self.kill()
