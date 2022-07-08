@@ -23,7 +23,10 @@ class Jogador(pygame.sprite.Sprite):
 
         self.__sprite = pygame.image.load("assets/ChicoCunha.png")
         self.__rect = self.__sprite.get_rect()
-        self.__rect.center = (self.sprite.get_width(), self.sprite.get_height())
+        self.__rect.center = (
+            int(self.sprite.get_width() / 2),
+            int(self.sprite.get_height() / 2),
+        )
 
         self.__tempo_ultimo_tiro = 0
 
@@ -32,6 +35,7 @@ class Jogador(pygame.sprite.Sprite):
     @property
     def vida(self) -> int:
         return self.__vida
+        self.__rect = self.__sprite.get_rect(center=(self.__x, self.__y))
 
     @vida.setter
     def vida(self, valor):
@@ -126,7 +130,7 @@ class Jogador(pygame.sprite.Sprite):
                 speed_y,
                 self.arma.nome_sprite,
                 self.arma.dano,
-                self.arma.durabilidade_bala
+                self.arma.durabilidade_bala,
             )
 
             return nova_bala

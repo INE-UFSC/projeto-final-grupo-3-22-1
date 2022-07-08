@@ -28,8 +28,8 @@ settings.FPS_VALUE = 20
 
 FPS = pygame.time.Clock()
 
-settings.largura_tela = 800
-settings.altura_tela = 800
+settings.largura_tela = 640
+settings.altura_tela = 640
 
 # tela
 settings.DISPLAY_SURF = pygame.display.set_mode(
@@ -50,10 +50,9 @@ lista_inimigos = [
 ]
 controleInimigo = ControladorInimigo()
 
-# mudar para ControleArmas
-controleArmas = ControleArmas()
-jogador = Jogador(vida=20, velocidade_movimento=10)
-# controleArmas.trocar_arma(jogador, "rede")
+jogador = Jogador(vida=20, velocidade_movimento=8)
+controleArmas = ControleArmas(jogador)
+# controleArmas.trocar_arma("rede")
 
 controleJogador = ControleJogador(jogador)
 controleBalasJogador = ControleBalasJogador()
@@ -75,9 +74,7 @@ morto = False
 while True:
     if morto:
         pygame.display.set_caption("Chico Cunha está morto. Reflita sobre suas ações.")
-        settings.DISPLAY_SURF.blit(
-            jogador.sprite, jogador.rect
-        )  # isso aqui era só pra deixar a imagem do Chico Cunha morto na tela de morte
+        settings.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -92,7 +89,8 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             tiro = jogador.atirar(mouse_x, mouse_y)
-            # pode não ter respeitado tempo da cadencia e não atirar
+            
+            # caso detecte um tiro, adiciona ao controlador de balas do jogador
             if tiro:
                 controleBalasJogador.nova_bala(tiro)
 
@@ -113,11 +111,11 @@ while True:
     tiro_inimigo = inimigo.atacar(x, y)
     if tiro_inimigo:
         controleBalasJogador.nova_bala(tiro_inimigo)
-    
+
     jogador.mover()
     inimigo.mover(x, y)
 
-    controleBalasJogador.desenhar()    
+    controleBalasJogador.desenhar()
     for entity in sprites:
         settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
 

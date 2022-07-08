@@ -20,30 +20,23 @@ class InimigoAtirador(pygame.sprite.Sprite):
         self.__rect = self.__sprite.get_rect(center=(self.__x, self.__y))
         self.__vida = vida
         self.__tempo_ultimo_tiro = 0
-        
+
         self.__settings = Settings()
 
     def atacar(self, x, y):
         tempo_agora = pygame.time.get_ticks()
-        
+
         if tempo_agora - self.__tempo_ultimo_tiro > 5000:
             self.__tempo_ultimo_tiro = tempo_agora
-        
-            nova_bala = Bala(
-                self.rect.x,
-                self.rect.y,
-                x,
-                y,
-                "assets/isca.png",
-                5
-            )
+
+            nova_bala = Bala(self.rect.x, self.rect.y, x, y, "assets/isca.png", 5, 1)
 
             return nova_bala
 
     def mover(self, x, y):
-        self.__rect.x += x*self.__velocidade
-        self.__rect.y += y*self.__velocidade
-    
+        self.__rect.x += x * self.__velocidade
+        self.__rect.y += y * self.__velocidade
+
     def desenhar(self):
         self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))
 
@@ -54,7 +47,7 @@ class InimigoAtirador(pygame.sprite.Sprite):
     @property
     def y(self) -> int:
         return self.__rect.y
-    
+
     @property
     def velocidade(self) -> int:
         return self.__velocidade
@@ -78,7 +71,7 @@ class InimigoAtirador(pygame.sprite.Sprite):
     @vida.setter
     def vida(self, vida):
         self.__vida = vida
-        
+
     @property
     def settings(self) -> Settings:
         return self.__settings
