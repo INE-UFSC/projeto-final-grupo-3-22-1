@@ -45,7 +45,7 @@ lista_inimigos = [
    # Inimigo(120, 330, 15, 2, "assets/tilapia.png"),
    # Inimigo(405, 250, 15, 2, "assets/bacalhau_radioativo.png"),
    #Inimigo(370, 100, 15, 2, "assets/tilapia.png"),
-    InimigoRastreador(380, 120, 3, 1, "assets/tilapia.png")
+    InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png")
 ]
 controleInimigo = ControladorInimigo()
 
