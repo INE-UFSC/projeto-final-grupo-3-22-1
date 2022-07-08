@@ -12,6 +12,7 @@ from Jogador import Jogador
 from Inimigo import Inimigo
 from Arma import Arma
 from InimigoRastreador import InimigoRastreador
+from InimigoAtirador import InimigoAtirador
 
 from ControleBalas import ControleBalas
 from CollisionHandler import CollisionHandler
@@ -43,9 +44,9 @@ lista_inimigos = [
     #Inimigo(350, 350, 15, 2, "assets/tilapia.png"),
     #Inimigo(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
    # Inimigo(120, 330, 15, 2, "assets/tilapia.png"),
-   # Inimigo(405, 250, 15, 2, "assets/bacalhau_radioativo.png"),
+    InimigoAtirador(405, 250, 15, 2, "assets/lulaAtiradora.png"),
    #Inimigo(370, 100, 15, 2, "assets/tilapia.png"),
-    InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png")
+    #InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png")
 ]
 controleInimigo = ControladorInimigo()
 
@@ -103,10 +104,12 @@ while True:
     
     #for entity in sprites:
         #settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
-        #entity.mover()
+        #x, y = controleInimigo.caminho_atirador(inimigo, jogador.x, jogador.y, 5)
+        #entity.mover(x, y)
 
     jogador.mover()
-    controleInimigo.achar_caminho(lista_inimigos[0], jogador.x, jogador.y)
+    x, y = controleInimigo.caminho_atirador(lista_inimigos[0], jogador.x, jogador.y, 250)
+    inimigo.mover(x, y)
     for entity in sprites:
         settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
 
