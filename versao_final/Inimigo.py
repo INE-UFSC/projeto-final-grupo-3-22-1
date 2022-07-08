@@ -54,6 +54,10 @@ class Inimigo(pygame.sprite.Sprite):
         return self.__rect.y
 
     @property
+    def velocidade(self) -> int:
+        return self.__velocidade
+
+    @property
     def sprite(self):
         return self.__sprite
 
