@@ -24,9 +24,9 @@ class InimigoRastreador(pygame.sprite.Sprite):
     def atacar(self):
         pass
 
-    def mover(self, x, y, sentidox, sentidoy):
-        self.__rect.x += sentidox*x
-        self.__rect.y += sentidoy*y
+    def mover(self, x, y):
+        self.__rect.x += x*self.__velocidade
+        self.__rect.y += y*self.__velocidade
     
     def desenhar(self):
         self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))

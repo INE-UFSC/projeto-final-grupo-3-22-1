@@ -3,27 +3,18 @@ from Inimigo import Inimigo
 from Jogador import Jogador
 import pygame
 from pygame.locals import *
-import numpy as np
+import math 
 
 
 class ControladorInimigo:
     def achar_caminho(self, inimigo, jogador_x, jogador_y):
-        distx = jogador_x - inimigo.x
-        disty = jogador_y - inimigo.y
+        # Achando os catetos e a hipotenusa
+        distx, disty = jogador_x - inimigo.x, jogador_y - inimigo.y 
+        hyp = math.hypot(distx, disty)
 
-        try:
-            angulo = np.arctan(disty / distx)
-        except DivisionByZero:
-            angulo = np.arctan(disty / 1)
+        # Normalizando as distâncias e multiplicando isso pela velocidade do inimigo        
+        distx, disty = distx / hyp, disty / hyp
+        print(distx, disty)
+        inimigo.mover(distx, disty)
 
-        xmov = inimigo.velocidade * np.sin(angulo)
-        ymov = inimigo.velocidade * np.cos(angulo)
 
-        if jogador_x >= inimigo.x and jogador_y >= inimigo.y:
-            inimigo.mover(xmov, ymov, sentidox=1, sentidoy=1)
-        elif jogador_x <= inimigo.x and jogador_y >= inimigo.y:
-            inimigo.mover(xmov, ymov, sentidox=-1, sentidoy=1)
-        elif jogador_x >= inimigo.x and jogador_y <= inimigo.y:
-            inimigo.mover(xmov, ymov, sentidox=1, sentidoy=-1)
-        else:
-            inimigo.mover(xmov, ymov, sentidox=-1, sentidoy=-1)
