@@ -21,8 +21,8 @@ class Inimigo(pygame.sprite.Sprite):
         
         self.__settings = Settings()
 
-    def atacar(self):
-        pass
+    def atacar(self, jogador_x, jogador_y):
+        pass 
 
     def mover(self):
         direcao = rd.choice(["x", "y"])
