@@ -44,7 +44,7 @@ lista_inimigos = [
     #Inimigo(350, 350, 15, 2, "assets/tilapia.png"),
     #Inimigo(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
    # Inimigo(120, 330, 15, 2, "assets/tilapia.png"),
-    InimigoAtirador(405, 250, 15, 2, "assets/lulaAtiradora.png"),
+    InimigoAtirador(405, 250, 5, 20, "assets/lulaAtiradora.png"),
    #Inimigo(370, 100, 15, 2, "assets/tilapia.png"),
     #InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png")
 ]

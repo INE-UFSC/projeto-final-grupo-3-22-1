@@ -33,14 +33,15 @@ class ControladorInimigo:
         # se sim, fugir dele
         # se não, caminho aleatório
         if abs(jogador_x - inimigo.x) <= raio:
-            return -distx, -disty
-        elif tempo_agora - self.__ultimo_tempo >= 5000:
+            return -2.5*distx, -2.5*disty
+        elif tempo_agora - self.__ultimo_tempo >= 200:
             x = rd.choice([1, -1])
             y = rd.choice([1, -1])
+            
+            # Atualiza o tempo
+            self.__ultimo_tempo = tempo_agora
+            
             return x, y
-        
-        # Atualiza o tempo
-        self.__ultimo_tempo = tempo_agora
-        
+                
         # Caso não haja nenhum movimento acima, retorna 0, 0
         return 0, 0 
