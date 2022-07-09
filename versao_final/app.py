@@ -58,6 +58,7 @@ controleArmas = ControleArmas(jogador)
 
 controleJogador = ControleJogador(jogador)
 controleBalasJogador = ControleBalasJogador()
+controleBalasInimigo = ControleBalasInimigo
 
 collisionHandler = CollisionHandler()
 
@@ -112,7 +113,7 @@ while True:
 
     tiro_inimigo = inimigo.atacar(x, y)
     if tiro_inimigo:
-        controleBalasJogador.nova_bala(tiro_inimigo)
+        controleBalasInimigo.nova_bala(tiro_inimigo)
 
     jogador.mover()
     inimigo.mover(x, y)
@@ -122,7 +123,7 @@ while True:
         settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
 
     collisionHandler.verificar_colisoes(
-        grupo_inimigos, jogador, controleBalasJogador.grupo_balas, ControleBalasInimigo.grupo_balas
+        grupo_inimigos, jogador, controleBalasJogador.grupo_balas, controleBalasInimigo.grupo_balas
     )
 
     if jogador.vida <= 0:
