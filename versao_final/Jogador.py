@@ -24,6 +24,8 @@ class Jogador(pygame.sprite.Sprite):
 
         self.__sprite = pygame.image.load(os.path.join(
             "versao_final/assets", "ChicoCunha.png"))
+        self.image = pygame.image.load(os.path.join(
+            "versao_final/assets", "ChicoCunha.png"))
         self.__rect = self.__sprite.get_rect()
         self.__rect.center = (
             int(self.sprite.get_width() / 2),

@@ -18,6 +18,7 @@ class InimigoAtirador(pygame.sprite.Sprite):
         self.__velocidade = velocidade
         self.__dano = dano
         self.__sprite = pygame.image.load(sprite)
+        self.image = pygame.image.load(sprite)
         self.__rect = self.__sprite.get_rect(center=(self.__x, self.__y))
         self.__vida = vida
         self.__tempo_ultimo_tiro = 0
