@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+import os
 
 import random as rd
 from Settings import Settings
@@ -29,7 +30,7 @@ class InimigoAtirador(pygame.sprite.Sprite):
         if tempo_agora - self.__tempo_ultimo_tiro > 5000:
             self.__tempo_ultimo_tiro = tempo_agora
 
-            nova_bala = Bala(self.rect.x, self.rect.y, x, y, "assets/isca.png", 5, 1)
+            nova_bala = Bala(self.rect.x, self.rect.y, x, y, os.path.join("versao_final/assets", "isca.png"), 5, 1)
 
             return nova_bala
 
