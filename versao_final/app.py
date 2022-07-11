@@ -50,7 +50,7 @@ controleInimigo = ControladorInimigo()
 # mudar para ControleArmas
 controleArmas = ControleArmas()
 jogador = Jogador(
-    vida=20, velocidade_movimento=10, arma=controleArmas.trocar_arma("isca")
+    vida=20, velocidade_movimento=10, arma=controleArmas.trocar_arma("rede")
 )
 controleJogador = ControleJogador(jogador)
 controleBalas = ControleBalas()
