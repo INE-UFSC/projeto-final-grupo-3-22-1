@@ -12,7 +12,31 @@ from ControleJogador import ControleJogador
 from Jogador import Jogador
 from InimigoAtirador import InimigoAtirador
 from Inimigo import Inimigo
+from Bloco import Bloco
+from SpritesFlyweight import SpritesFlyweight
 
+tilemap = [
+    "BBBBBBBBBBBBBBBBBBBB",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "B...P..............B",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "B..................B",
+    "BBBBBBBBBBBBBBBBBBBB",
+]
 
 class Jogo(pygame.sprite.Sprite):
     def __init__(self):
@@ -42,11 +66,18 @@ class Jogo(pygame.sprite.Sprite):
         self.sprites.add(self.jogador)
         self.grupo_inimigos = pygame.sprite.Group()
 
+        #inicializando as sprites a serem utilizadas no jogo
+        self.caixaSprite = SpritesFlyweight(os.path.join(
+        "versao_final/assets", "caixa1.png"))
+
         #adiciona os inimigos ao grupo de sprites de inimigos
         for inimigo in self.lista_inimigos:
             self.grupo_inimigos.add(inimigo)
             self.sprites.add(inimigo)
     
+    def iniciar_nova_rodada(self):
+        self.mudar_mapa(tilemap)
+
     def rodar_jogo(self):
         while self.rodando:
             self.verificar_eventos()
@@ -54,7 +85,7 @@ class Jogo(pygame.sprite.Sprite):
             self.atualizar()
     
     def desenhar_tela(self):
-        self.settings.DISPLAY_SURF.fill((255, 255, 255))
+        self.settings.DISPLAY_SURF.fill((0, 255, 255))
         self.sprites.draw(self.settings.DISPLAY_SURF)
         for entity in self.sprites:
             self.settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
@@ -66,7 +97,6 @@ class Jogo(pygame.sprite.Sprite):
         self.jogador.mover()
         x, y = self.controleInimigo.caminho_atirador(
         self.lista_inimigos[0], self.jogador.x, self.jogador.y, 250)
-
         tiro_inimigo = Inimigo.atacar(self, x, y)
         if tiro_inimigo:
             self.controleBalasJogador.nova_bala(tiro_inimigo)
@@ -89,8 +119,12 @@ class Jogo(pygame.sprite.Sprite):
     def pausar(self):
         ...
     
-    def mudar_mapa(self, mapa: Mapa):
-        ...
+    def mudar_mapa(self, tilemap):
+        for i, row in enumerate(tilemap):
+            for j, column in enumerate(row):
+                if column == "B":
+                    block = Bloco(j, i, self.caixaSprite.spriteAddress)
+                    self.sprites.add(block)
     
     def encerrar_jogo(self):
         ...
