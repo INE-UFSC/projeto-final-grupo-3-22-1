@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from math import sin, cos, atan2
+import os
 
 from Arma import Arma
 from Bala import Bala
@@ -10,16 +11,27 @@ from Settings import Settings
 
 
 class Jogador(pygame.sprite.Sprite):
-    def __init__(self, vida: int, velocidade_movimento: int, arma: Arma):
+    def __init__(
+        self,
+        vida: int,
+        velocidade_movimento: int,
+        arma: Arma = Arma(0, 20, 4, 250, "isca", 1),
+    ):
         super().__init__()
         self.__vida = vida
         self.__velocidade_movimento = velocidade_movimento
         self.__arma = arma
 
-        self.__sprite = pygame.image.load("assets/ChicoCunha.png")
+        self.__sprite = pygame.image.load(os.path.join(
+            "versao_final/assets", "ChicoCunha.png"))
+        self.image = pygame.image.load(os.path.join(
+            "versao_final/assets", "ChicoCunha.png"))
         self.__rect = self.__sprite.get_rect()
-        self.__rect.center = (self.sprite.get_width(), self.sprite.get_height())
-        
+        self.__rect.center = (
+            int(self.sprite.get_width() / 2),
+            int(self.sprite.get_height() / 2),
+        )
+
         self.__tempo_ultimo_tiro = 0
 
         self.__settings = Settings()
@@ -27,10 +39,19 @@ class Jogador(pygame.sprite.Sprite):
     @property
     def vida(self) -> int:
         return self.__vida
+        self.__rect = self.__sprite.get_rect(center=(self.__x, self.__y))
 
     @vida.setter
     def vida(self, valor):
         self.__vida = valor
+
+    @property
+    def x(self) -> int:
+        return self.__rect.x
+
+    @property
+    def y(self) -> int:
+        return self.__rect.y
 
     @property
     def velocidade_movimento(self) -> int:
@@ -39,6 +60,10 @@ class Jogador(pygame.sprite.Sprite):
     @property
     def arma(self) -> Arma:
         return self.__arma
+
+    @arma.setter
+    def arma(self, arma):
+        self.__arma = arma
 
     @property
     def sprite(self):
@@ -54,7 +79,7 @@ class Jogador(pygame.sprite.Sprite):
     @property
     def tempo_ultimo_tiro(self) -> int:
         return self.__tempo_ultimo_tiro
-    
+
     @tempo_ultimo_tiro.setter
     def tempo_ultimo_tiro(self, tempo):
         self.__tempo_ultimo_tiro = tempo
@@ -64,6 +89,7 @@ class Jogador(pygame.sprite.Sprite):
         return self.__settings
 
     def mover(self):
+        # TODO: animacao de acordo com andando
         self.__andando = False
         pressed_keys = pygame.key.get_pressed()
 
@@ -89,10 +115,10 @@ class Jogador(pygame.sprite.Sprite):
 
     def atirar(self, mouse_x, mouse_y):
         tempo_agora = pygame.time.get_ticks()
-        
+
         if tempo_agora - self.__tempo_ultimo_tiro > self.arma.cadencia:
             self.__tempo_ultimo_tiro = tempo_agora
-        
+
             distancia_x = mouse_x - self.rect.x
             distancia_y = mouse_y - self.rect.y
 
@@ -107,7 +133,8 @@ class Jogador(pygame.sprite.Sprite):
                 speed_x,
                 speed_y,
                 self.arma.nome_sprite,
-                self.__arma.dano,
+                self.arma.dano,
+                self.arma.durabilidade_bala,
             )
 
             return nova_bala

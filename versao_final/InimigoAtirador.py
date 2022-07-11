@@ -1,11 +1,13 @@
 import pygame
 from pygame.locals import *
+import os
 
 import random as rd
 from Settings import Settings
+from Bala import Bala
 
 
-class Inimigo(pygame.sprite.Sprite):
+class InimigoAtirador(pygame.sprite.Sprite):
     def __init__(self, x, y, velocidade, dano, sprite, vida=10):
         # self.__tipo_ataque = tipo_ataque
         # self.__pontos_concedidos = pontos_concedidos
@@ -16,31 +18,26 @@ class Inimigo(pygame.sprite.Sprite):
         self.__velocidade = velocidade
         self.__dano = dano
         self.__sprite = pygame.image.load(sprite)
+        self.image = pygame.image.load(sprite)
         self.__rect = self.__sprite.get_rect(center=(self.__x, self.__y))
         self.__vida = vida
-        
+        self.__tempo_ultimo_tiro = 0
+
         self.__settings = Settings()
 
-    def atacar(self, jogador_x, jogador_y):
-        pass 
+    def atacar(self, x, y):
+        tempo_agora = pygame.time.get_ticks()
 
-    def mover(self):
-        direcao = rd.choice(["x", "y"])
-        sentido = rd.choice([1, -1])
+        if tempo_agora - self.__tempo_ultimo_tiro > 5000:
+            self.__tempo_ultimo_tiro = tempo_agora
 
-        if self.rect.left <= 0:
-            self.__rect.x += self.__velocidade
-        elif self.rect.right >= self.settings.largura_tela:
-            self.__rect.x -= self.__velocidade
-        elif self.rect.bottom >= self.settings.largura_tela:
-            self.__rect.y -= self.__velocidade
-        elif self.rect.top <= 0:
-            self.__rect.y += self.__velocidade
-        else:
-            if direcao == "x":
-                self.__rect.x += sentido * self.__velocidade
-            elif direcao == "y":
-                self.__rect.y += sentido * self.__velocidade
+            nova_bala = Bala(self.rect.x, self.rect.y, x, y, os.path.join("versao_final/assets", "isca.png"), 5, 1)
+
+            return nova_bala
+
+    def mover(self, x, y):
+        self.__rect.x += x * self.__velocidade
+        self.__rect.y += y * self.__velocidade
 
     def desenhar(self):
         self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))
@@ -76,7 +73,7 @@ class Inimigo(pygame.sprite.Sprite):
     @vida.setter
     def vida(self, vida):
         self.__vida = vida
-        
+
     @property
     def settings(self) -> Settings:
         return self.__settings

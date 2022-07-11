@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 import sys
+import os
 import random as rd
 import numpy as np
 from ControleArmas import ControleArmas
@@ -11,8 +12,10 @@ from ControleJogador import ControleJogador
 from Jogador import Jogador
 from Inimigo import Inimigo
 from Arma import Arma
+from InimigoRastreador import InimigoRastreador
+from InimigoAtirador import InimigoAtirador
 
-from ControleBalas import ControleBalas
+from ControleBalasJogador import ControleBalasJogador
 from CollisionHandler import CollisionHandler
 
 from Settings import Settings
@@ -26,8 +29,8 @@ settings.FPS_VALUE = 20
 
 FPS = pygame.time.Clock()
 
-settings.largura_tela = 800
-settings.altura_tela = 800
+settings.largura_tela = 640
+settings.altura_tela = 640
 
 # tela
 settings.DISPLAY_SURF = pygame.display.set_mode(
@@ -39,21 +42,22 @@ pygame.display.set_caption("Game")
 #######################################
 
 lista_inimigos = [
-    Inimigo(350, 350, 15, 2, "assets/tilapia.png"),
-    Inimigo(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
-    Inimigo(120, 330, 15, 2, "assets/tilapia.png"),
-    Inimigo(405, 250, 15, 2, "assets/bacalhau_radioativo.png"),
-    Inimigo(370, 100, 15, 2, "assets/tilapia.png"),
+    # Inimigo(350, 350, 15, 2, "assets/tilapia.png"),
+    # Inimigo(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
+    # Inimigo(120, 330, 15, 2, "assets/tilapia.png"),
+    InimigoAtirador(405, 250, 5, 20, os.path.join(
+        "versao_final/assets", "lulaAtiradora.png")),
+    # Inimigo(370, 100, 15, 2, "assets/tilapia.png"),
+    # InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png")
 ]
 controleInimigo = ControladorInimigo()
 
-# mudar para ControleArmas
-controleArmas = ControleArmas()
-jogador = Jogador(
-    vida=20, velocidade_movimento=10, arma=controleArmas.trocar_arma("rede")
-)
+jogador = Jogador(vida=20, velocidade_movimento=8)
+controleArmas = ControleArmas(jogador)
+# controleArmas.trocar_arma("rede")
+
 controleJogador = ControleJogador(jogador)
-controleBalas = ControleBalas()
+controleBalasJogador = ControleBalasJogador()
 
 collisionHandler = CollisionHandler()
 
@@ -71,10 +75,9 @@ for inimigo in lista_inimigos:
 morto = False
 while True:
     if morto:
-        pygame.display.set_caption("Chico Cunha está morto. Reflita sobre suas ações.")
-        settings.DISPLAY_SURF.blit(
-            jogador.sprite, jogador.rect
-        )  # isso aqui era só pra deixar a imagem do Chico Cunha morto na tela de morte
+        pygame.display.set_caption(
+            "Chico Cunha está morto. Reflita sobre suas ações.")
+        settings.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -89,21 +92,38 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             tiro = jogador.atirar(mouse_x, mouse_y)
-            # pode não ter respeitado tempo da cadencia e não atirar
+
+            # caso detecte um tiro, adiciona ao controlador de balas do jogador
             if tiro:
-                controleBalas.nova_bala(tiro)
+                controleBalasJogador.nova_bala(tiro)
 
     # fundo branco
     settings.DISPLAY_SURF.fill((255, 255, 255))
 
     # laço que percorre todos inimigos e jogador e redesenha
+
+    # for entity in sprites:
+    # settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
+    # x, y = controleInimigo.caminho_atirador(inimigo, jogador.x, jogador.y, 5)
+    # entity.mover(x, y)
+
+    x, y = controleInimigo.caminho_atirador(
+        lista_inimigos[0], jogador.x, jogador.y, 250
+    )
+
+    tiro_inimigo = inimigo.atacar(x, y)
+    if tiro_inimigo:
+        controleBalasJogador.nova_bala(tiro_inimigo)
+
+    jogador.mover()
+    inimigo.mover(x, y)
+
+    controleBalasJogador.desenhar()
     for entity in sprites:
         settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
-        entity.mover()
 
-    controleBalas.desenhar()
     collisionHandler.verificar_colisoes(
-        grupo_inimigos, jogador, controleBalas.grupo_balas
+        grupo_inimigos, jogador, controleBalasJogador.grupo_balas
     )
 
     if jogador.vida <= 0:

@@ -5,7 +5,7 @@ import random as rd
 from Settings import Settings
 
 
-class Inimigo(pygame.sprite.Sprite):
+class InimigoRastreador(pygame.sprite.Sprite):
     def __init__(self, x, y, velocidade, dano, sprite, vida=10):
         # self.__tipo_ataque = tipo_ataque
         # self.__pontos_concedidos = pontos_concedidos
@@ -21,27 +21,13 @@ class Inimigo(pygame.sprite.Sprite):
         
         self.__settings = Settings()
 
-    def atacar(self, jogador_x, jogador_y):
-        pass 
+    def atacar(self):
+        pass
 
-    def mover(self):
-        direcao = rd.choice(["x", "y"])
-        sentido = rd.choice([1, -1])
-
-        if self.rect.left <= 0:
-            self.__rect.x += self.__velocidade
-        elif self.rect.right >= self.settings.largura_tela:
-            self.__rect.x -= self.__velocidade
-        elif self.rect.bottom >= self.settings.largura_tela:
-            self.__rect.y -= self.__velocidade
-        elif self.rect.top <= 0:
-            self.__rect.y += self.__velocidade
-        else:
-            if direcao == "x":
-                self.__rect.x += sentido * self.__velocidade
-            elif direcao == "y":
-                self.__rect.y += sentido * self.__velocidade
-
+    def mover(self, x, y):
+        self.__rect.x += x*self.__velocidade
+        self.__rect.y += y*self.__velocidade
+    
     def desenhar(self):
         self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))
 
@@ -52,7 +38,7 @@ class Inimigo(pygame.sprite.Sprite):
     @property
     def y(self) -> int:
         return self.__rect.y
-
+    
     @property
     def velocidade(self) -> int:
         return self.__velocidade
