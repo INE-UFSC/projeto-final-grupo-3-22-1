@@ -15,7 +15,7 @@ class Bala(pygame.sprite.Sprite):
         self.__dano = int(dano)
         self.__durabilidade = durabilidade
 
-        self.__sprite = pygame.image.load(sprite)
+        self.__sprite = sprite
         self.__rect = self.__sprite.get_rect()
         self.__rect.center = (self.sprite.get_width(), self.sprite.get_height())
 
@@ -79,6 +79,10 @@ class Bala(pygame.sprite.Sprite):
     # @property
     # def hitbox(self):
     #     return self.__hitbox
+    
+    @sprite.setter
+    def sprite(self, sprite):
+        self.__sprite = sprite
     
     @property
     def settings(self) -> Settings:

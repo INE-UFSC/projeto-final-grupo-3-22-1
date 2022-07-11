@@ -1,7 +1,6 @@
 import pygame
 from pygame.locals import *
-from math import sin, cos, atan2
-import os
+from math import sin, cos, atan2, degrees, atan
 
 from Arma import Arma
 from Bala import Bala
@@ -124,12 +123,13 @@ class Jogador(pygame.sprite.Sprite):
             speed_x = self.arma.velocidade_projetil * cos(angulo)
             speed_y = self.arma.velocidade_projetil * sin(angulo)
 
+            print(f"graus1: {(angulo)}, graus2: {degrees(angulo)}")
             nova_bala = Bala(
                 self.rect.x,
                 self.rect.y,
                 speed_x,
                 speed_y,
-                self.arma.nome_sprite,
+                pygame.transform.rotate(self.arma.sprite_bala, -degrees(angulo) - 90),
                 self.arma.dano,
                 self.arma.durabilidade_bala,
             )
