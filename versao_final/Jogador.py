@@ -15,17 +15,14 @@ class Jogador(pygame.sprite.Sprite):
         self,
         vida: int,
         velocidade_movimento: int,
-        arma: Arma = Arma(0, 20, 4, 250, "isca", 1),
+        arma: Arma = Arma(0, 20, 4, 250, "isca", 1)  
     ):
         super().__init__()
         self.__vida = vida
         self.__velocidade_movimento = velocidade_movimento
         self.__arma = arma
 
-        self.__sprite = pygame.image.load(os.path.join(
-            "versao_final/assets", "ChicoCunha.png"))
-        self.image = pygame.image.load(os.path.join(
-            "versao_final/assets", "ChicoCunha.png"))
+        self.__sprite = pygame.image.load("assets/ChicoCunha.png")
         self.__rect = self.__sprite.get_rect()
         self.__rect.center = (
             int(self.sprite.get_width() / 2),

@@ -9,7 +9,7 @@ class Arma:
         self.__dano = dano
         # cadencia em ms
         self.__cadencia = cadencia
-        self.__nome_sprite = os.path.join("versao_final/assets",  nome_sprite + ".png")
+        self.__nome_sprite = "assets/" +  nome_sprite + ".png"
         self.__durabilidade_bala = durabilidade_bala
 
     @property
