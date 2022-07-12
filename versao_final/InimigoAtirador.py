@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 
-from math import sin, cos, atan2
+from math import sin, cos, atan2, hypot
 
 
 import random as rd
@@ -32,6 +32,7 @@ class InimigoAtirador(pygame.sprite.Sprite):
         self.__rect = self.__sprite.get_rect(center=(self.__x, self.__y))
         self.__vida = vida
         self.__tempo_ultimo_tiro = 0
+        self.__tempo_ultimo_movimento = 0
 
         self.__settings = Settings()
 
@@ -64,7 +65,7 @@ class InimigoAtirador(pygame.sprite.Sprite):
                 self.rect.y,
                 speed_x,
                 speed_y,
-                "assets/isca.png",
+                pygame.image.load("assets/isca.png"),
                 3,
                 20)
 
@@ -75,6 +76,32 @@ class InimigoAtirador(pygame.sprite.Sprite):
         # pela velocidade do inimigo
         self.__rect.x += x * self.__velocidade
         self.__rect.y += y * self.__velocidade
+    
+    def achar_caminho(self, inimigo, jogador_x, jogador_y, raio=20) -> int:
+        # Achando os catetos e a hipotenusa
+        distx, disty = jogador_x - inimigo.x, jogador_y - inimigo.y
+        hyp = hypot(distx, disty)
+
+        # Normalizando as distâncias
+        distx, disty = distx / hyp, disty / hyp
+        tempo_agora = pygame.time.get_ticks()
+
+        # Checando se o jogador está perto,
+        # se sim, fugir dele
+        # se não, caminho aleatório
+        if abs(jogador_x - inimigo.x) <= raio:
+            return -2.5*distx, -2.5*disty
+        elif tempo_agora - self.__tempo_ultimo_movimento >= 200:
+            x = rd.choice([1, -1])
+            y = rd.choice([1, -1])
+            
+            # Atualiza o tempo
+            self.__tempo_ultimo_movimento = tempo_agora
+            
+            return x, y
+                
+        # Caso não haja nenhum movimento acima, retorna 0, 0
+        return 0, 0 
 
     def desenhar(self):
         # Desenha o sprite do inimigo na tela 

@@ -42,6 +42,9 @@ class InimigoBasico(pygame.sprite.Sprite):
                 self.__rect.x += sentido * self.__velocidade
             elif direcao == "y":
                 self.__rect.y += sentido * self.__velocidade
+    
+    def achar_caminho(self) -> None:
+        pass
 
     def desenhar(self):
         self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))

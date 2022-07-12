@@ -7,7 +7,6 @@ import random as rd
 import numpy as np
 from ControleArmas import ControleArmas
 
-from ControleInimigo import ControladorInimigo
 from ControleJogador import ControleJogador
 
 from Jogador import Jogador
@@ -47,8 +46,8 @@ inimigos_basicos = [
     InimigoBasico(350, 350, 15, 2, "assets/tilapia.png"),
     InimigoBasico(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
     InimigoBasico(120, 330, 15, 2, "assets/tilapia.png"),
-    InimigoBasico(370, 100, 15, 2, "assets/tilapia.png"),
-
+    InimigoBasico(370, 100, 15, 2, "assets/tilapia.png")
+]
 
 inimigos_atiradores = [
     InimigoAtirador(405, 250, 1, 20, "assets/lulaAtiradora.png", 6),
@@ -66,8 +65,6 @@ jogador = Jogador(vida=20, velocidade_movimento=8)
 controleArmas = ControleArmas(jogador)
 controleArmas.trocar_arma("arpao")
 
-
-controleInimigo = ControladorInimigo()
 controleArmas = ControleArmas(jogador)
 controleJogador = ControleJogador(jogador)
 controleBalasJogador = ControleBalasJogador()
@@ -99,16 +96,16 @@ for inimigo in inimigos_rastreadores:
 
 #######################################
 
+jogando = True
 morto = False
-while True:
+while jogando:
     if morto:
         pygame.display.set_caption(
             "Chico Cunha está morto. Reflita sobre suas ações.")
         settings.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         for event in pygame.event.get():
             if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
+                jogando = False
         continue  # continue faz com que se esse if seja ativado, o while loop vai continuar aqui dentro e não passar pros próximos
 
     for event in pygame.event.get():
@@ -127,13 +124,7 @@ while True:
     # fundo branco
     settings.DISPLAY_SURF.fill((255, 255, 255))
 
-    # laço que percorre todos inimigos e jogador e redesenha
-
-    # for entity in sprites:
-    # settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
-    # x, y = controleInimigo.caminho_atirador(inimigo, jogador.x, jogador.y, 5)
-    # entity.mover(x, y)
-
+    # percorre todos os inimigos atiradores e executa suas funções
     for atirador in grupo_inimigos_atiradores:
         # fazendo o atirador atirar
         tiro_inimigo = atirador.atacar(jogador.x, jogador.y)
@@ -141,7 +132,7 @@ while True:
             controleBalasInimigo.nova_bala(tiro_inimigo)
         
         # achando o caminho do atirador
-        x, y = controleInimigo.caminho_atirador(
+        x, y = atirador.achar_caminho(
             atirador, jogador.x, jogador.y, 250
         )
 
@@ -154,7 +145,7 @@ while True:
 
     for rastreador in grupo_inimigos_rastreadores:
         # achando o caminho do rastreador
-        x, y = controleInimigo.caminho_rastreador(rastreador, jogador.x, jogador.y)
+        x, y = rastreador.achar_caminho(rastreador, jogador.x, jogador.y)
         
         # movendo o rastreador com os resultados obtidos
         rastreador.mover(x, y)
@@ -178,3 +169,5 @@ while True:
 
     pygame.display.update()
     FPS.tick(settings.FPS_VALUE)
+
+pygame.quit()

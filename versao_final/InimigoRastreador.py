@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from math import hypot
 
 import random as rd
 from Settings import Settings
@@ -28,6 +29,15 @@ class InimigoRastreador(pygame.sprite.Sprite):
         self.__rect.x += x * self.__velocidade
         self.__rect.y += y * self.__velocidade
     
+    def achar_caminho(self, inimigo, jogador_x, jogador_y) -> int:
+        # Achando os catetos e a hipotenusa
+        distx, disty = jogador_x - inimigo.x, jogador_y - inimigo.y 
+        hyp = hypot(distx, disty)
+
+        # Normalizando as distâncias e retornando        
+        distx, disty = distx / hyp, disty / hyp
+        return distx, disty
+
     def desenhar(self):
         self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))
 
