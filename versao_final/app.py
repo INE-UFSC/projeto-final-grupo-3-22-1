@@ -2,6 +2,7 @@ from ControleBalasInimigo import ControleBalasInimigo
 import pygame
 from pygame.locals import *
 import sys
+import os
 import random as rd
 import numpy as np
 from ControleArmas import ControleArmas
@@ -46,15 +47,16 @@ lista_inimigos = [
     # Inimigo(350, 350, 15, 2, "assets/tilapia.png"),
     # Inimigo(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
     # Inimigo(120, 330, 15, 2, "assets/tilapia.png"),
-    InimigoAtirador(405, 250, 5, 20, "assets/lulaAtiradora.png"),
-    # Inimigo(370, 100, 15, 2, "assets/tilapia.png"),
+    # InimigoAtirador(405, 250, 5, 20, os.path.join(
+    #     "versao_final/assets", "lulaAtiradora.png")),
+    Inimigo(370, 100, 15, 2, "assets/tilapia.png"),
     # InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png")
 ]
 controleInimigo = ControladorInimigo()
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
 controleArmas = ControleArmas(jogador)
-# controleArmas.trocar_arma("rede")
+controleArmas.trocar_arma("arpao")
 
 controleJogador = ControleJogador(jogador)
 controleBalasJogador = ControleBalasJogador()
@@ -75,7 +77,8 @@ for inimigo in lista_inimigos:
 morto = False
 while True:
     if morto:
-        pygame.display.set_caption("Chico Cunha está morto. Reflita sobre suas ações.")
+        pygame.display.set_caption(
+            "Chico Cunha está morto. Reflita sobre suas ações.")
         settings.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -91,7 +94,7 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             tiro = jogador.atirar(mouse_x, mouse_y)
-            
+
             # caso detecte um tiro, adiciona ao controlador de balas do jogador
             if tiro:
                 controleBalasJogador.nova_bala(tiro)
@@ -115,7 +118,6 @@ while True:
         controleBalasJogador.nova_bala(tiro_inimigo)
 
     jogador.mover()
-    inimigo.mover(x, y)
 
     controleBalasJogador.desenhar()
     for entity in sprites:

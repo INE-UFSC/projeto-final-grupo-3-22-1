@@ -3,15 +3,15 @@ import csv
 from Jogador import Jogador
 
 tilemap = ["BBBBBBBBBB",
-"B........B",
-"B........B",
-"B........B",
-"B...P....B",
-"B........B",
-"B........B",
-"B........B",
-"B........B",
-"BBBBBBBBBB"]
+            "B....B...B",
+            "B....B...B",
+            "B....B...B",
+            "B...PB...B",
+            "B....B...B",
+            "B....B...B",
+            "B....B...B",
+            "B....B...B",
+            "BBBBBBBBBB"]
 
 class Bloco(pygame.sprite.Sprite):
     def __init__(self, jogo, x, y):
