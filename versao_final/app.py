@@ -47,7 +47,8 @@ inimigos_basicos = [
     InimigoBasico(350, 350, 15, 2, "assets/tilapia.png"),
     InimigoBasico(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
     InimigoBasico(120, 330, 15, 2, "assets/tilapia.png"),
-    InimigoBasico(370, 100, 15, 2, "assets/tilapia.png"),
+    InimigoBasico(370, 100, 15, 2, "assets/tilapia.png")
+]
 
 
 inimigos_atiradores = [
@@ -100,15 +101,15 @@ for inimigo in inimigos_rastreadores:
 #######################################
 
 morto = False
-while True:
+jogando = True
+while jogando:
     if morto:
         pygame.display.set_caption(
             "Chico Cunha está morto. Reflita sobre suas ações.")
         settings.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         for event in pygame.event.get():
             if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
+                jogando = False
         continue  # continue faz com que se esse if seja ativado, o while loop vai continuar aqui dentro e não passar pros próximos
 
     for event in pygame.event.get():
@@ -178,3 +179,5 @@ while True:
 
     pygame.display.update()
     FPS.tick(settings.FPS_VALUE)
+
+pygame.quit()

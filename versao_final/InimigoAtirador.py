@@ -64,7 +64,7 @@ class InimigoAtirador(pygame.sprite.Sprite):
                 self.rect.y,
                 speed_x,
                 speed_y,
-                "assets/isca.png",
+                pygame.image.load("assets/isca.png"),
                 3,
                 20)
 
