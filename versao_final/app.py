@@ -48,6 +48,10 @@ inimigos_basicos = [
     InimigoBasico(120, 330, 15, 2, "assets/tilapia.png"),
     InimigoBasico(370, 100, 15, 2, "assets/tilapia.png")
 ]
+<<<<<<< HEAD
+=======
+
+>>>>>>> e263c5df3105e167c1948fc5034e22807aa3c075
 
 inimigos_atiradores = [
     InimigoAtirador(405, 250, 1, 20, "assets/lulaAtiradora.png", 6),
@@ -98,6 +102,10 @@ for inimigo in inimigos_rastreadores:
 
 jogando = True
 morto = False
+<<<<<<< HEAD
+=======
+jogando = True
+>>>>>>> e263c5df3105e167c1948fc5034e22807aa3c075
 while jogando:
     if morto:
         pygame.display.set_caption(
@@ -170,4 +178,8 @@ while jogando:
     pygame.display.update()
     FPS.tick(settings.FPS_VALUE)
 
+<<<<<<< HEAD
 pygame.quit()
+=======
+pygame.quit()
+>>>>>>> e263c5df3105e167c1948fc5034e22807aa3c075
