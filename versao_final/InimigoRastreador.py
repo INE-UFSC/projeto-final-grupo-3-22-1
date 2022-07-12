@@ -28,6 +28,8 @@ class InimigoRastreador(pygame.sprite.Sprite):
         self.__rect.x += x * self.__velocidade
         self.__rect.y += y * self.__velocidade
     
+    
+    
     def desenhar(self):
         self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))
 
