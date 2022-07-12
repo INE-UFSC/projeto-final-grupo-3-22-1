@@ -1,4 +1,3 @@
-from Inimigo import Inimigo
 from Jogador import Jogador
 
 import pygame
@@ -10,7 +9,7 @@ class CollisionHandler(pygame.sprite.Sprite):
     def verificar_colisoes(self, grupo_inimigos, jogador, grupo_balas_jogador, grupo_balas_inimigos):
         self.colisao_jogador_inimigo(grupo_inimigos, jogador)
         self.colisao_bala_inimigo(grupo_inimigos, grupo_balas_jogador)
-        self.colisao_bala_jogador(grupo_balas_inimigos, jogador)
+        self.colisao_bala_jogador(jogador, grupo_balas_inimigos)
 
     # colisao entre jogador e inimigos
     def colisao_jogador_inimigo(self, grupo_inimigos, jogador):
@@ -26,7 +25,8 @@ class CollisionHandler(pygame.sprite.Sprite):
                 hits[0].reduzir_durabilidade()
                 inimigo.receber_dano(hits[0].dano)
     
-    def colisao_bala_jogador(self, grupo_balas_inimigos, jogador):
-        hits = pygame.sprite.spritecollide(grupo_balas_inimigos, jogador, False)
-        if hits:
-            jogador.receber_dano(hits[0].dano)
+    def colisao_bala_jogador(self, jogador, grupo_balas_inimigos):
+        for bala in grupo_balas_inimigos:
+            hit = jogador.rect.colliderect(bala.rect)
+            if hit:
+                jogador.receber_dano(bala.dano)

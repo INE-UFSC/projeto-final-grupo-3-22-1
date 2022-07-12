@@ -1,5 +1,5 @@
 from decimal import DivisionByZero
-from Inimigo import Inimigo
+from InimigoBasico import InimigoBasico
 from Jogador import Jogador
 import pygame
 from pygame.locals import *
@@ -20,7 +20,7 @@ class ControladorInimigo:
         distx, disty = distx / hyp, disty / hyp
         return distx, disty
     
-    def caminho_atirador(self, inimigo, jogador_x, jogador_y, raio) -> int:
+    def caminho_atirador(self, inimigo, jogador_x, jogador_y, raio=20) -> int:
         # Achando os catetos e a hipotenusa
         distx, disty = jogador_x - inimigo.x, jogador_y - inimigo.y
         hyp = math.hypot(distx, disty)

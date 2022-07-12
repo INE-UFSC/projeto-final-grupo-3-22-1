@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
-import os
+
+from math import sin, cos, atan2
+
 
 import random as rd
 from Settings import Settings
@@ -8,7 +10,14 @@ from Bala import Bala
 
 
 class InimigoAtirador(pygame.sprite.Sprite):
-    def __init__(self, x, y, velocidade, dano, sprite, vida=10):
+    """
+    Classe que define inimigos atiradores, que evitam o jogador e atiram
+    projéteis de uma distância segura
+    """
+    
+    def __init__(self, x: int, y: int, velocidade: int,
+                    dano: int, sprite: str,
+                    velocidade_ataque: int, vida=10):
         # self.__tipo_ataque = tipo_ataque
         # self.__pontos_concedidos = pontos_concedidos
         # self.__comprimento = comprimento
@@ -17,6 +26,7 @@ class InimigoAtirador(pygame.sprite.Sprite):
         self.__y = y
         self.__velocidade = velocidade
         self.__dano = dano
+        self.__velocidade_ataque = velocidade_ataque
         self.__sprite = pygame.image.load(sprite)
         self.image = pygame.image.load(sprite)
         self.__rect = self.__sprite.get_rect(center=(self.__x, self.__y))
@@ -25,21 +35,49 @@ class InimigoAtirador(pygame.sprite.Sprite):
 
         self.__settings = Settings()
 
-    def atacar(self, x, y):
+    def atacar(self, jogador_x, jogador_y):
+        """O InimigoAtirador vai atirar projéteis na direção do Jogador"""
+
+        # obtém o tempo quando o método é chamado, para comparar com o tempo salvo
+        # isso é a base do sistema de cadência de tiros  
         tempo_agora = pygame.time.get_ticks()
 
+        # compara o tempo obtido com o tempo salvo para checar se está dentro do tempo de cadência
         if tempo_agora - self.__tempo_ultimo_tiro > 5000:
+            # atualiza o tempo
             self.__tempo_ultimo_tiro = tempo_agora
 
-            nova_bala = Bala(self.rect.x, self.rect.y, x, y, os.path.join("versao_final/assets", "isca.png"), 5, 1)
+
+            # calcula as distâncias da posição do jogador à posição do inimigo
+            distancia_x = jogador_x - self.__rect.x
+            distancia_y = jogador_y - self.__rect.y
+
+            # calcula o ângulo entre essas distâncias e com isso calcula a velocidade do projétil
+            angulo = atan2(distancia_y, distancia_x)
+
+            speed_x = self.__velocidade_ataque * cos(angulo)
+            speed_y = self.__velocidade_ataque * sin(angulo)
+
+            # instancia uma nova Bala de acordo com as informações obtidas e retorna a mesma
+            nova_bala = Bala(
+                self.rect.x,
+                self.rect.y,
+                speed_x,
+                speed_y,
+                "assets/isca.png",
+                3,
+                20)
 
             return nova_bala
 
     def mover(self, x, y):
+        # Move-se ao multiplicar os xs e ys obtidos pelo processo de normalização 
+        # pela velocidade do inimigo
         self.__rect.x += x * self.__velocidade
         self.__rect.y += y * self.__velocidade
 
     def desenhar(self):
+        # Desenha o sprite do inimigo na tela 
         self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))
 
     @property
@@ -55,7 +93,7 @@ class InimigoAtirador(pygame.sprite.Sprite):
         return self.__velocidade
 
     @property
-    def sprite(self):
+    def sprite(self) -> str:
         return self.__sprite
 
     @property
@@ -63,22 +101,22 @@ class InimigoAtirador(pygame.sprite.Sprite):
         return self.__dano
 
     @property
-    def rect(self):
+    def rect(self) -> tuple:
         return self.__rect
 
     @property
-    def vida(self):
+    def vida(self) -> int:
         return self.__vida
 
     @vida.setter
-    def vida(self, vida):
+    def vida(self, vida: int):
         self.__vida = vida
 
     @property
     def settings(self) -> Settings:
         return self.__settings
 
-    def receber_dano(self, dano):
+    def receber_dano(self, dano: int):
         self.vida -= dano
 
         if self.vida <= 0:
