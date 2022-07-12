@@ -1,4 +1,6 @@
+import pygame
 from Melhoria import Melhoria
+import os
 
 
 class Arma:
@@ -8,7 +10,8 @@ class Arma:
         self.__dano = dano
         # cadencia em ms
         self.__cadencia = cadencia
-        self.__nome_sprite = "assets/" + nome_sprite + ".png"
+        self.__sprite_bala = pygame.image.load(f"assets/{nome_sprite}.png")
+        self.__nome_sprite = "assets/" +  nome_sprite + ".png"
         self.__durabilidade_bala = durabilidade_bala
 
     @property
@@ -30,6 +33,10 @@ class Arma:
     @property
     def cadencia(self) -> int:
         return self.__cadencia
+    
+    @property
+    def sprite_bala(self):
+        return self.__sprite_bala
     
     @property
     def durabilidade_bala(self):

@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
+
 from math import sin, cos, atan2
+
 
 import random as rd
 from Settings import Settings
@@ -26,6 +28,7 @@ class InimigoAtirador(pygame.sprite.Sprite):
         self.__dano = dano
         self.__velocidade_ataque = velocidade_ataque
         self.__sprite = pygame.image.load(sprite)
+        self.image = pygame.image.load(sprite)
         self.__rect = self.__sprite.get_rect(center=(self.__x, self.__y))
         self.__vida = vida
         self.__tempo_ultimo_tiro = 0
@@ -43,6 +46,7 @@ class InimigoAtirador(pygame.sprite.Sprite):
         if tempo_agora - self.__tempo_ultimo_tiro > 5000:
             # atualiza o tempo
             self.__tempo_ultimo_tiro = tempo_agora
+
 
             # calcula as distâncias da posição do jogador à posição do inimigo
             distancia_x = jogador_x - self.__rect.x

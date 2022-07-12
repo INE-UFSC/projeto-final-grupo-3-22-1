@@ -2,6 +2,7 @@ from ControleBalasInimigo import ControleBalasInimigo
 import pygame
 from pygame.locals import *
 import sys
+import os
 import random as rd
 import numpy as np
 from ControleArmas import ControleArmas
@@ -47,7 +48,7 @@ inimigos_basicos = [
     InimigoBasico(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
     InimigoBasico(120, 330, 15, 2, "assets/tilapia.png"),
     InimigoBasico(370, 100, 15, 2, "assets/tilapia.png"),
-]
+
 
 inimigos_atiradores = [
     InimigoAtirador(405, 250, 1, 20, "assets/lulaAtiradora.png", 6),
@@ -60,9 +61,11 @@ inimigos_rastreadores = [
 ]
 
 
-
 jogador = Jogador(vida=20, velocidade_movimento=8)
-# controleArmas.trocar_arma("rede")
+
+controleArmas = ControleArmas(jogador)
+controleArmas.trocar_arma("arpao")
+
 
 controleInimigo = ControladorInimigo()
 controleArmas = ControleArmas(jogador)
@@ -99,7 +102,8 @@ for inimigo in inimigos_rastreadores:
 morto = False
 while True:
     if morto:
-        pygame.display.set_caption("Chico Cunha está morto. Reflita sobre suas ações.")
+        pygame.display.set_caption(
+            "Chico Cunha está morto. Reflita sobre suas ações.")
         settings.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -115,7 +119,7 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             tiro = jogador.atirar(mouse_x, mouse_y)
-            
+
             # caso detecte um tiro, adiciona ao controlador de balas do jogador
             if tiro:
                 controleBalasJogador.nova_bala(tiro)
