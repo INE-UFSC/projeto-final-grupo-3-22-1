@@ -5,11 +5,12 @@ import random as rd
 from Settings import Settings
 
 
-class Inimigo(pygame.sprite.Sprite):
+class InimigoBasico(pygame.sprite.Sprite):
     def __init__(self, x, y, velocidade, dano, sprite, vida=10):
         # self.__tipo_ataque = tipo_ataque
         # self.__pontos_concedidos = pontos_concedidos
         # self.__comprimento = comprimento
+        #                    
         super().__init__()
         self.__x = x
         self.__y = y
