@@ -35,7 +35,6 @@ class Jogador(pygame.sprite.Sprite):
     @property
     def vida(self) -> int:
         return self.__vida
-        self.__rect = self.__sprite.get_rect(center=(self.__x, self.__y))
 
     @vida.setter
     def vida(self, valor):
