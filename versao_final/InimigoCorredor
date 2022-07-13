@@ -1,0 +1,55 @@
+import pygame
+from pygame.locals import *
+
+from math import hypot
+
+from Settings import Settings
+from Inimigo import Inimigo
+
+
+class InimigoCorredor(Inimigo):
+    """
+    Classe que define inimigos atiradores, que evitam o jogador e atiram
+    projéteis de uma distância segura
+    """
+    
+    def __init__(self, x: int, y: int, velocidade: int,
+                    dano: int, sprite: str,
+                    velocidade_ataque: int, vida=10):
+        super().__init__(x, y, velocidade,
+                        dano, sprite, vida)
+        
+        self._velocidade_ataque = velocidade_ataque
+        self._tempo_ultimo_tiro = 0
+        self._tempo_ultimo_caminho = 0
+        self._inicio_movimento = True
+
+        self._settings = Settings()
+
+    def atacar(self, jogador_x, jogador_y):
+        pass     
+
+    def mover(self, x, y):
+        # Move-se ao multiplicar os xs e ys obtidos pelo processo de normalização 
+        # pela velocidade do inimigo
+        self._rect.x += x * self._velocidade
+        self._rect.y += y * self._velocidade
+    
+    def achar_caminho(self, jogador_x, jogador_y) -> int:
+        # Checando se o inimigo atingiu a parede
+        atingiuParede = False
+        if self._rect.x >= self._settings.largura_tela or self._rect.x <= 0:
+            atingiuParede = True
+        if self._rect.y >= self._settings.altura_tela or self._rect.y <= 0:
+            atingiuParede = True
+
+        if atingiuParede or self._inicio_movimento:
+            # Achando os catetos e a hipotenusa
+            distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
+            hyp = hypot(distx, disty)
+
+            # Normalizando as distâncias
+            distx, disty = distx / hyp, disty / hyp
+            self._inicio_movimento = False
+
+            return distx, disty

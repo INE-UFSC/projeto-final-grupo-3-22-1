@@ -13,6 +13,7 @@ from InimigoBasico import InimigoBasico
 from Arma import Arma
 from InimigoRastreador import InimigoRastreador
 from InimigoAtirador import InimigoAtirador
+from InimigoCorredor import InimigoCorredor
 
 from GrupoBalasJogador import GrupoBalasJogador
 from GrupoBalasInimigo import GrupoBalasInimigo
@@ -56,6 +57,10 @@ inimigos_atiradores = [
 inimigos_rastreadores = [
     InimigoRastreador(330, 100, 3, 1, "assets/cobraD'agua.png"),
     InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png"),
+]
+
+inimigos_corredores = [
+    InimigoCorredor(400, 110, 20, 20, "assets/peixe_espada.png")
 ]
 
 
