@@ -1,4 +1,3 @@
-from ControleBalasInimigo import ControleBalasInimigo
 import pygame
 from pygame.locals import *
 import sys
@@ -7,7 +6,6 @@ import random as rd
 import numpy as np
 from ControleArmas import ControleArmas
 
-from ControleInimigo import ControladorInimigo
 from ControleJogador import ControleJogador
 
 from Jogador import Jogador
@@ -16,8 +14,8 @@ from Arma import Arma
 from InimigoRastreador import InimigoRastreador
 from InimigoAtirador import InimigoAtirador
 
-from ControleBalasJogador import ControleBalasJogador
-from ControleBalasInimigo import ControleBalasInimigo
+from GrupoBalasJogador import GrupoBalasJogador
+from GrupoBalasInimigo import GrupoBalasInimigo
 from CollisionHandler import CollisionHandler
 
 from Settings import Settings
@@ -50,7 +48,6 @@ inimigos_basicos = [
     InimigoBasico(370, 100, 15, 2, "assets/tilapia.png")
 ]
 
-
 inimigos_atiradores = [
     InimigoAtirador(405, 250, 1, 20, "assets/lulaAtiradora.png", 6),
     InimigoAtirador(200, 230, 1, 20, "assets/lulaAtiradora.png", 6)
@@ -67,12 +64,10 @@ jogador = Jogador(vida=20, velocidade_movimento=8)
 controleArmas = ControleArmas(jogador)
 controleArmas.trocar_arma("arpao")
 
-
-controleInimigo = ControladorInimigo()
 controleArmas = ControleArmas(jogador)
 controleJogador = ControleJogador(jogador)
-controleBalasJogador = ControleBalasJogador()
-controleBalasInimigo = ControleBalasInimigo()
+grupoBalasJogador = GrupoBalasJogador()
+grupoBalasInimigo = GrupoBalasInimigo()
 collisionHandler = CollisionHandler()
 
 sprites = pygame.sprite.Group()
@@ -100,8 +95,8 @@ for inimigo in inimigos_rastreadores:
 
 #######################################
 
-morto = False
 jogando = True
+morto = False
 while jogando:
     if morto:
         pygame.display.set_caption(
@@ -123,27 +118,21 @@ while jogando:
 
             # caso detecte um tiro, adiciona ao controlador de balas do jogador
             if tiro:
-                controleBalasJogador.nova_bala(tiro)
+                grupoBalasJogador.nova_bala(tiro)
 
     # fundo branco
     settings.DISPLAY_SURF.fill((255, 255, 255))
 
-    # laço que percorre todos inimigos e jogador e redesenha
-
-    # for entity in sprites:
-    # settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
-    # x, y = controleInimigo.caminho_atirador(inimigo, jogador.x, jogador.y, 5)
-    # entity.mover(x, y)
-
+    # percorre todos os inimigos atiradores e executa suas funções
     for atirador in grupo_inimigos_atiradores:
         # fazendo o atirador atirar
         tiro_inimigo = atirador.atacar(jogador.x, jogador.y)
         if tiro_inimigo:
-            controleBalasInimigo.nova_bala(tiro_inimigo)
+            grupoBalasInimigo.nova_bala(tiro_inimigo)
         
         # achando o caminho do atirador
-        x, y = controleInimigo.caminho_atirador(
-            atirador, jogador.x, jogador.y, 250
+        x, y = atirador.achar_caminho(
+            jogador.x, jogador.y, 250
         )
 
         # movendo o atirador com os resultados obtidos anteriormente
@@ -155,20 +144,20 @@ while jogando:
 
     for rastreador in grupo_inimigos_rastreadores:
         # achando o caminho do rastreador
-        x, y = controleInimigo.caminho_rastreador(rastreador, jogador.x, jogador.y)
+        x, y = rastreador.achar_caminho(rastreador, jogador.x, jogador.y)
         
         # movendo o rastreador com os resultados obtidos
         rastreador.mover(x, y)
 
     jogador.mover()
 
-    controleBalasJogador.desenhar()
-    controleBalasInimigo.desenhar()
+    grupoBalasJogador.desenhar()
+    grupoBalasInimigo.desenhar()
     for entity in sprites:
         settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
 
     collisionHandler.verificar_colisoes(
-        grupo_inimigos, jogador, controleBalasJogador.grupo_balas, controleBalasInimigo.grupo_balas
+        grupo_inimigos, jogador, grupoBalasJogador.grupo_balas, grupoBalasInimigo.grupo_balas
     )
 
     if jogador.vida <= 0:
