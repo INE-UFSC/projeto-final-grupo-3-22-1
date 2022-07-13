@@ -7,7 +7,7 @@ import random as rd
 import numpy as np
 from ControleArmas import ControleArmas
 
-from ControleInimigo import ControladorInimigo
+from ControleInimigo import ControleInimigo
 from ControleJogador import ControleJogador
 
 from Jogador import Jogador
