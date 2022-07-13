@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from math import hypot
 
 import random as rd
 from Settings import Settings
@@ -13,12 +14,22 @@ class InimigoRastreador(Inimigo):
         super().__init__(x, y, velocidade, dano,
                             sprite, vida)
         
-        self.__settings = Settings()
+        self._settings = Settings()
 
     def atacar(self):
         pass
 
     def mover(self, x, y):
-        self.__rect.x += x * self.__velocidade
-        self.__rect.y += y * self.__velocidade
+        self._rect.x += x * self._velocidade
+        self._rect.y += y * self._velocidade
+    
+    def achar_caminho(self, inimigo, jogador_x, jogador_y) -> int:
+        # Achando os catetos e a hipotenusa
+        distx, disty = jogador_x - inimigo.x, jogador_y - inimigo.y 
+        hyp = hypot(distx, disty)
+
+        # Normalizando as distâncias e retornando        
+        distx, disty = distx / hyp, disty / hyp
+        return distx, disty
+
     

@@ -14,15 +14,15 @@ class Inimigo(pygame.sprite.Sprite, ABC):
         pygame.sprite.Sprite.__init__(self)
         ABC.__init__(self)
 
-        self.x = x
-        self.y = y
-        self.velocidade = velocidade
-        self.dano = dano
-        self.sprite = pygame.image.load(sprite)
-        self.rect = self.sprite.get_rect(center=(self.x, self.y))
-        self.vida = vida
+        self._x = x
+        self._y = y
+        self._velocidade = velocidade
+        self._dano = dano
+        self._sprite = pygame.image.load(sprite)
+        self._rect = self._sprite.get_rect(center=(self._x, self._y))
+        self._vida = vida
         
-        self.settings = Settings()
+        self._settings = Settings()
 
     @abstractmethod
     def atacar(self, jogador_x, jogador_y):
@@ -33,46 +33,46 @@ class Inimigo(pygame.sprite.Sprite, ABC):
         pass
 
     def desenhar(self):
-        self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))
+        self._settings.DISPLAY_SURF.blit(self._sprite, (self._x, self._y))
 
     @property
     def x(self) -> int:
-        return self.rect.x
+        return self._rect.x
 
     @property
     def y(self) -> int:
-        return self.rect.y
+        return self._rect.y
 
     @property
     def velocidade(self) -> int:
-        return self.velocidade
+        return self._velocidade
 
     @property
-    def sprite(self):
-        return self.sprite
+    def sprite(self) -> str:
+        return self._sprite
 
     @property
     def dano(self) -> int:
-        return self.dano
+        return self._dano
 
     @property
-    def rect(self):
-        return self.rect
+    def rect(self) -> tuple:
+        return self._rect
 
     @property
-    def vida(self):
-        return self.vida
+    def vida(self) -> int:
+        return self._vida
 
     @vida.setter
     def vida(self, vida):
-        self.vida = vida
+        self._vida = vida
         
     @property
     def settings(self) -> Settings:
-        return self.settings
+        return self._settings
 
     def receber_dano(self, dano):
-        self.vida -= dano
+        self._vida -= dano
 
-        if self.vida <= 0:
+        if self._vida <= 0:
             self.kill()

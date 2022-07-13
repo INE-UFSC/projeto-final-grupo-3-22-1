@@ -12,8 +12,8 @@ class InimigoBasico(Inimigo):
                     sprite: str, vida=10):                
         super().__init__(x, y, velocidade,
                         dano, sprite, vida)
-                
-        self.__settings = Settings()
+                                
+        self._settings = Settings()
 
     def atacar(self, jogador_x, jogador_y):
         pass 
@@ -23,16 +23,16 @@ class InimigoBasico(Inimigo):
         sentido = rd.choice([1, -1])
 
         if self.rect.left <= 0:
-            self.__rect.x += self.__velocidade
+            self._rect.x += self._velocidade
         elif self.rect.right >= self.settings.largura_tela:
-            self.__rect.x -= self.__velocidade
+            self._rect.x -= self._velocidade
         elif self.rect.bottom >= self.settings.largura_tela:
-            self.__rect.y -= self.__velocidade
+            self._rect.y -= self._velocidade
         elif self.rect.top <= 0:
-            self.__rect.y += self.__velocidade
+            self._rect.y += self._velocidade
         else:
             if direcao == "x":
-                self.__rect.x += sentido * self.__velocidade
+                self._rect.x += sentido * self._velocidade
             elif direcao == "y":
-                self.__rect.y += sentido * self.__velocidade
+                self._rect.y += sentido * self._velocidade
 
