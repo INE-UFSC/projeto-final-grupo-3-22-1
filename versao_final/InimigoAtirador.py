@@ -23,6 +23,7 @@ class InimigoAtirador(Inimigo):
         
         self._velocidade_ataque = velocidade_ataque
         self._tempo_ultimo_tiro = 0
+        self._tempo_ultimo_caminho = 0
 
         self._settings = Settings()
 
@@ -67,9 +68,9 @@ class InimigoAtirador(Inimigo):
         self._rect.x += x * self._velocidade
         self._rect.y += y * self._velocidade
     
-    def achar_caminho(self, inimigo, jogador_x, jogador_y, raio=20) -> int:
+    def achar_caminho(self, jogador_x, jogador_y, raio=50) -> int:
         # Achando os catetos e a hipotenusa
-        distx, disty = jogador_x - inimigo.x, jogador_y - inimigo.y
+        distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
         hyp = hypot(distx, disty)
 
         # Normalizando as distâncias
@@ -79,13 +80,15 @@ class InimigoAtirador(Inimigo):
         # Checando se o jogador está perto,
         # se sim, fugir dele
         # se não, caminho aleatório
-        if abs(jogador_x - inimigo.x) <= raio:
-            return -100*distx, -100*disty
-        elif tempo_agora - self.__ultimo_tempo >= 200:
+        if abs(jogador_x - self._rect.x) <= raio:
+            return -5*distx, -5*disty
+        elif tempo_agora - self._tempo_ultimo_caminho >= 200:
             x = rd.choice([1, -1])
             y = rd.choice([1, -1])
             
             # Atualiza o tempo
-            self.__ultimo_tempo = tempo_agora
+            self._tempo_ultimo_caminho = tempo_agora
             
             return x, y
+        
+        return 0, 0
