@@ -14,7 +14,7 @@ class Jogador(pygame.sprite.Sprite):
         self,
         vida: int,
         velocidade_movimento: int,
-        arma: Arma = Arma(0, 20, 4, 250, "isca", 1)  
+        arma: Arma = Arma(0, 20, 4, 250, "isca", 1),
     ):
         super().__init__()
         self.__vida = vida
@@ -134,8 +134,22 @@ class Jogador(pygame.sprite.Sprite):
 
             return nova_bala
 
+    def mover_arma(self, mouse_x, mouse_y):
+        dist_x = mouse_x - self.rect.x
+        dist_y = mouse_y - self.rect.y
+        angulo = atan2(dist_y, dist_x)
+
+        copia_arma = pygame.transform.rotate(self.arma.sprite_bala, -degrees(angulo) - 90)
+        self.settings.DISPLAY_SURF.blit(
+            copia_arma,
+            (
+                (self.x + self.sprite.get_width() - 10- int(copia_arma.get_width() / 2)),
+                (self.y + self.sprite.get_height() - 3 - int(copia_arma.get_height())),
+            ),
+        )
+
     def receber_dano(self, dano: int):
         self.__vida -= dano
-    
+
     def usar_melhoria(self, melhoria: Melhoria):
         ...
