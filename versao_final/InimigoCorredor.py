@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 
-from math import hypot
+from math import hypot, degrees, atan2
 
 from Settings import Settings
 from Inimigo import Inimigo
@@ -14,15 +14,15 @@ class InimigoCorredor(Inimigo):
     """
     
     def __init__(self, x: int, y: int, velocidade: int,
-                    dano: int, sprite: str,
-                    velocidade_ataque: int, vida=10):
+                    dano: int, sprite: str, vida=10):
         super().__init__(x, y, velocidade,
                         dano, sprite, vida)
         
-        self._velocidade_ataque = velocidade_ataque
         self._tempo_ultimo_tiro = 0
         self._tempo_ultimo_caminho = 0
         self._inicio_movimento = True
+
+        self._ultima_distx = self._ultima_disty = 0
 
         self._settings = Settings()
 
@@ -43,13 +43,35 @@ class InimigoCorredor(Inimigo):
         if self._rect.y >= self._settings.altura_tela or self._rect.y <= 0:
             atingiuParede = True
 
-        if atingiuParede or self._inicio_movimento:
+        if self._inicio_movimento:
             # Achando os catetos e a hipotenusa
             distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
             hyp = hypot(distx, disty)
 
-            # Normalizando as distâncias
+            # Normalizando as distâncias e colocando-as em um vetor base,
+            # que não será atualizado a não ser que o inimigo atinja uma parede
             distx, disty = distx / hyp, disty / hyp
             self._inicio_movimento = False
+            
+            self._ultima_distx = distx
+            self._ultima_disty = disty
+
+            angulo = atan2(distx, disty)
+            self._sprite = pygame.transform.rotate(self._sprite, degrees(angulo) +360)
+
+        if atingiuParede:
+            # Achando os catetos e a hipotenusa
+            distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
+            hyp = hypot(distx, disty)
+
+            angulo = atan2(distx, disty)
+            self._sprite = pygame.transform.rotate(self._sprite, degrees(angulo) + 360)
+
+            # Normalizando as distâncias
+            distx, disty = distx / hyp, disty / hyp
+            
+            self._ultima_distx, self._ultima_disty = distx, disty
 
             return distx, disty
+        
+        return self._ultima_distx, self._ultima_disty
