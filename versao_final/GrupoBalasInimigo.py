@@ -5,7 +5,7 @@ from Bala import Bala
 from Settings import Settings
 
 
-class ControleBalasInimigo(pygame.sprite.Sprite):
+class GrupoBalasInimigo(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.__grupo_balas = pygame.sprite.Group()
