@@ -13,6 +13,7 @@ from InimigoBasico import InimigoBasico
 from Arma import Arma
 from InimigoRastreador import InimigoRastreador
 from InimigoAtirador import InimigoAtirador
+from InimigoCorredor import InimigoCorredor
 
 from GrupoBalasJogador import GrupoBalasJogador
 from GrupoBalasInimigo import GrupoBalasInimigo
@@ -58,6 +59,10 @@ inimigos_rastreadores = [
     InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png"),
 ]
 
+inimigos_corredores = [
+    InimigoCorredor(610, 50, 10, 10, "assets/peixe_espada.png")
+]
+
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
@@ -76,6 +81,7 @@ sprites.add(jogador)
 grupo_inimigos_basicos = pygame.sprite.Group()
 grupo_inimigos_atiradores = pygame.sprite.Group()
 grupo_inimigos_rastreadores = pygame.sprite.Group()
+grupo_inimigos_corredores = pygame.sprite.Group()
 grupo_inimigos = pygame.sprite.Group()
 
 for inimigo in inimigos_basicos:
@@ -90,6 +96,11 @@ for inimigo in inimigos_atiradores:
 
 for inimigo in inimigos_rastreadores:
     grupo_inimigos_rastreadores.add(inimigo)
+    sprites.add(inimigo)
+    grupo_inimigos.add(inimigo)
+
+for inimigo in inimigos_corredores:
+    grupo_inimigos_corredores.add(inimigo)
     sprites.add(inimigo)
     grupo_inimigos.add(inimigo)
 
@@ -139,10 +150,17 @@ while jogando:
 
     for rastreador in grupo_inimigos_rastreadores:
         # achando o caminho do rastreador
-        x, y = rastreador.achar_caminho(rastreador, jogador.x, jogador.y)
+        x, y = rastreador.achar_caminho(jogador.x, jogador.y)
 
         # movendo o rastreador com os resultados obtidos
         rastreador.mover(x, y)
+    
+    for corredor in grupo_inimigos_corredores:
+        # achando o caminho do corredor
+        x, y = corredor.achar_caminho(jogador.x, jogador.y)
+
+        # movendo o corredor com os resultados obtidos
+        corredor.mover(x, y)
 
     jogador.mover()
     jogador.mover_arma(mouse_x, mouse_y)
@@ -169,3 +187,4 @@ while jogando:
     FPS.tick(settings.FPS_VALUE)
 
 pygame.quit()
+sys.exit()

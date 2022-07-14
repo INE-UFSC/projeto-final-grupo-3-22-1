@@ -26,9 +26,9 @@ class InimigoRastreador(Inimigo):
     def desenhar(self):
         self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))
 
-    def achar_caminho(self, inimigo, jogador_x, jogador_y) -> int:
+    def achar_caminho(self, jogador_x, jogador_y) -> int:
         # Achando os catetos e a hipotenusa
-        distx, disty = jogador_x - inimigo.x, jogador_y - inimigo.y 
+        distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y 
         hyp = hypot(distx, disty)
 
         # Normalizando as distâncias e retornando        
