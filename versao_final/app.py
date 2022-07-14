@@ -42,25 +42,25 @@ pygame.display.set_caption("Game")
 
 #######################################
 
-#inimigos_basicos = [
-    #InimigoBasico(350, 350, 15, 2, "assets/peixe_palhaco.png"),
-    #InimigoBasico(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
-    #InimigoBasico(120, 330, 15, 2, "assets/peixe_palhaco.png"),
-    #InimigoBasico(370, 100, 15, 2, "assets/peixe_palhaco.png"),
-#]
+inimigos_basicos = [
+    InimigoBasico(350, 350, 15, 2, "assets/peixe_palhaco.png"),
+    InimigoBasico(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
+    InimigoBasico(120, 330, 15, 2, "assets/peixe_palhaco.png"),
+    InimigoBasico(370, 100, 15, 2, "assets/peixe_palhaco.png"),
+]
 
-#inimigos_atiradores = [
-#    InimigoAtirador(405, 250, 1, 20, "assets/lulaAtiradora.png", 6),
-#    InimigoAtirador(200, 230, 1, 20, "assets/lulaAtiradora.png", 6),
-#]
+inimigos_atiradores = [
+    InimigoAtirador(405, 250, 1, 20, "assets/lulaAtiradora.png", 6),
+    InimigoAtirador(200, 230, 1, 20, "assets/lulaAtiradora.png", 6),
+]
 
-#inimigos_rastreadores = [
-#    InimigoRastreador(330, 100, 3, 1, "assets/cobraD'agua.png"),
-#    InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png"),
-#]
+inimigos_rastreadores = [
+    InimigoRastreador(330, 100, 3, 1, "assets/cobraD'agua.png"),
+    InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png"),
+]
 
 inimigos_corredores = [
-    InimigoCorredor(400, 110, 10, 10, "assets/peixe_espada.png")
+    InimigoCorredor(610, 50, 10, 10, "assets/peixe_espada.png")
 ]
 
 
@@ -84,20 +84,20 @@ grupo_inimigos_rastreadores = pygame.sprite.Group()
 grupo_inimigos_corredores = pygame.sprite.Group()
 grupo_inimigos = pygame.sprite.Group()
 
-#for inimigo in inimigos_basicos:
-#    grupo_inimigos_basicos.add(inimigo)
-#    sprites.add(inimigo)
-#    grupo_inimigos.add(inimigo)
+for inimigo in inimigos_basicos:
+    grupo_inimigos_basicos.add(inimigo)
+    sprites.add(inimigo)
+    grupo_inimigos.add(inimigo)
 
-#for inimigo in inimigos_atiradores:
-#    grupo_inimigos_atiradores.add(inimigo)
-#    sprites.add(inimigo)
-#    grupo_inimigos.add(inimigo)
+for inimigo in inimigos_atiradores:
+    grupo_inimigos_atiradores.add(inimigo)
+    sprites.add(inimigo)
+    grupo_inimigos.add(inimigo)
 
-#for inimigo in inimigos_rastreadores:
-#    grupo_inimigos_rastreadores.add(inimigo)
-#    sprites.add(inimigo)
-#    grupo_inimigos.add(inimigo)
+for inimigo in inimigos_rastreadores:
+    grupo_inimigos_rastreadores.add(inimigo)
+    sprites.add(inimigo)
+    grupo_inimigos.add(inimigo)
 
 for inimigo in inimigos_corredores:
     grupo_inimigos_corredores.add(inimigo)
@@ -133,27 +133,27 @@ while jogando:
     settings.DISPLAY_SURF.fill((255, 255, 255))
 
     # percorre todos os inimigos atiradores e executa suas funções
-#    for atirador in grupo_inimigos_atiradores:
-#        # fazendo o atirador atirar
-#        tiro_inimigo = atirador.atacar(jogador.x, jogador.y)
-#        if tiro_inimigo:
-#            grupoBalasInimigo.nova_bala(tiro_inimigo)
+    for atirador in grupo_inimigos_atiradores:
+        # fazendo o atirador atirar
+        tiro_inimigo = atirador.atacar(jogador.x, jogador.y)
+        if tiro_inimigo:
+            grupoBalasInimigo.nova_bala(tiro_inimigo)
 
         # achando o caminho do atirador
-#        x, y = atirador.achar_caminho(jogador.x, jogador.y, 250)
+        x, y = atirador.achar_caminho(jogador.x, jogador.y, 250)
 
         # movendo o atirador com os resultados obtidos anteriormente
-#        atirador.mover(x, y)
+        atirador.mover(x, y)
 
-#    for basico in grupo_inimigos_basicos:
-#        basico.mover()
+    for basico in grupo_inimigos_basicos:
+        basico.mover()
 
-#    for rastreador in grupo_inimigos_rastreadores:
+    for rastreador in grupo_inimigos_rastreadores:
         # achando o caminho do rastreador
-#        x, y = rastreador.achar_caminho(jogador.x, jogador.y)
+        x, y = rastreador.achar_caminho(jogador.x, jogador.y)
 
         # movendo o rastreador com os resultados obtidos
-#        rastreador.mover(x, y)
+        rastreador.mover(x, y)
     
     for corredor in grupo_inimigos_corredores:
         # achando o caminho do corredor
@@ -187,3 +187,4 @@ while jogando:
     FPS.tick(settings.FPS_VALUE)
 
 pygame.quit()
+sys.exit()

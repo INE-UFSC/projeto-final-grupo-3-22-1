@@ -21,6 +21,7 @@ class InimigoCorredor(Inimigo):
         self._tempo_ultimo_tiro = 0
         self._tempo_ultimo_caminho = 0
         self._inicio_movimento = True
+        self._sprite_original = self._sprite
 
         self._ultima_distx = self._ultima_disty = 0
 
@@ -56,16 +57,24 @@ class InimigoCorredor(Inimigo):
             self._ultima_distx = distx
             self._ultima_disty = disty
 
-            angulo = atan2(distx, disty)
-            self._sprite = pygame.transform.rotate(self._sprite, degrees(angulo) +360)
+            angulo = atan2(disty, distx)
+
+            # Rotaciona o sprite de acordo com o ângulo relativo ao jogador,
+            # de modo que sempre estará apontando ao mesmo quando atinge uma parede
+            self._sprite = pygame.transform.rotate(self._sprite, -degrees(angulo) - 90)
 
         if atingiuParede:
+            # Atualizando o sprite para o sprite original, facilita os cálculos
+            self._sprite = self._sprite_original
+            
             # Achando os catetos e a hipotenusa
             distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
             hyp = hypot(distx, disty)
 
-            angulo = atan2(distx, disty)
-            self._sprite = pygame.transform.rotate(self._sprite, degrees(angulo) + 360)
+            angulo = atan2(disty, distx)
+
+            # Rotaciona o sprite de acordo com o ângulo relativo ao jogador
+            self._sprite = pygame.transform.rotate(self._sprite, -degrees(angulo) - 90)
 
             # Normalizando as distâncias
             distx, disty = distx / hyp, disty / hyp
