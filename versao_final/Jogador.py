@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from math import sin, cos, atan2, degrees, atan
+import os
 
 from Arma import Arma
 from Bala import Bala
@@ -21,7 +22,7 @@ class Jogador(pygame.sprite.Sprite):
         self.__velocidade_movimento = velocidade_movimento
         self.__arma = arma
 
-        self.__sprite = pygame.image.load("assets/ChicoCunha.png")
+        self.__sprite = pygame.image.load(os.path.join(os.path.dirname(__file__), "assets" ,"ChicoCunha.png"))
         self.__rect = self.__sprite.get_rect()
         self.__rect.center = (
             int(self.sprite.get_width() / 2),

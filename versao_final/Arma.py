@@ -10,8 +10,9 @@ class Arma:
         self.__dano = dano
         # cadencia em ms
         self.__cadencia = cadencia
-        self.__sprite_bala = pygame.image.load(f"assets/{nome_sprite}.png")
-        self.__nome_sprite = "assets/" +  nome_sprite + ".png"
+        self.__sprite_bala = pygame.image.load(
+            os.path.join(os.path.dirname(__file__), "assets" ,"isca.png"))
+        self.__nome_sprite = "assets/" + nome_sprite + ".png"
         self.__durabilidade_bala = durabilidade_bala
 
     @property
@@ -21,7 +22,7 @@ class Arma:
     @property
     def velocidade_projetil(self) -> int:
         return self.__velocidade_projetil
-    
+
     @property
     def nome_sprite(self) -> str:
         return self.__nome_sprite
@@ -29,15 +30,15 @@ class Arma:
     @property
     def dano(self) -> int:
         return self.__dano
-    
+
     @property
     def cadencia(self) -> int:
         return self.__cadencia
-    
+
     @property
     def sprite_bala(self):
         return self.__sprite_bala
-    
+
     @property
     def durabilidade_bala(self):
         return self.__durabilidade_bala

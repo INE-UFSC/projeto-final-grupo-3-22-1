@@ -43,24 +43,24 @@ pygame.display.set_caption("Game")
 #######################################
 
 inimigos_basicos = [
-    InimigoBasico(350, 350, 15, 2, "assets/peixe_palhaco.png"),
-    InimigoBasico(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
-    InimigoBasico(120, 330, 15, 2, "assets/peixe_palhaco.png"),
-    InimigoBasico(370, 100, 15, 2, "assets/peixe_palhaco.png"),
+    InimigoBasico(350, 350, 15, 2, os.path.join(os.path.dirname(__file__), "assets" ,"peixe_palhaco.png")),
+    InimigoBasico(200, 470, 15, 2, os.path.join(os.path.dirname(__file__), "assets" ,"bacalhau_radioativo.png")),
+    InimigoBasico(120, 330, 15, 2, os.path.join(os.path.dirname(__file__), "assets" ,"peixe_palhaco.png")),
+    InimigoBasico(370, 100, 15, 2, os.path.join(os.path.dirname(__file__), "assets" ,"peixe_palhaco.png")),
 ]
 
 inimigos_atiradores = [
-    InimigoAtirador(405, 250, 1, 20, "assets/lulaAtiradora.png", 6),
-    InimigoAtirador(200, 230, 1, 20, "assets/lulaAtiradora.png", 6),
+    InimigoAtirador(405, 250, 1, 20, os.path.join(os.path.dirname(__file__), "assets" ,"lulaAtiradora.png"), 6),
+    InimigoAtirador(200, 230, 1, 20, os.path.join(os.path.dirname(__file__), "assets" ,"lulaAtiradora.png"), 6),
 ]
 
 inimigos_rastreadores = [
-    InimigoRastreador(330, 100, 3, 1, "assets/cobraD'agua.png"),
-    InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png"),
+    InimigoRastreador(330, 100, 3, 1, os.path.join(os.path.dirname(__file__), "assets" ,"cobraD'agua.png")),
+    InimigoRastreador(380, 120, 3, 1, os.path.join(os.path.dirname(__file__), "assets" ,"cobraD'agua.png")),
 ]
 
 inimigos_corredores = [
-    InimigoCorredor(610, 50, 10, 10, "assets/peixe_espada.png")
+    InimigoCorredor(610, 50, 10, 10, os.path.join(os.path.dirname(__file__), "assets" ,"peixe_espada.png"))
 ]
 
 
@@ -178,7 +178,7 @@ while jogando:
     )
 
     if jogador.vida <= 0:
-        jogador.set_sprite("assets/ChicoCunhaMorto.png")
+        jogador.set_sprite(os.path.join(os.path.dirname(__file__), "assets" ,"ChicoCunhaMorto.png"))
         settings.DISPLAY_SURF.fill((255, 255, 255))
         settings.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         morto = True

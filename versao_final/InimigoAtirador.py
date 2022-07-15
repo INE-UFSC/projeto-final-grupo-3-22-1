@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 
 from math import sin, cos, atan2, hypot
+import os
 
 import random as rd
 from Settings import Settings
@@ -56,7 +57,7 @@ class InimigoAtirador(Inimigo):
                 self._rect.y,
                 speed_x,
                 speed_y,
-                pygame.image.load("assets/isca.png"),
+                pygame.image.load(os.path.join(os.path.dirname(__file__), "assets" ,"isca.png")),
                 3,
                 20)
 
