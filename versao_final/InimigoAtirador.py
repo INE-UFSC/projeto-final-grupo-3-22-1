@@ -7,7 +7,7 @@ import random as rd
 from Settings import Settings
 from Bala import Bala
 from Inimigo import Inimigo
-
+from BombaTinta import BombaTinta
 
 class InimigoAtirador(Inimigo):
     """
@@ -34,10 +34,10 @@ class InimigoAtirador(Inimigo):
         distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
         hipotenusa = hypot(disty, distx)
 
-        if hipotenusa <= 50:
-            return self._ataque_proximo()
-        
+        if hipotenusa > 100:
+            return self._ataque_distancia(jogador_x, jogador_y)
 
+        return self._ataque_proximo(self._rect.x, self._rect.y)
 
     def mover(self, x, y):
         # Move-se ao multiplicar os xs e ys obtidos pelo processo de normalização 

@@ -25,7 +25,7 @@ class GrupoBalas(ABC, pygame.sprite.Sprite):
 
     def desenhar(self):
         for bala in self.__grupo_balas:
-            if bala.isinstance(Bala):
+            if isinstance(bala, Bala):
                 bala.pos_x += bala.speed_x
                 bala.pos_y += bala.speed_y
 
@@ -33,7 +33,7 @@ class GrupoBalas(ABC, pygame.sprite.Sprite):
                 bala.rect.y = bala.pos_y
 
                 # caso esteja fazendo debug e vendo aonde esta o rect da bala
-                # bala.hitbox = (bala.rect.x, bala.rect.y, 20, 20)
+                bala.hitbox = (bala.rect.x, bala.rect.y, 20, 20)
 
                 # verifica se bala esta nas bordas do mapa
                 if (
@@ -45,5 +45,5 @@ class GrupoBalas(ABC, pygame.sprite.Sprite):
                     bala.kill()
         
             # para debug da hitbox da bala
-            # pygame.draw.rect(self.settings.DISPLAY_SURF, (0, 255, 0), bala.hitbox, 1)
+            pygame.draw.rect(self.settings.DISPLAY_SURF, (0, 255, 0), bala.hitbox, 1)
             self.settings.DISPLAY_SURF.blit(bala.sprite, (bala.pos_x, bala.pos_y))

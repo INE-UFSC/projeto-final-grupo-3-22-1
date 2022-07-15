@@ -67,7 +67,7 @@ inimigos_direcionais = [
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
 controleArmas = ControleArmas(jogador)
-controleArmas.trocar_arma("arpao")
+controleArmas.trocar_arma("rede")
 
 controleArmas = ControleArmas(jogador)
 controleJogador = ControleJogador(jogador)
@@ -145,22 +145,22 @@ while jogando:
         # movendo o atirador com os resultados obtidos anteriormente
         atirador.mover(x, y)
 
-    for basico in grupo_inimigos_basicos:
-        basico.mover()
-
-    for rastreador in grupo_inimigos_rastreadores:
+#    for basico in grupo_inimigos_basicos:
+#        basico.mover()
+#
+#    for rastreador in grupo_inimigos_rastreadores:
         # achando o caminho do rastreador
-        x, y = rastreador.achar_caminho(jogador.x, jogador.y)
+#        x, y = rastreador.achar_caminho(jogador.x, jogador.y)
 
         # movendo o rastreador com os resultados obtidos
-        rastreador.mover(x, y)
+#        rastreador.mover(x, y)
     
-    for direcional in grupo_inimigos_direcionais:
+#    for direcional in grupo_inimigos_direcionais:
         # achando o caminho do corredor
-        x, y = direcional.achar_caminho(jogador.x, jogador.y)
+#        x, y = direcional.achar_caminho(jogador.x, jogador.y)
 
         # movendo o corredor com os resultados obtidos
-        direcional.mover(x, y)
+#        direcional.mover(x, y)
 
     jogador.mover()
     jogador.mover_arma(mouse_x, mouse_y)
