@@ -30,37 +30,14 @@ class InimigoAtirador(Inimigo):
     def atacar(self, jogador_x, jogador_y):
         """O InimigoAtirador vai atirar projéteis na direção do Jogador"""
 
-        # obtém o tempo quando o método é chamado, para comparar com o tempo salvo
-        # isso é a base do sistema de cadência de tiros  
-        tempo_agora = pygame.time.get_ticks()
+        # se o jogador está muito próximo, joga uma mancha de tinta nos arredores
+        distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
+        hipotenusa = hypot(disty, distx)
 
-        # compara o tempo obtido com o tempo salvo para checar se está dentro do tempo de cadência
-        if tempo_agora - self._tempo_ultimo_tiro > 5000:
-            # atualiza o tempo
-            self._tempo_ultimo_tiro = tempo_agora
+        if hipotenusa <= 50:
+            return self._ataque_proximo()
+        
 
-
-            # calcula as distâncias da posição do jogador à posição do inimigo
-            distancia_x = jogador_x - self._rect.x
-            distancia_y = jogador_y - self._rect.y
-
-            # calcula o ângulo entre essas distâncias e com isso calcula a velocidade do projétil
-            angulo = atan2(distancia_y, distancia_x)
-
-            speed_x = self._velocidade_ataque * cos(angulo)
-            speed_y = self._velocidade_ataque * sin(angulo)
-
-            # instancia uma nova Bala de acordo com as informações obtidas e retorna a mesma
-            nova_bala = Bala(
-                self._rect.x,
-                self._rect.y,
-                speed_x,
-                speed_y,
-                pygame.image.load("assets/isca.png"),
-                3,
-                20)
-
-            return nova_bala
 
     def mover(self, x, y):
         # Move-se ao multiplicar os xs e ys obtidos pelo processo de normalização 
@@ -92,3 +69,49 @@ class InimigoAtirador(Inimigo):
             return x, y
         
         return 0, 0
+
+    def _ataque_distancia(self, jogador_x, jogador_y):
+        """O InimigoAtirador vai atirar projéteis na direção do Jogador"""
+
+        # obtém o tempo quando o método é chamado, para comparar com o tempo salvo
+        # isso é a base do sistema de cadência de tiros  
+        tempo_agora = pygame.time.get_ticks()
+
+        # compara o tempo obtido com o tempo salvo para checar se está dentro do tempo de cadência
+        if tempo_agora - self._tempo_ultimo_tiro > 5000:
+            # atualiza o tempo
+            self._tempo_ultimo_tiro = tempo_agora
+
+
+            # calcula as distâncias da posição do jogador à posição do inimigo
+            distancia_x = jogador_x - self._rect.x
+            distancia_y = jogador_y - self._rect.y
+
+            # calcula o ângulo entre essas distâncias e com isso calcula a velocidade do projétil
+            angulo = atan2(distancia_y, distancia_x)
+
+            speed_x = self._velocidade_ataque * cos(angulo)
+            speed_y = self._velocidade_ataque * sin(angulo)
+
+            # instancia uma nova Bala de acordo com as informações obtidas e retorna a mesma
+            nova_bala = Bala(
+                self._rect.x,
+                self._rect.y,
+                speed_x,
+                speed_y,
+                pygame.image.load("assets/isca.png"),
+                3,
+                20)
+
+            return nova_bala
+    
+    def _ataque_proximo(self, x, y):
+            
+            bomba_tinta = BombaTinta(
+                x,
+                y,
+                pygame.image.load("assets/mancha_tinta.png"),
+                3
+            )
+
+            return bomba_tinta
