@@ -19,7 +19,7 @@ from ControleJogador import ControleJogador
 from GrupoBalasJogador import GrupoBalasJogador
 from GrupoBalasInimigo import GrupoBalasInimigo
 from CollisionHandler import CollisionHandler
-from GrupoPowerUp import GrupoPowerUp
+from GrupoPowerUps import GrupoPowerUps
 
 from Settings import Settings
 from Globals import Globals
@@ -107,7 +107,7 @@ for inimigo in inimigos_direcionais:
     sprites.add(inimigo)
     grupo_inimigos.add(inimigo)
 
-grupo_powerUp = GrupoPowerUp()
+grupo_powerUp = GrupoPowerUps()
 power_up1 = PowerUpTemporario(300, 300, "adilson", "adilson", 30, dano=5, cadencia=10)
 grupo_powerUp.novo_powerUp(power_up1)
 

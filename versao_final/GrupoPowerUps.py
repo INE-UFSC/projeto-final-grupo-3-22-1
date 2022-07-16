@@ -7,7 +7,7 @@ from PowerUp import PowerUp
 from PowerUpTemporario import PowerUpTemporario
 
 
-class GrupoPowerUp:
+class GrupoPowerUps:
     def __init__(self):
         # self.__jogador = jogador
 

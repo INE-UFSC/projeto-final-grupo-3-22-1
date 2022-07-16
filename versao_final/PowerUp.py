@@ -8,7 +8,12 @@ from Globals import Globals
 
 class PowerUp(ABC, pygame.sprite.Sprite):
     def __init__(
-        self, spawn_position_x: int, spawn_position_y: int, sprite: str, nome: str, **mudancas
+        self,
+        spawn_position_x: int,
+        spawn_position_y: int,
+        sprite: str,
+        nome: str,
+        **mudancas,
     ):
         super().__init__()
 
@@ -24,7 +29,7 @@ class PowerUp(ABC, pygame.sprite.Sprite):
         self.__nome = nome
 
         self.__mudancas = mudancas
-        
+
         self.__globals = Globals()
 
     @property
@@ -46,7 +51,7 @@ class PowerUp(ABC, pygame.sprite.Sprite):
     @property
     def nome(self):
         return self.__nome
-    
+
     @property
     def mudancas(self):
         return self.__mudancas
