@@ -18,7 +18,7 @@ class Bala(pygame.sprite.Sprite):
 
         self.__sprite = sprite
         self.__rect = self.__sprite.get_rect()
-        self.__rect.center = (self.sprite.get_width(), self.sprite.get_height())
+        self.__rect.center = (self.sprite.get_width() / 2, self.sprite.get_height() / 2)
 
         # self.__hitbox = (self.__pos_x, self.__pos_y, 20, 20)
 
@@ -77,7 +77,6 @@ class Bala(pygame.sprite.Sprite):
     def durabilidade(self, valor):
         self.__durabilidade = valor
         
-
     # @property
     # def hitbox(self):
     #     return self.__hitbox
@@ -99,7 +98,7 @@ class Bala(pygame.sprite.Sprite):
     #     self.__hitbox = hitbox
 
     def desenhar(self):
-        # pygame.draw.rect(self.settings.globals, (0, 255, 0), self.__hitbox, 1)
+        # pygame.draw.rect(self.globals.DISPLAY_SURF, (0, 255, 0), self.__hitbox, 1)
         self.globals.DISPLAY_SURF.blit(self.__sprite, (self.rect.x, self.rect.y))
         
     def reduzir_durabilidade(self):
