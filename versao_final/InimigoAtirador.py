@@ -7,7 +7,7 @@ import random as rd
 from Settings import Settings
 from Bala import Bala
 from Inimigo import Inimigo
-
+from BombaTinta import BombaTinta
 
 class InimigoAtirador(Inimigo):
     """
@@ -25,9 +25,58 @@ class InimigoAtirador(Inimigo):
         self._tempo_ultimo_tiro = 0
         self._tempo_ultimo_caminho = 0
 
+        self._centrox = (self._rect.x + (self._sprite.get_width() / 2)) 
+        self._centroy = (self._rect.y + (self._sprite.get_height() / 2))
+
         self._settings = Settings()
 
     def atacar(self, jogador_x, jogador_y):
+        """O InimigoAtirador vai atirar projéteis na direção do Jogador"""
+
+        # se o jogador está muito próximo, joga uma mancha de tinta nos arredores
+        distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
+        hipotenusa = hypot(disty, distx)
+
+        if hipotenusa > 100:
+            return self._ataque_distancia(jogador_x, jogador_y)
+
+        return self._ataque_proximo(
+            (self._rect.x + (self._sprite.get_width() / 2)), 
+            (self._rect.y + (self._sprite.get_height() / 2))
+        )
+
+    def mover(self, x, y):
+        # Move-se ao multiplicar os xs e ys obtidos pelo processo de normalização 
+        # pela velocidade do inimigo
+        self._rect.x += x * self._velocidade
+        self._rect.y += y * self._velocidade
+    
+    def achar_caminho(self, jogador_x, jogador_y, raio=50) -> int:
+        # Achando os catetos e a hipotenusa
+        distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
+        hyp = hypot(distx, disty)
+
+        # Normalizando as distâncias
+        distx, disty = distx / hyp, disty / hyp
+        tempo_agora = pygame.time.get_ticks()
+
+        # Checando se o jogador está perto,
+        # se sim, fugir dele
+        # se não, caminho aleatório
+        if abs(jogador_x - self._rect.x) <= raio:
+            return -5*distx, -5*disty
+        elif tempo_agora - self._tempo_ultimo_caminho >= 200:
+            x = rd.choice([1, -1])
+            y = rd.choice([1, -1])
+            
+            # Atualiza o tempo
+            self._tempo_ultimo_caminho = tempo_agora
+            
+            return x, y
+        
+        return 0, 0
+
+    def _ataque_distancia(self, jogador_x, jogador_y):
         """O InimigoAtirador vai atirar projéteis na direção do Jogador"""
 
         # obtém o tempo quando o método é chamado, para comparar com o tempo salvo
@@ -61,34 +110,19 @@ class InimigoAtirador(Inimigo):
                 20)
 
             return nova_bala
-
-    def mover(self, x, y):
-        # Move-se ao multiplicar os xs e ys obtidos pelo processo de normalização 
-        # pela velocidade do inimigo
-        self._rect.x += x * self._velocidade
-        self._rect.y += y * self._velocidade
     
-    def achar_caminho(self, jogador_x, jogador_y, raio=50) -> int:
-        # Achando os catetos e a hipotenusa
-        distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
-        hyp = hypot(distx, disty)
-
-        # Normalizando as distâncias
-        distx, disty = distx / hyp, disty / hyp
-        tempo_agora = pygame.time.get_ticks()
-
-        # Checando se o jogador está perto,
-        # se sim, fugir dele
-        # se não, caminho aleatório
-        if abs(jogador_x - self._rect.x) <= raio:
-            return -5*distx, -5*disty
-        elif tempo_agora - self._tempo_ultimo_caminho >= 200:
-            x = rd.choice([1, -1])
-            y = rd.choice([1, -1])
+    def _ataque_proximo(self, x, y):
             
-            # Atualiza o tempo
-            self._tempo_ultimo_caminho = tempo_agora
+            tempo_agora = pygame.time.get_ticks()
             
-            return x, y
-        
-        return 0, 0
+            if tempo_agora - self._tempo_ultimo_caminho > 1500:
+                self._tempo_ultimo_caminho = tempo_agora
+
+                bomba_tinta = BombaTinta(
+                    x,
+                    y,
+                    pygame.image.load("assets/mancha_tinta.png"),
+                    25
+                )
+
+                return bomba_tinta

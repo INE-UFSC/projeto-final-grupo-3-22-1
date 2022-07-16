@@ -7,7 +7,7 @@ from Settings import Settings
 from Inimigo import Inimigo
 
 
-class InimigoCorredor(Inimigo):
+class InimigoDirecional(Inimigo):
     """
     Classe que define inimigos atiradores, que evitam o jogador e atiram
     projéteis de uma distância segura
