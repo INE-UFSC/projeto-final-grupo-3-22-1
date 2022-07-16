@@ -25,6 +25,9 @@ class InimigoAtirador(Inimigo):
         self._tempo_ultimo_tiro = 0
         self._tempo_ultimo_caminho = 0
 
+        self._centrox = (self._rect.x + (self._sprite.get_width() / 2)) 
+        self._centroy = (self._rect.y + (self._sprite.get_height() / 2))
+
         self._settings = Settings()
 
     def atacar(self, jogador_x, jogador_y):
@@ -37,7 +40,10 @@ class InimigoAtirador(Inimigo):
         if hipotenusa > 100:
             return self._ataque_distancia(jogador_x, jogador_y)
 
-        return self._ataque_proximo(self._rect.x, self._rect.y)
+        return self._ataque_proximo(
+            (self._rect.x + (self._sprite.get_width() / 2)), 
+            (self._rect.y + (self._sprite.get_height() / 2))
+        )
 
     def mover(self, x, y):
         # Move-se ao multiplicar os xs e ys obtidos pelo processo de normalização 
@@ -107,11 +113,16 @@ class InimigoAtirador(Inimigo):
     
     def _ataque_proximo(self, x, y):
             
-            bomba_tinta = BombaTinta(
-                x,
-                y,
-                pygame.image.load("assets/mancha_tinta.png"),
-                3
-            )
+            tempo_agora = pygame.time.get_ticks()
+            
+            if tempo_agora - self._tempo_ultimo_caminho > 1500:
+                self._tempo_ultimo_caminho = tempo_agora
 
-            return bomba_tinta
+                bomba_tinta = BombaTinta(
+                    x,
+                    y,
+                    pygame.image.load("assets/mancha_tinta.png"),
+                    25
+                )
+
+                return bomba_tinta

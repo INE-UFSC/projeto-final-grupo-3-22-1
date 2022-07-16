@@ -9,70 +9,72 @@ class BombaTinta(pygame.sprite.Sprite):
     def __init__(self, pos_x: float, pos_y: float,
                     sprite: str, dano: int):
         super().__init__()
-        self.__pos_x = int(pos_x)
-        self.__pos_y = int(pos_y)
-        self.__dano = int(dano)
+        #self._pos_x = int(pos_x)
+        #self._pos_y = int(pos_y)
+        self._dano = int(dano)
 
-        self.__sprite = sprite
-        self.__rect = self.__sprite.get_rect()
-        self.__rect.center = (self.sprite.get_width(), self.sprite.get_height())
+        self._sprite = sprite
+        self._rect = self._sprite.get_rect()
 
-        self.__hitbox = (self.__pos_x, self.__pos_y, 20, 20)
+        self._pos_x = pos_x - (self._sprite.get_width() / 2)
+        self._pos_y = pos_y - (self._sprite.get_height() / 2)
+        
+        self._hitbox = (self._pos_x, self._pos_y, self._sprite.get_width(), self._sprite.get_height())
 
-        self.__settings = Settings()
+        self._settings = Settings()
 
     @property
     def rect(self):
-        return self.__rect
+        return self._rect
 
     @property
     def pos_x(self):
-        return self.__pos_x
+        return self._pos_x
 
     @property
     def pos_y(self):
-        return self.__pos_y
+        return self._pos_y
 
     @property
     def sprite(self):
-        return self.__sprite
+        return self._sprite
 
     @pos_x.setter
     def pos_x(self, posicao):
-        self.__pos_x = posicao
+        self._pos_x = posicao
 
     @pos_y.setter
     def pos_y(self, posicao):
-        self.__pos_y = posicao
+        self._pos_y = posicao
 
     @property
     def rect(self):
-        return self.__rect
+        return self._rect
 
     @property
     def sprite(self):
-        return self.__sprite
+        return self._sprite
 
     @property
     def dano(self):
-        return self.__dano
+        return self._dano
     
     @sprite.setter
     def sprite(self, sprite):
-        self.__sprite = sprite
+        self._sprite = sprite
     
     @property
     def settings(self) -> Settings:
-        return self.__settings
+        return self._settings
 
     @property
     def hitbox(self):
-        return self.__hitbox
+        return self._hitbox
     
     @hitbox.setter
     def hitbox(self, hitbox):
-        self.__hitbox = hitbox
+        self._hitbox = hitbox
 
     def desenhar(self):
         # pygame.draw.rect(self.settings.DISPLAY_SURF, (0, 255, 0), self.__hitbox, 1)
-        self.settings.DISPLAY_SURF.blit(self.__sprite, (self.rect.x, self.rect.y))
+        self.settings.DISPLAY_SURF.blit(self._sprite, (self._rect.x, self._rect.y))
