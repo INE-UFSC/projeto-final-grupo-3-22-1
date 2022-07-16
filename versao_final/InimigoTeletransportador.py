@@ -34,8 +34,6 @@ class InimigoTeletransportador(Inimigo):
         if tempo_agora - self._tempo_inicio_ataque >= self._cooldown_ataque or self._atacando:
             self._rect.x, self._rect.y = jogador_x, jogador_y
 
-
-
     def mover(self, x: int, y: int):
         pass
 

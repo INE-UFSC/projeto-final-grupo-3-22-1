@@ -5,6 +5,7 @@ from math import sin, cos, atan2, hypot
 
 import random as rd
 from Settings import Settings
+from Globals import Globals
 from Bala import Bala
 from Inimigo import Inimigo
 from BombaTinta import BombaTinta
@@ -29,6 +30,7 @@ class InimigoAtirador(Inimigo):
         self._centroy = (self._rect.y + (self._sprite.get_height() / 2))
 
         self._settings = Settings()
+        self._globals = Globals()
 
     def atacar(self, jogador_x, jogador_y):
         """O InimigoAtirador vai atirar projéteis na direção do Jogador"""

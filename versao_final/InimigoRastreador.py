@@ -3,6 +3,7 @@ from pygame.locals import *
 from math import hypot
 
 import random as rd
+from Globals import Globals
 from Settings import Settings
 from Inimigo import Inimigo
 
@@ -15,6 +16,7 @@ class InimigoRastreador(Inimigo):
                             sprite, vida)
         
         self._settings = Settings()
+        self._globals = Globals()
 
     def atacar(self):
         pass
@@ -24,7 +26,7 @@ class InimigoRastreador(Inimigo):
         self._rect.y += y * self._velocidade
     
     def desenhar(self):
-        self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))
+        self.globals.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))
 
     def achar_caminho(self, jogador_x, jogador_y) -> int:
         # Achando os catetos e a hipotenusa

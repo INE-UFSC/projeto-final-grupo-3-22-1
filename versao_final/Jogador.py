@@ -7,6 +7,7 @@ from Bala import Bala
 from Melhoria import Melhoria
 
 from Settings import Settings
+from Globals import Globals
 
 
 class Jogador(pygame.sprite.Sprite):
@@ -29,8 +30,12 @@ class Jogador(pygame.sprite.Sprite):
         )
 
         self.__tempo_ultimo_tiro = 0
-
+        
+        self.__powerUps_temporarios = []
+        self.__powerUps_permanentes = []
+        
         self.__settings = Settings()
+        self.__globals = Globals()
 
     @property
     def vida(self) -> int:
@@ -82,6 +87,10 @@ class Jogador(pygame.sprite.Sprite):
     @property
     def settings(self) -> Settings:
         return self.__settings
+    
+    @property
+    def globals(self) -> Globals:
+        return self.__globals
 
     def mover(self):
         # TODO: animacao de acordo com andando
@@ -140,7 +149,7 @@ class Jogador(pygame.sprite.Sprite):
         angulo = atan2(dist_y, dist_x)
 
         copia_arma = pygame.transform.rotate(self.arma.sprite_bala, -degrees(angulo) - 90)
-        self.settings.DISPLAY_SURF.blit(
+        self.globals.DISPLAY_SURF.blit(
             copia_arma,
             (
                 (self.x + self.sprite.get_width() - 10- int(copia_arma.get_width() / 2)),

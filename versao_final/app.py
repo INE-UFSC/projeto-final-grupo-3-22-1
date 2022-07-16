@@ -4,9 +4,7 @@ import sys
 import os
 import random as rd
 import numpy as np
-from ControleArmas import ControleArmas
 
-from ControleJogador import ControleJogador
 
 from Jogador import Jogador
 from InimigoBasico import InimigoBasico
@@ -14,17 +12,23 @@ from Arma import Arma
 from InimigoRastreador import InimigoRastreador
 from InimigoAtirador import InimigoAtirador
 from InimigoDirecional import InimigoDirecional
+from PowerUpTemporario import PowerUpTemporario
 
+from ControleArmas import ControleArmas
+from ControleJogador import ControleJogador
 from GrupoBalasJogador import GrupoBalasJogador
 from GrupoBalasInimigo import GrupoBalasInimigo
 from CollisionHandler import CollisionHandler
+from GrupoPowerUp import GrupoPowerUp
 
 from Settings import Settings
+from Globals import Globals
 
 #######################################
 # parte do pygame (ficara no app.py)
 pygame.init()
 settings = Settings()
+globals = Globals()
 
 settings.FPS_VALUE = 20
 
@@ -34,10 +38,10 @@ settings.largura_tela = 640
 settings.altura_tela = 640
 
 # tela
-settings.DISPLAY_SURF = pygame.display.set_mode(
+globals.DISPLAY_SURF = pygame.display.set_mode(
     (settings.largura_tela, settings.altura_tela)
 )
-settings.DISPLAY_SURF.fill((255, 255, 255))
+globals.DISPLAY_SURF.fill((255, 255, 255))
 pygame.display.set_caption("Game")
 
 #######################################
@@ -62,7 +66,6 @@ inimigos_rastreadores = [
 inimigos_direcionais = [
     InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")
 ]
-
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
@@ -104,6 +107,10 @@ for inimigo in inimigos_direcionais:
     sprites.add(inimigo)
     grupo_inimigos.add(inimigo)
 
+grupo_powerUp = GrupoPowerUp()
+power_up1 = PowerUpTemporario(300, 300, "adilson", "adilson", 30, dano=5, cadencia=10)
+grupo_powerUp.novo_powerUp(power_up1)
+
 #######################################
 
 jogando = True
@@ -111,7 +118,7 @@ morto = False
 while jogando:
     if morto:
         pygame.display.set_caption("Chico Cunha está morto. Reflita sobre suas ações.")
-        settings.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
+        globals.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         for event in pygame.event.get():
             if event.type == QUIT:
                 jogando = False
@@ -130,7 +137,7 @@ while jogando:
                 grupoBalasJogador.nova_bala(tiro)
 
     # fundo branco
-    settings.DISPLAY_SURF.fill((255, 255, 255))
+    globals.DISPLAY_SURF.fill((255, 255, 255))
 
     # percorre todos os inimigos atiradores e executa suas funções
     for atirador in grupo_inimigos_atiradores:
@@ -167,9 +174,10 @@ while jogando:
 
     grupoBalasJogador.desenhar()
     grupoBalasInimigo.desenhar()
+    grupo_powerUp.desenhar()
 
     for entity in sprites:
-        settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
+        globals.DISPLAY_SURF.blit(entity.sprite, entity.rect)
 
     collisionHandler.verificar_colisoes(
         grupo_inimigos,
@@ -180,8 +188,8 @@ while jogando:
 
     if jogador.vida <= 0:
         jogador.set_sprite("assets/ChicoCunhaMorto.png")
-        settings.DISPLAY_SURF.fill((255, 255, 255))
-        settings.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
+        globals.DISPLAY_SURF.fill((255, 255, 255))
+        globals.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         morto = True
 
     pygame.display.update()

@@ -7,6 +7,7 @@ from abc import (
 
 import random as rd
 from Settings import Settings
+from Globals import Globals
 
 
 class Inimigo(pygame.sprite.Sprite, ABC):
@@ -23,6 +24,7 @@ class Inimigo(pygame.sprite.Sprite, ABC):
         self._vida = vida
         
         self._settings = Settings()
+        self._globals = Globals()
 
     @abstractmethod
     def atacar(self, jogador_x, jogador_y):
@@ -33,7 +35,7 @@ class Inimigo(pygame.sprite.Sprite, ABC):
         pass
 
     def desenhar(self):
-        self._settings.DISPLAY_SURF.blit(self._sprite, (self._x, self._y))
+        self._globals.DISPLAY_SURF.blit(self._sprite, (self._x, self._y))
 
     @property
     def x(self) -> int:
@@ -70,6 +72,10 @@ class Inimigo(pygame.sprite.Sprite, ABC):
     @property
     def settings(self) -> Settings:
         return self._settings
+    
+    @property
+    def globals(self) -> Globals:
+        return self._globals
 
     def receber_dano(self, dano):
         self._vida -= dano
