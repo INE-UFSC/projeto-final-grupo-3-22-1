@@ -1,90 +1,130 @@
 import pygame
 from pygame.locals import *
 
+from math import sin, cos, atan2, hypot
+
 import random as rd
 from Settings import Settings
+from Globals import Globals
 from Bala import Bala
+from Inimigo import Inimigo
+from BombaTinta import BombaTinta
 
+class InimigoAtirador(Inimigo):
+    """
+    Classe que define inimigos atiradores, que evitam o jogador e atiram
+    projéteis de uma distância segura
+    """
+    
+    def __init__(self, x: int, y: int, velocidade: int,
+                    dano: int, sprite: str,
+                    velocidade_ataque: int, vida=10):
+        super().__init__(x, y, velocidade,
+                        dano, sprite, vida)
+        
+        self._velocidade_ataque = velocidade_ataque
+        self._tempo_ultimo_tiro = 0
+        self._tempo_ultimo_caminho = 0
 
-class InimigoAtirador(pygame.sprite.Sprite):
-    def __init__(self, x, y, velocidade, dano, sprite, vida=10):
-        # self.__tipo_ataque = tipo_ataque
-        # self.__pontos_concedidos = pontos_concedidos
-        # self.__comprimento = comprimento
-        super().__init__()
-        self.__x = x
-        self.__y = y
-        self.__velocidade = velocidade
-        self.__dano = dano
-        self.__sprite = pygame.image.load(sprite)
-        self.__rect = self.__sprite.get_rect(center=(self.__x, self.__y))
-        self.__vida = vida
-        self.__tempo_ultimo_tiro = 0
+        self._centrox = (self._rect.x + (self._sprite.get_width() / 2)) 
+        self._centroy = (self._rect.y + (self._sprite.get_height() / 2))
 
-        self.__settings = Settings()
+        self._settings = Settings()
+        self._globals = Globals()
 
-    def atacar(self, x, y):
-        tempo_agora = pygame.time.get_ticks()
+    def atacar(self, jogador_x, jogador_y):
+        """O InimigoAtirador vai atirar projéteis na direção do Jogador"""
 
-        if tempo_agora - self.__tempo_ultimo_tiro > 5000:
-            self.__tempo_ultimo_tiro = tempo_agora
+        # se o jogador está muito próximo, joga uma mancha de tinta nos arredores
+        distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
+        hipotenusa = hypot(disty, distx)
 
-            nova_bala = Bala(
-                self.rect.x, 
-                self.rect.y, 
-                x, 
-                y, 
-                "assets/isca.png", 
-                5, 1
-            )
+        if hipotenusa > 100:
+            return self._ataque_distancia(jogador_x, jogador_y)
 
-            return nova_bala
+        return self._ataque_proximo(
+            (self._rect.x + (self._sprite.get_width() / 2)), 
+            (self._rect.y + (self._sprite.get_height() / 2))
+        )
 
     def mover(self, x, y):
-        self.__rect.x += x * self.__velocidade
-        self.__rect.y += y * self.__velocidade
+        # Move-se ao multiplicar os xs e ys obtidos pelo processo de normalização 
+        # pela velocidade do inimigo
+        self._rect.x += x * self._velocidade
+        self._rect.y += y * self._velocidade
+    
+    def achar_caminho(self, jogador_x, jogador_y, raio=50) -> int:
+        # Achando os catetos e a hipotenusa
+        distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
+        hyp = hypot(distx, disty)
 
-    def desenhar(self):
-        self.settings.DISPLAY_SURF.blit(self.__sprite, (self.x, self.y))
+        # Normalizando as distâncias
+        distx, disty = distx / hyp, disty / hyp
+        tempo_agora = pygame.time.get_ticks()
 
-    @property
-    def x(self) -> int:
-        return self.__rect.x
+        # Checando se o jogador está perto,
+        # se sim, fugir dele
+        # se não, caminho aleatório
+        if abs(jogador_x - self._rect.x) <= raio:
+            return -5*distx, -5*disty
+        elif tempo_agora - self._tempo_ultimo_caminho >= 200:
+            x = rd.choice([1, -1])
+            y = rd.choice([1, -1])
+            
+            # Atualiza o tempo
+            self._tempo_ultimo_caminho = tempo_agora
+            
+            return x, y
+        
+        return 0, 0
 
-    @property
-    def y(self) -> int:
-        return self.__rect.y
+    def _ataque_distancia(self, jogador_x, jogador_y):
+        """O InimigoAtirador vai atirar projéteis na direção do Jogador"""
 
-    @property
-    def velocidade(self) -> int:
-        return self.__velocidade
+        # obtém o tempo quando o método é chamado, para comparar com o tempo salvo
+        # isso é a base do sistema de cadência de tiros  
+        tempo_agora = pygame.time.get_ticks()
 
-    @property
-    def sprite(self):
-        return self.__sprite
+        # compara o tempo obtido com o tempo salvo para checar se está dentro do tempo de cadência
+        if tempo_agora - self._tempo_ultimo_tiro > 5000:
+            # atualiza o tempo
+            self._tempo_ultimo_tiro = tempo_agora
 
-    @property
-    def dano(self) -> int:
-        return self.__dano
 
-    @property
-    def rect(self):
-        return self.__rect
+            # calcula as distâncias da posição do jogador à posição do inimigo
+            distancia_x = jogador_x - self._rect.x
+            distancia_y = jogador_y - self._rect.y
 
-    @property
-    def vida(self):
-        return self.__vida
+            # calcula o ângulo entre essas distâncias e com isso calcula a velocidade do projétil
+            angulo = atan2(distancia_y, distancia_x)
 
-    @vida.setter
-    def vida(self, vida):
-        self.__vida = vida
+            speed_x = self._velocidade_ataque * cos(angulo)
+            speed_y = self._velocidade_ataque * sin(angulo)
 
-    @property
-    def settings(self) -> Settings:
-        return self.__settings
+            # instancia uma nova Bala de acordo com as informações obtidas e retorna a mesma
+            nova_bala = Bala(
+                self._rect.x,
+                self._rect.y,
+                speed_x,
+                speed_y,
+                pygame.image.load("assets/isca.png"),
+                3,
+                20)
 
-    def receber_dano(self, dano):
-        self.vida -= dano
+            return nova_bala
+    
+    def _ataque_proximo(self, x, y):
+            
+            tempo_agora = pygame.time.get_ticks()
+            
+            if tempo_agora - self._tempo_ultimo_caminho > 1500:
+                self._tempo_ultimo_caminho = tempo_agora
 
-        if self.vida <= 0:
-            self.kill()
+                bomba_tinta = BombaTinta(
+                    x,
+                    y,
+                    pygame.image.load("assets/mancha_tinta.png"),
+                    25
+                )
+
+                return bomba_tinta

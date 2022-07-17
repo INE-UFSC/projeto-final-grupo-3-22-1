@@ -1,30 +1,33 @@
-from ControleBalasInimigo import ControleBalasInimigo
 import pygame
 from pygame.locals import *
 import sys
+import os
 import random as rd
 import numpy as np
-from ControleArmas import ControleArmas
 
-from ControleInimigo import ControladorInimigo
-from ControleJogador import ControleJogador
 
 from Jogador import Jogador
-from Inimigo import Inimigo
+from InimigoBasico import InimigoBasico
 from Arma import Arma
 from InimigoRastreador import InimigoRastreador
 from InimigoAtirador import InimigoAtirador
+from InimigoDirecional import InimigoDirecional
 
-from ControleBalasJogador import ControleBalasJogador
-from ControleBalasInimigo import ControleBalasInimigo
+from ControleArmas import ControleArmas
+from ControleJogador import ControleJogador
+from GrupoBalasJogador import GrupoBalasJogador
+from GrupoBalasInimigo import GrupoBalasInimigo
 from CollisionHandler import CollisionHandler
+from ControlePowerUps import ControlePowerUps
 
 from Settings import Settings
+from Globals import Globals
 
 #######################################
 # parte do pygame (ficara no app.py)
 pygame.init()
 settings = Settings()
+globals = Globals()
 
 settings.FPS_VALUE = 20
 
@@ -34,103 +37,163 @@ settings.largura_tela = 640
 settings.altura_tela = 640
 
 # tela
-settings.DISPLAY_SURF = pygame.display.set_mode(
+globals.DISPLAY_SURF = pygame.display.set_mode(
     (settings.largura_tela, settings.altura_tela)
 )
-settings.DISPLAY_SURF.fill((255, 255, 255))
+globals.DISPLAY_SURF.fill((255, 255, 255))
 pygame.display.set_caption("Game")
 
 #######################################
 
-lista_inimigos = [
-    # Inimigo(350, 350, 15, 2, "assets/tilapia.png"),
-    # Inimigo(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
-    # Inimigo(120, 330, 15, 2, "assets/tilapia.png"),
-    InimigoAtirador(405, 250, 5, 20, "assets/lulaAtiradora.png"),
-    # Inimigo(370, 100, 15, 2, "assets/tilapia.png"),
-    # InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png")
+inimigos_basicos = [
+    InimigoBasico(350, 350, 15, 2, "assets/peixe_palhaco.png"),
+    InimigoBasico(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
+    InimigoBasico(120, 330, 15, 2, "assets/peixe_palhaco.png"),
+    InimigoBasico(370, 100, 15, 2, "assets/peixe_palhaco.png"),
 ]
-controleInimigo = ControladorInimigo()
+
+inimigos_atiradores = [
+    InimigoAtirador(405, 250, 1, 20, "assets/lulaAtiradora.png", 6),
+    InimigoAtirador(200, 230, 1, 20, "assets/lulaAtiradora.png", 6),
+]
+
+inimigos_rastreadores = [
+    InimigoRastreador(330, 100, 3, 1, "assets/cobraD'agua.png"),
+    InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png"),
+]
+
+inimigos_direcionais = [
+    InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")
+]
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
+
 controleArmas = ControleArmas(jogador)
-# controleArmas.trocar_arma("rede")
+controleArmas.trocar_arma("rede")
 
+controleArmas = ControleArmas(jogador)
 controleJogador = ControleJogador(jogador)
-controleBalasJogador = ControleBalasJogador()
-controleBalasInimigo = ControleBalasInimigo
-
+grupoBalasJogador = GrupoBalasJogador()
+grupoBalasInimigo = GrupoBalasInimigo()
 collisionHandler = CollisionHandler()
 
 sprites = pygame.sprite.Group()
 sprites.add(jogador)
 
+grupo_inimigos_basicos = pygame.sprite.Group()
+grupo_inimigos_atiradores = pygame.sprite.Group()
+grupo_inimigos_rastreadores = pygame.sprite.Group()
+grupo_inimigos_direcionais = pygame.sprite.Group()
 grupo_inimigos = pygame.sprite.Group()
 
-for inimigo in lista_inimigos:
-    grupo_inimigos.add(inimigo)
+for inimigo in inimigos_basicos:
+    grupo_inimigos_basicos.add(inimigo)
     sprites.add(inimigo)
+    grupo_inimigos.add(inimigo)
+
+for inimigo in inimigos_atiradores:
+    grupo_inimigos_atiradores.add(inimigo)
+    sprites.add(inimigo)
+    grupo_inimigos.add(inimigo)
+
+for inimigo in inimigos_rastreadores:
+    grupo_inimigos_rastreadores.add(inimigo)
+    sprites.add(inimigo)
+    grupo_inimigos.add(inimigo)
+
+for inimigo in inimigos_direcionais:
+    grupo_inimigos_direcionais.add(inimigo)
+    sprites.add(inimigo)
+    grupo_inimigos.add(inimigo)
+
+controle_powerUps = ControlePowerUps(jogador, )
+controle_powerUps.spawn_powerUp_temporario("pureza", 100, 100)
 
 #######################################
 
+jogando = True
 morto = False
-while True:
+while jogando:
     if morto:
         pygame.display.set_caption("Chico Cunha está morto. Reflita sobre suas ações.")
-        settings.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
+        globals.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         for event in pygame.event.get():
             if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
+                jogando = False
         continue  # continue faz com que se esse if seja ativado, o while loop vai continuar aqui dentro e não passar pros próximos
 
+    mouse_x, mouse_y = pygame.mouse.get_pos()
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
             tiro = jogador.atirar(mouse_x, mouse_y)
-            
             # caso detecte um tiro, adiciona ao controlador de balas do jogador
             if tiro:
-                controleBalasJogador.nova_bala(tiro)
+                grupoBalasJogador.nova_bala(tiro)
 
     # fundo branco
-    settings.DISPLAY_SURF.fill((255, 255, 255))
+    globals.DISPLAY_SURF.fill((255, 255, 255))
 
-    # laço que percorre todos inimigos e jogador e redesenha
+    # percorre todos os inimigos atiradores e executa suas funções
+    for atirador in grupo_inimigos_atiradores:
+        # fazendo o atirador atirar
+        ataque_inimigo = atirador.atacar(jogador.x, jogador.y)
+        if ataque_inimigo:
+            grupoBalasInimigo.nova_bala(ataque_inimigo)
 
-    # for entity in sprites:
-    # settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
-    # x, y = controleInimigo.caminho_atirador(inimigo, jogador.x, jogador.y, 5)
-    # entity.mover(x, y)
+        # achando o caminho do atirador
+        x, y = atirador.achar_caminho(jogador.x, jogador.y, 250)
 
-    x, y = controleInimigo.caminho_atirador(
-        lista_inimigos[0], jogador.x, jogador.y, 250
-    )
+        # movendo o atirador com os resultados obtidos anteriormente
+        atirador.mover(x, y)
 
-    tiro_inimigo = inimigo.atacar(x, y)
-    if tiro_inimigo:
-        controleBalasInimigo.nova_bala(tiro_inimigo)
+    for basico in grupo_inimigos_basicos:
+        basico.mover()
+
+    for rastreador in grupo_inimigos_rastreadores:
+        # achando o caminho do rastreador
+        x, y = rastreador.achar_caminho(jogador.x, jogador.y)
+
+        # movendo o rastreador com os resultados obtidos
+        rastreador.mover(x, y)
+    
+    for direcional in grupo_inimigos_direcionais:
+        # achando o caminho do corredor
+        x, y = direcional.achar_caminho(jogador.x, jogador.y)
+
+        # movendo o corredor com os resultados obtidos
+        direcional.mover(x, y)
 
     jogador.mover()
-    inimigo.mover(x, y)
+    jogador.mover_arma(mouse_x, mouse_y)
 
-    controleBalasJogador.desenhar()
+    grupoBalasJogador.desenhar()
+    grupoBalasInimigo.desenhar()
+    
+    controle_powerUps.grupo_powerUps.desenhar()
+
     for entity in sprites:
-        settings.DISPLAY_SURF.blit(entity.sprite, entity.rect)
+        globals.DISPLAY_SURF.blit(entity.sprite, entity.rect)
 
     collisionHandler.verificar_colisoes(
-        grupo_inimigos, jogador, controleBalasJogador.grupo_balas, controleBalasInimigo.grupo_balas
+        grupo_inimigos,
+        jogador,
+        grupoBalasJogador.grupo_balas,
+        grupoBalasInimigo.grupo_balas,
+        controle_powerUps.grupo_powerUps.grupo_todos_caidos
     )
 
     if jogador.vida <= 0:
         jogador.set_sprite("assets/ChicoCunhaMorto.png")
-        settings.DISPLAY_SURF.fill((255, 255, 255))
-        settings.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
+        globals.DISPLAY_SURF.fill((255, 255, 255))
+        globals.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         morto = True
 
     pygame.display.update()
     FPS.tick(settings.FPS_VALUE)
+
+pygame.quit()
+sys.exit()

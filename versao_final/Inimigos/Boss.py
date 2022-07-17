@@ -1,4 +1,4 @@
-from Inimigo import Inimigo
+from InimigoBasico import Inimigo
 
 
 class Boss(Inimigo):

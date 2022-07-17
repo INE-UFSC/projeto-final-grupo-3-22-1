@@ -1,13 +1,23 @@
-from Melhoria import Melhoria
+import pygame
+from pygame.locals import *
 
 
 class Arma:
-    def __init__(self, preco: int, velocidade_projetil: int, dano: int, cadencia: int, nome_sprite: str, durabilidade_bala):
+    def __init__(
+        self,
+        preco: int,
+        velocidade_projetil: int,
+        dano: int,
+        cadencia: int,
+        nome_sprite: str,
+        durabilidade_bala,
+    ):
         self.__preco = preco
         self.__velocidade_projetil = velocidade_projetil
         self.__dano = dano
         # cadencia em ms
         self.__cadencia = cadencia
+        self.__sprite_bala = pygame.image.load(f"assets/{nome_sprite}.png")
         self.__nome_sprite = "assets/" + nome_sprite + ".png"
         self.__durabilidade_bala = durabilidade_bala
 
@@ -18,7 +28,7 @@ class Arma:
     @property
     def velocidade_projetil(self) -> int:
         return self.__velocidade_projetil
-    
+
     @property
     def nome_sprite(self) -> str:
         return self.__nome_sprite
@@ -26,17 +36,15 @@ class Arma:
     @property
     def dano(self) -> int:
         return self.__dano
-    
+
     @property
     def cadencia(self) -> int:
         return self.__cadencia
-    
+
+    @property
+    def sprite_bala(self):
+        return self.__sprite_bala
+
     @property
     def durabilidade_bala(self):
         return self.__durabilidade_bala
-
-    def aplicar_melhoria(self, melhoria: Melhoria):
-        ...
-
-    def remover_melhoria(self):
-        ...
