@@ -3,6 +3,7 @@ from pygame.locals import *
 
 from math import hypot, degrees, atan2
 
+from Globals import Globals
 from Settings import Settings
 from Inimigo import Inimigo
 
@@ -26,6 +27,7 @@ class InimigoDirecional(Inimigo):
         self._ultima_distx = self._ultima_disty = 0
 
         self._settings = Settings()
+        self._globals = Globals()
 
     def atacar(self, jogador_x, jogador_y):
         pass     

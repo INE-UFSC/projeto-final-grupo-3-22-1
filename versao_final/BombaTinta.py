@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 import os
+from Globals import Globals
 
 from Settings import Settings
 
@@ -22,6 +23,7 @@ class BombaTinta(pygame.sprite.Sprite):
         self._hitbox = (self._pos_x, self._pos_y, self._sprite.get_width(), self._sprite.get_height())
 
         self._settings = Settings()
+        self._globals = Globals()
 
     @property
     def rect(self):
@@ -66,6 +68,10 @@ class BombaTinta(pygame.sprite.Sprite):
     @property
     def settings(self) -> Settings:
         return self._settings
+    
+    @property
+    def globals(self) -> Globals:
+        return self._globals
 
     @property
     def hitbox(self):
@@ -76,5 +82,5 @@ class BombaTinta(pygame.sprite.Sprite):
         self._hitbox = hitbox
 
     def desenhar(self):
-        # pygame.draw.rect(self.settings.DISPLAY_SURF, (0, 255, 0), self.__hitbox, 1)
-        self.settings.DISPLAY_SURF.blit(self._sprite, (self._rect.x, self._rect.y))
+        # pygame.draw.rect(self.globals.DISPLAY_SURF, (0, 255, 0), self.__hitbox, 1)
+        self.globals.DISPLAY_SURF.blit(self._sprite, (self._rect.x, self._rect.y))

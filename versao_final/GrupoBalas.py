@@ -3,6 +3,7 @@ from abc import ABC
 import pygame
 from pygame.locals import *
 
+from Globals import Globals
 from Settings import Settings
 from Bala import Bala
 
@@ -11,6 +12,7 @@ class GrupoBalas(ABC, pygame.sprite.Sprite):
     def __init__(self):
         self.__grupo_balas = pygame.sprite.Group()
         self.__settings = Settings()
+        self.__globals = Globals()
 
     @property
     def grupo_balas(self):
@@ -19,6 +21,10 @@ class GrupoBalas(ABC, pygame.sprite.Sprite):
     @property
     def settings(self):
         return self.__settings
+    
+    @property
+    def globals(self):
+        return self.__globals
 
     def nova_bala(self, bala: Bala):
         self.__grupo_balas.add(bala)
@@ -45,5 +51,6 @@ class GrupoBalas(ABC, pygame.sprite.Sprite):
                     bala.kill()
         
             # para debug da hitbox da bala
-            pygame.draw.rect(self.settings.DISPLAY_SURF, (0, 255, 0), bala.hitbox, 1)
-            self.settings.DISPLAY_SURF.blit(bala.sprite, (bala.pos_x, bala.pos_y))
+
+            # pygame.draw.rect(self.globals.DISPLAY_SURF, (0, 255, 0), bala.hitbox, 1)
+            bala.desenhar()
