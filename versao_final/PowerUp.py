@@ -9,11 +9,9 @@ from Globals import Globals
 class PowerUp(ABC, pygame.sprite.Sprite):
     def __init__(
         self,
-        spawn_position_x: int,
-        spawn_position_y: int,
         sprite: str,
         nome: str,
-        **mudancas,
+        mudancas: dict,
     ):
         super().__init__()
 
@@ -24,11 +22,11 @@ class PowerUp(ABC, pygame.sprite.Sprite):
             int(self.sprite.get_height() / 2),
         )
 
-        self.__spawn_position_x = spawn_position_x
-        self.__spawn_position_y = spawn_position_y
         self.__nome = nome
-
         self.__mudancas = mudancas
+        
+        self.__pos_x = 0
+        self.__pos_y = 0
 
         self.__globals = Globals()
 
@@ -59,8 +57,26 @@ class PowerUp(ABC, pygame.sprite.Sprite):
     @property
     def globals(self):
         return self.__globals
+    
+    @property
+    def pos_x(self):
+        return self.__pos_x
 
+    @property
+    def pos_y(self):
+        return self.__pos_y
+    
+    @pos_x.setter
+    def pos_x(self, pos_x):
+        self.__pos_x = pos_x
+        
+    @pos_y.setter
+    def pos_y(self, pos_y):
+        self.__pos_y = pos_y
+        
+    def definir_coordenadas(self, pos_x, pos_y):
+        self.__pos_x = pos_x
+        self.__pos_y = pos_y
+    
     def desenhar(self):
-        self.globals.DISPLAY_SURF.blit(
-            self.sprite, (self.spawn_position_x, self.spawn_position_y)
-        )
+        self.globals.DISPLAY_SURF.blit(self.sprite, (self.pos_x, self.pos_y))

@@ -11,19 +11,11 @@ from PowerUp import PowerUp
 
 
 class PowerUpTemporario(PowerUp):
-    def __init__(
-        self,
-        spawn_position_x: int,
-        spawn_position_y: int,
-        sprite: str,
-        nome: str,
-        duracao: int,
-        **mudanca: int
-    ):
-        super().__init__(spawn_position_x, spawn_position_y, sprite, nome)
+    def __init__(self, sprite: str, nome: str, mudancas: dict, duracao: int):
+        super().__init__(sprite, nome, mudancas)
 
         self.__duracao = duracao
-        self.__mudanca = mudanca
+        self.__mudancas = mudancas
 
         self.__tempo_spawn = pygame.time.get_ticks()
 
@@ -34,11 +26,3 @@ class PowerUpTemporario(PowerUp):
     @property
     def tempo_spawn(self):
         return self.__tempo_spawn
-
-    @property
-    def mudanca(self):
-        return self.__mudanca
-
-    @property
-    def valor(self):
-        return self.__valor

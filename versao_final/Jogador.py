@@ -1,10 +1,13 @@
+from numpy import power
 import pygame
 from pygame.locals import *
-from math import sin, cos, atan2, degrees, atan
+from math import sin, cos, atan2, degrees
 
 from Arma import Arma
 from Bala import Bala
-from Melhoria import Melhoria
+from PowerUp import PowerUp
+from PowerUpPermanente import PowerUpPermanente
+from PowerUpTemporario import PowerUpTemporario
 
 from Settings import Settings
 from Globals import Globals
@@ -30,10 +33,10 @@ class Jogador(pygame.sprite.Sprite):
         )
 
         self.__tempo_ultimo_tiro = 0
-        
+
         self.__powerUps_temporarios = []
         self.__powerUps_permanentes = []
-        
+
         self.__settings = Settings()
         self.__globals = Globals()
 
@@ -87,10 +90,18 @@ class Jogador(pygame.sprite.Sprite):
     @property
     def settings(self) -> Settings:
         return self.__settings
-    
+
     @property
     def globals(self) -> Globals:
         return self.__globals
+
+    @property
+    def powerUps_temporarios(self):
+        return self.__powerUps_temporarios
+
+    @property
+    def powerUps_permanentes(self):
+        return self.__powerUps_permanentes
 
     def mover(self):
         # TODO: animacao de acordo com andando
@@ -148,11 +159,18 @@ class Jogador(pygame.sprite.Sprite):
         dist_y = mouse_y - self.rect.y
         angulo = atan2(dist_y, dist_x)
 
-        copia_arma = pygame.transform.rotate(self.arma.sprite_bala, -degrees(angulo) - 90)
+        copia_arma = pygame.transform.rotate(
+            self.arma.sprite_bala, -degrees(angulo) - 90
+        )
         self.globals.DISPLAY_SURF.blit(
             copia_arma,
             (
-                (self.x + self.sprite.get_width() - 10- int(copia_arma.get_width() / 2)),
+                (
+                    self.x
+                    + self.sprite.get_width()
+                    - 10
+                    - int(copia_arma.get_width() / 2)
+                ),
                 (self.y + self.sprite.get_height() - 3 - int(copia_arma.get_height())),
             ),
         )
@@ -160,5 +178,9 @@ class Jogador(pygame.sprite.Sprite):
     def receber_dano(self, dano: int):
         self.__vida -= dano
 
-    def usar_melhoria(self, melhoria: Melhoria):
-        ...
+    # adiciona a lista de power-up daquele tipo; controlePowerUps faz lógica
+    def usar_melhoria(self, powerUp: PowerUp):
+        if isinstance(powerUp, PowerUpPermanente):
+            self.powerUps_permanentes.append(powerUp)
+        elif isinstance(powerUp, PowerUpTemporario):
+            self.powerUps_temporarios.append(powerUp)
