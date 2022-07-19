@@ -3,6 +3,7 @@ import sys
 from Interface import Interface
 from PlayButton import PlayButton
 from OptionsButton import OptionsButton
+from ControlsButton import ControlsButton
 from QuitButton import QuitButton
 from Settings import Settings
 
@@ -26,7 +27,7 @@ class MainMenuInterface(Interface):
         while True:            
             play_button = PlayButton(665, 220, "Jogar")
             options_button = OptionsButton(665, 320, "Opções")
-            button3 = PlayButton(665, 420, "Controles")
+            controls_button = ControlsButton(665, 420, "Controles")
             button4 = PlayButton(665, 520, "Ranking")
             quit_button = QuitButton(665, 620, "Sair")
 
@@ -37,7 +38,7 @@ class MainMenuInterface(Interface):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     play_button.nextStep(pygame.mouse.get_pos())
                     options_button.nextStep(pygame.mouse.get_pos())
-                    button3.nextStep(pygame.mouse.get_pos())
+                    controls_button.nextStep(pygame.mouse.get_pos())
                     button4.nextStep(pygame.mouse.get_pos())
                     quit_button.nextStep(pygame.mouse.get_pos())
             
@@ -45,13 +46,13 @@ class MainMenuInterface(Interface):
 
             play_button.changeColor(pygame.mouse.get_pos())
             options_button.changeColor(pygame.mouse.get_pos())
-            button3.changeColor(pygame.mouse.get_pos())
+            controls_button.changeColor(pygame.mouse.get_pos())
             button4.changeColor(pygame.mouse.get_pos())
             quit_button.changeColor(pygame.mouse.get_pos())
 
             play_button.update()
             options_button.update()
-            button3.update()
+            controls_button.update()
             button4.update()
             quit_button.update()
             

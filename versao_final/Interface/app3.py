@@ -1,5 +1,4 @@
 import pygame
-import sys
 from MainMenuInterface import MainMenuInterface
 
 pygame.init()
