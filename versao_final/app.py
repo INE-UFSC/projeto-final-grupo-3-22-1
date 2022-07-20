@@ -115,8 +115,6 @@ jogando = True
 morto = False
 while jogando:
     if morto:
-        pygame.display.set_caption("Chico Cunha está morto. Reflita sobre suas ações.")
-        globals.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
         for event in pygame.event.get():
             if event.type == QUIT:
                 jogando = False
@@ -186,11 +184,7 @@ while jogando:
         controle_powerUps.grupo_powerUps.grupo_todos_caidos
     )
 
-    if jogador.vida <= 0:
-        jogador.set_sprite("assets/ChicoCunhaMorto.png")
-        globals.DISPLAY_SURF.fill((255, 255, 255))
-        globals.DISPLAY_SURF.blit(jogador.sprite, jogador.rect)
-        morto = True
+    morto = jogador.morto
 
     pygame.display.update()
     FPS.tick(settings.FPS_VALUE)

@@ -24,6 +24,7 @@ class Jogador(pygame.sprite.Sprite):
         self.__vida = vida
         self.__velocidade_movimento = velocidade_movimento
         self.__arma = arma
+        self.__morto = False
 
         self.__sprite = pygame.image.load("assets/ChicoCunha.png")
         self.__rect = self.__sprite.get_rect()
@@ -47,6 +48,14 @@ class Jogador(pygame.sprite.Sprite):
     @vida.setter
     def vida(self, valor):
         self.__vida = valor
+        
+    @property
+    def morto(self) -> bool:
+        return self.__morto
+    
+    @morto.setter
+    def morto(self, estado: bool):
+        self.__morto = estado
 
     @property
     def x(self) -> int:
@@ -177,6 +186,17 @@ class Jogador(pygame.sprite.Sprite):
 
     def receber_dano(self, dano: int):
         self.__vida -= dano
+        
+        if self.vida <= 0:            
+            self.morrer()
+            
+    def morrer(self):
+        self.__morto = True
+        
+        self.set_sprite("assets/ChicoCunhaMorto.png")
+        pygame.display.set_caption("Fim de jogo.")
+        self.globals.DISPLAY_SURF.fill((255, 255, 255))
+        self.globals.DISPLAY_SURF.blit(self.sprite, self.rect)    
 
     # adiciona a lista de power-up daquele tipo; controlePowerUps faz lógica
     def usar_melhoria(self, powerUp: PowerUp):

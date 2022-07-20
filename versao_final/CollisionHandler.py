@@ -19,7 +19,7 @@ class CollisionHandler(pygame.sprite.Sprite):
     def colisao_jogador_inimigo(self, grupo_inimigos, jogador):
         for inimigo in grupo_inimigos:
             if jogador.rect.colliderect(inimigo.rect):
-                jogador.vida -= inimigo.dano
+                jogador.receber_dano(inimigo.dano)
 
     # colisao entre balas disparadas pelo jogador e inimigos
     def colisao_bala_inimigo(self, grupo_inimigos, grupo_balas_jogador):
