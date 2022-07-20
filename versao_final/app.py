@@ -112,9 +112,8 @@ controle_powerUps.spawn_powerUp_temporario("pureza", 100, 100)
 #######################################
 
 jogando = True
-morto = False
 while jogando:
-    if morto:
+    if jogador.morto:
         for event in pygame.event.get():
             if event.type == QUIT:
                 jogando = False
@@ -183,8 +182,6 @@ while jogando:
         grupoBalasInimigo.grupo_balas,
         controle_powerUps.grupo_powerUps.grupo_todos_caidos
     )
-
-    morto = jogador.morto
 
     pygame.display.update()
     FPS.tick(settings.FPS_VALUE)
