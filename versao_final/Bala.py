@@ -9,7 +9,7 @@ from Globals import Globals
 class Bala(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, speed_x, speed_y, sprite, dano, durabilidade):
         super().__init__()
-        
+
         self.__pos_x = pos_x
         self.__pos_y = pos_y
         self.__speed_x = speed_x
@@ -61,7 +61,7 @@ class Bala(pygame.sprite.Sprite):
     @property
     def dano(self):
         return self.__dano
-    
+
     @property
     def speed_x(self):
         return self.__speed_x
@@ -69,27 +69,27 @@ class Bala(pygame.sprite.Sprite):
     @property
     def speed_y(self):
         return self.__speed_y
-    
+
     @property
     def durabilidade(self):
         return self.__durabilidade
-    
+
     @durabilidade.setter
     def durabilidade(self, valor):
         self.__durabilidade = valor
-        
+
     # @property
     # def hitbox(self):
     #     return self.__hitbox
-    
+
     @sprite.setter
     def sprite(self, sprite):
         self.__sprite = sprite
-    
+
     @property
     def settings(self) -> Settings:
         return self.__settings
-    
+
     @property
     def globals(self) -> Globals:
         return self.__globals
@@ -101,9 +101,9 @@ class Bala(pygame.sprite.Sprite):
     def desenhar(self):
         # pygame.draw.rect(self.globals.DISPLAY_SURF, (0, 255, 0), self.__hitbox, 1)
         self.globals.DISPLAY_SURF.blit(self.__sprite, (self.rect.x, self.rect.y))
-        
+
     def reduzir_durabilidade(self):
         self.durabilidade -= 1
-        
+
         if self.durabilidade < 1:
             self.kill()

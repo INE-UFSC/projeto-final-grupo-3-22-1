@@ -62,9 +62,7 @@ inimigos_rastreadores = [
     InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png"),
 ]
 
-inimigos_direcionais = [
-    InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")
-]
+inimigos_direcionais = [InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")]
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
@@ -106,7 +104,9 @@ for inimigo in inimigos_direcionais:
     sprites.add(inimigo)
     grupo_inimigos.add(inimigo)
 
-controle_powerUps = ControlePowerUps(jogador, )
+controle_powerUps = ControlePowerUps(
+    jogador,
+)
 controle_powerUps.spawn_powerUp_temporario("pureza", 100, 100)
 
 #######################################
@@ -156,7 +156,7 @@ while jogando:
 
         # movendo o rastreador com os resultados obtidos
         rastreador.mover(x, y)
-    
+
     for direcional in grupo_inimigos_direcionais:
         # achando o caminho do corredor
         x, y = direcional.achar_caminho(jogador.x, jogador.y)
@@ -169,7 +169,7 @@ while jogando:
 
     grupoBalasJogador.desenhar()
     grupoBalasInimigo.desenhar()
-    
+
     controle_powerUps.grupo_powerUps.desenhar()
 
     for entity in sprites:
@@ -180,7 +180,7 @@ while jogando:
         jogador,
         grupoBalasJogador.grupo_balas,
         grupoBalasInimigo.grupo_balas,
-        controle_powerUps.grupo_powerUps.grupo_todos_caidos
+        controle_powerUps.grupo_powerUps.grupo_todos_caidos,
     )
 
     pygame.display.update()

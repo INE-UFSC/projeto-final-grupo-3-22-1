@@ -8,7 +8,12 @@ from pygame.locals import *
 class CollisionHandler(pygame.sprite.Sprite):
     # funcao que chama todas verificaoes de colisao necessarias
     def verificar_colisoes(
-        self, grupo_inimigos, jogador, grupo_balas_jogador, grupo_balas_inimigos, grupo_powerUps
+        self,
+        grupo_inimigos,
+        jogador,
+        grupo_balas_jogador,
+        grupo_balas_inimigos,
+        grupo_powerUps,
     ):
         self.colisao_jogador_inimigo(grupo_inimigos, jogador)
         self.colisao_bala_inimigo(grupo_inimigos, grupo_balas_jogador)

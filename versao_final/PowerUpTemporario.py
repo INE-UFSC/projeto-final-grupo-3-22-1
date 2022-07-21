@@ -15,8 +15,6 @@ class PowerUpTemporario(PowerUp):
         super().__init__(sprite, nome, mudancas)
 
         self.__duracao = duracao
-        self.__mudancas = mudancas
-
         self.__tempo_spawn = pygame.time.get_ticks()
 
     @property

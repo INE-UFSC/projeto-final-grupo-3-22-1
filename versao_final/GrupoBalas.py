@@ -21,7 +21,7 @@ class GrupoBalas(ABC, pygame.sprite.Sprite):
     @property
     def settings(self):
         return self.__settings
-    
+
     @property
     def globals(self):
         return self.__globals
@@ -49,7 +49,7 @@ class GrupoBalas(ABC, pygame.sprite.Sprite):
                     or bala.pos_y > self.settings.largura_tela
                 ):
                     bala.kill()
-        
+
             # para debug da hitbox da bala
 
             # pygame.draw.rect(self.globals.DISPLAY_SURF, (0, 255, 0), bala.hitbox, 1)

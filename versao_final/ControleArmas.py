@@ -2,7 +2,6 @@ from Arma import Arma
 from Jogador import Jogador
 
 
-
 class ControleArmas:
     def __init__(self, jogador: Jogador):
         self.__jogador = jogador

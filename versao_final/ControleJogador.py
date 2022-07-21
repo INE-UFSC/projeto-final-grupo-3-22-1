@@ -2,7 +2,8 @@ from Jogador import Jogador
 import pygame
 from pygame.locals import *
 
-class ControleJogador():
+
+class ControleJogador:
     def __init__(self, jogador: Jogador):
         self.__jogador = jogador
 
