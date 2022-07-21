@@ -21,8 +21,8 @@ class Jogador(pygame.sprite.Sprite):
         arma: Arma = Arma(0, 20, 4, 250, "isca", 1),
     ):
         super().__init__()
-        self.__vida = vida
-        self.__velocidade_movimento = velocidade_movimento
+        self.__stats = {"vida": vida, "velocidade_movimento": velocidade_movimento}
+
         self.__arma = arma
         self.__morto = False
 
@@ -42,17 +42,13 @@ class Jogador(pygame.sprite.Sprite):
         self.__globals = Globals()
 
     @property
-    def vida(self) -> int:
-        return self.__vida
+    def stats(self) -> dict:
+        return self.__stats
 
-    @vida.setter
-    def vida(self, valor):
-        self.__vida = valor
-        
     @property
     def morto(self) -> bool:
         return self.__morto
-    
+
     @morto.setter
     def morto(self, estado: bool):
         self.__morto = estado
@@ -64,10 +60,6 @@ class Jogador(pygame.sprite.Sprite):
     @property
     def y(self) -> int:
         return self.__rect.y
-
-    @property
-    def velocidade_movimento(self) -> int:
-        return self.__velocidade_movimento
 
     @property
     def arma(self) -> Arma:
@@ -119,28 +111,28 @@ class Jogador(pygame.sprite.Sprite):
 
         if self.rect.left > 0:
             if pressed_keys[K_LEFT] or pressed_keys[K_a]:
-                self.rect.move_ip(-(self.velocidade_movimento), 0)
+                self.rect.move_ip(-(self.stats["velocidade_movimento"]), 0)
                 self.__andando = True
 
         if self.rect.right < self.settings.largura_tela:
             if pressed_keys[K_RIGHT] or pressed_keys[K_d]:
-                self.rect.move_ip(self.velocidade_movimento, 0)
+                self.rect.move_ip(self.stats["velocidade_movimento"], 0)
                 self.__andando = True
 
         if self.rect.bottom < self.settings.largura_tela:
             if pressed_keys[K_DOWN] or pressed_keys[K_s]:
-                self.rect.move_ip(0, self.velocidade_movimento)
+                self.rect.move_ip(0, self.stats["velocidade_movimento"])
                 self.__andando = True
 
         if self.rect.top > 0:
             if pressed_keys[K_UP] or pressed_keys[K_w]:
-                self.rect.move_ip(0, -(self.velocidade_movimento))
+                self.rect.move_ip(0, -(self.stats["velocidade_movimento"]))
                 self.__andando = True
 
     def atirar(self, mouse_x, mouse_y):
         tempo_agora = pygame.time.get_ticks()
 
-        if tempo_agora - self.__tempo_ultimo_tiro > self.arma.cadencia:
+        if tempo_agora - self.__tempo_ultimo_tiro > self.arma.stats["cadencia"]:
             self.__tempo_ultimo_tiro = tempo_agora
 
             distancia_x = mouse_x - self.rect.x
@@ -148,8 +140,8 @@ class Jogador(pygame.sprite.Sprite):
 
             angulo = atan2(distancia_y, distancia_x)
 
-            speed_x = self.arma.velocidade_projetil * cos(angulo)
-            speed_y = self.arma.velocidade_projetil * sin(angulo)
+            speed_x = self.arma.stats["velocidade_projetil"] * cos(angulo)
+            speed_y = self.arma.stats["velocidade_projetil"] * sin(angulo)
 
             nova_bala = Bala(
                 self.rect.x,
@@ -157,8 +149,8 @@ class Jogador(pygame.sprite.Sprite):
                 speed_x,
                 speed_y,
                 pygame.transform.rotate(self.arma.sprite_bala, -degrees(angulo) - 90),
-                self.arma.dano,
-                self.arma.durabilidade_bala,
+                self.arma.stats["dano"],
+                self.arma.stats["durabilidade_bala"],
             )
 
             return nova_bala
@@ -185,22 +177,27 @@ class Jogador(pygame.sprite.Sprite):
         )
 
     def receber_dano(self, dano: int):
-        self.__vida -= dano
-        
-        if self.vida <= 0:            
+        self.stats["vida"] -= dano
+
+        if self.stats["vida"] <= 0:
             self.morrer()
-            
+
     def morrer(self):
         self.__morto = True
-        
+
         self.set_sprite("assets/ChicoCunhaMorto.png")
         pygame.display.set_caption("Fim de jogo.")
         self.globals.DISPLAY_SURF.fill((255, 255, 255))
-        self.globals.DISPLAY_SURF.blit(self.sprite, self.rect)    
+        self.globals.DISPLAY_SURF.blit(self.sprite, self.rect)
 
     # adiciona a lista de power-up daquele tipo; controlePowerUps faz lógica
     def usar_melhoria(self, powerUp: PowerUp):
+        powerUp.tempo_pego = pygame.time.get_ticks()
+
         if isinstance(powerUp, PowerUpPermanente):
             self.powerUps_permanentes.append(powerUp)
         elif isinstance(powerUp, PowerUpTemporario):
             self.powerUps_temporarios.append(powerUp)
+
+        for atributo in powerUp.mudancas.keys():
+            ...

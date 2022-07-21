@@ -12,39 +12,29 @@ class Arma:
         nome_sprite: str,
         durabilidade_bala,
     ):
+        self.__stats = {
+            "velocidade_projetil": velocidade_projetil,
+            "dano": dano,
+            "cadencia": cadencia,  # milisegundos
+            "durabilidade_bala": durabilidade_bala,
+        }
         self.__preco = preco
-        self.__velocidade_projetil = velocidade_projetil
-        self.__dano = dano
-        # cadencia em ms
-        self.__cadencia = cadencia
+
         self.__sprite_bala = pygame.image.load(f"assets/{nome_sprite}.png")
         self.__nome_sprite = "assets/" + nome_sprite + ".png"
-        self.__durabilidade_bala = durabilidade_bala
+
+    @property
+    def stats(self) -> dict:
+        return self.__stats
 
     @property
     def preco(self) -> int:
         return self.__preco
 
     @property
-    def velocidade_projetil(self) -> int:
-        return self.__velocidade_projetil
-
-    @property
     def nome_sprite(self) -> str:
         return self.__nome_sprite
 
     @property
-    def dano(self) -> int:
-        return self.__dano
-
-    @property
-    def cadencia(self) -> int:
-        return self.__cadencia
-
-    @property
     def sprite_bala(self):
         return self.__sprite_bala
-
-    @property
-    def durabilidade_bala(self):
-        return self.__durabilidade_bala

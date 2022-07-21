@@ -38,10 +38,15 @@ class ControlePowerUps:
         # seleciona do dicionario pelo nome
         powerUp = self.powerUps_temporarios[nome]
         self.grupo_powerUps.novo_powerUp_caido(powerUp)
-        # desenha na tela usando a função desenhar() que todo powerUp possui
+
+        # desenha na tela usando a função desenhar() que todo powerUp possui e def. posicao
         powerUp.definir_coordenadas(pos_x, pos_y)
         powerUp.desenhar()
 
-    def desenhar(self):
-        for powerUp in self.grupo_powerUps.grupo_todos_caidos:
-            powerUp.desenhar()
+    def verificar_fim_temporarios(self):
+        for powerUp in self.jogador.powerUps_temporarios:
+            tempo_atual = pygame.time.get_ticks()
+            
+            # verifica se ja passou o tempo que o powerUp dura
+            if tempo_atual - powerUp.tempo_pego > powerUp.duracao:
+                powerUp.encerrar()

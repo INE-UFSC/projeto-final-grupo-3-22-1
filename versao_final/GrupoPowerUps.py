@@ -1,4 +1,3 @@
-from numpy import power
 import pygame
 from pygame.locals import *
 
@@ -36,12 +35,15 @@ class GrupoPowerUps:
     def globals(self):
         return self.__globals
 
+    # adiciona ao grupo de powerUps que estão caidos
     def novo_powerUp_caido(self, powerUp: PowerUp):
+        # guarda em grupo especifico para saber se faz verificacao de temporizacao
         if isinstance(powerUp, PowerUpTemporario):
             self.grupo_temporarios_caidos.add(powerUp)
         elif isinstance(powerUp, PowerUpPermanente):
             self.grupo_permanentes_caidos.add(powerUp)
 
+        # adiciona em grupo geral para desenhar na tela
         self.grupo_todos_caidos.add(powerUp)
 
     def desenhar(self):

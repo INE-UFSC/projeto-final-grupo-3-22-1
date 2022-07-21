@@ -26,3 +26,6 @@ class PowerUpTemporario(PowerUp):
     @property
     def tempo_spawn(self):
         return self.__tempo_spawn
+
+    def encerrar(self):  # percorrer mudancas e passar elas de volta com valor negativo?
+        ...

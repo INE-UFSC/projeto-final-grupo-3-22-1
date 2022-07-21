@@ -9,11 +9,12 @@ from Globals import Globals
 class Bala(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, speed_x, speed_y, sprite, dano, durabilidade):
         super().__init__()
-        self.__pos_x = int(pos_x)
-        self.__pos_y = int(pos_y)
-        self.__speed_x = int(speed_x)
-        self.__speed_y = int(speed_y)
-        self.__dano = int(dano)
+        
+        self.__pos_x = pos_x
+        self.__pos_y = pos_y
+        self.__speed_x = speed_x
+        self.__speed_y = speed_y
+        self.__dano = dano
         self.__durabilidade = durabilidade
 
         self.__sprite = sprite

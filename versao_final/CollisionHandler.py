@@ -36,7 +36,7 @@ class CollisionHandler(pygame.sprite.Sprite):
             if hit:
                 jogador.receber_dano(bala.dano)
 
-    # colisao entre jogador e powerUps
+    # verifica sem jogador pegou um powerUp
     def colisao_powerUp(self, jogador, grupo_powerUps):
         for powerUp in grupo_powerUps:
             colision = jogador.rect.colliderect(powerUp.rect)
