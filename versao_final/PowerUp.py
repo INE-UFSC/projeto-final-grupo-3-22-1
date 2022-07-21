@@ -6,6 +6,7 @@ from abc import ABC, abstractmethod
 from Globals import Globals
 
 
+# mudancas: vida, velocidade_movimento, velocidade_projetil, dano, cadencia, durabilidade_bala
 class PowerUp(ABC, pygame.sprite.Sprite):
     def __init__(
         self,
@@ -17,10 +18,6 @@ class PowerUp(ABC, pygame.sprite.Sprite):
 
         self.__sprite = pygame.image.load(f"assets/{sprite}.png")
         self.__rect = self.__sprite.get_rect()
-        self.__rect.center = (
-            int(self.sprite.get_width() / 2),
-            int(self.sprite.get_height() / 2),
-        )
 
         self.__nome = nome
         self.__mudancas = mudancas
@@ -86,6 +83,11 @@ class PowerUp(ABC, pygame.sprite.Sprite):
     def definir_coordenadas(self, pos_x, pos_y):
         self.__pos_x = pos_x
         self.__pos_y = pos_y
+        
+        self.__rect.center = (
+            int(pos_x),
+            int(pos_y),
+        )
 
     # chamado dentro do main loop pelo controle dos power ups para cada power up
     def desenhar(self):

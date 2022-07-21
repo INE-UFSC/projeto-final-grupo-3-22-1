@@ -104,9 +104,7 @@ for inimigo in inimigos_direcionais:
     sprites.add(inimigo)
     grupo_inimigos.add(inimigo)
 
-controle_powerUps = ControlePowerUps(
-    jogador,
-)
+controle_powerUps = ControlePowerUps(jogador)
 controle_powerUps.spawn_powerUp_temporario("pureza", 100, 100)
 
 #######################################

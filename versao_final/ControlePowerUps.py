@@ -43,10 +43,12 @@ class ControlePowerUps:
         powerUp.definir_coordenadas(pos_x, pos_y)
         powerUp.desenhar()
 
+    # TODO: verificar implementação de fim de tempo de uso
     def verificar_fim_temporarios(self):
+        tempo_atual = pygame.time.get_ticks()
         for powerUp in self.jogador.powerUps_temporarios:
-            tempo_atual = pygame.time.get_ticks()
 
             # verifica se ja passou o tempo que o powerUp dura
             if tempo_atual - powerUp.tempo_pego > powerUp.duracao:
+                print("powerup encerrado")
                 powerUp.encerrar()

@@ -47,3 +47,4 @@ class CollisionHandler(pygame.sprite.Sprite):
             colision = jogador.rect.colliderect(powerUp.rect)
             if colision:
                 jogador.usar_melhoria(powerUp)
+                powerUp.kill()

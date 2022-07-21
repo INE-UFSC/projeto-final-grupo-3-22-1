@@ -150,7 +150,7 @@ class Jogador(pygame.sprite.Sprite):
                 speed_y,
                 pygame.transform.rotate(self.arma.sprite_bala, -degrees(angulo) - 90),
                 self.arma.stats["dano"],
-                self.arma.stats["durabilidade_bala"],
+                self.arma.stats["durabilidade_bala"]
             )
 
             return nova_bala
@@ -199,5 +199,8 @@ class Jogador(pygame.sprite.Sprite):
         elif isinstance(powerUp, PowerUpTemporario):
             self.powerUps_temporarios.append(powerUp)
 
-        for atributo in powerUp.mudancas.keys():
-            ...
+        for stat, value in powerUp.mudancas.items():
+            if stat in self.stats.keys():
+                self.stats[stat] += value
+            else:
+                self.arma.stats[stat] += value
