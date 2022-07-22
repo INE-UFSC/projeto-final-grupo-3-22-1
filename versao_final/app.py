@@ -100,7 +100,7 @@ for inimigo in inimigos_direcionais:
     grupo_inimigos.add(inimigo)
 
 controle_powerUps = ControlePowerUps(jogador)
-controle_powerUps.spawn_powerUp_temporario("pureza", 100, 100)
+controle_powerUps.spawn_powerUp_temporario("adilson", 100, 100)
 
 #######################################
 

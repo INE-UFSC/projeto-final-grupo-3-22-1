@@ -208,4 +208,4 @@ class Jogador(pygame.sprite.Sprite):
             else:
                 self.arma.stats[stat] -= value
 
-            self.powerUps_temporarios.remove(powerUp)
+        self.powerUps_temporarios.remove(powerUp)
