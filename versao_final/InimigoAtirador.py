@@ -124,7 +124,7 @@ class InimigoAtirador(Inimigo):
                     x,
                     y,
                     pygame.image.load("assets/mancha_tinta.png"),
-                    25
+                    1
                 )
 
                 return bomba_tinta

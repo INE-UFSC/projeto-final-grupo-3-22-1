@@ -15,11 +15,12 @@ class BombaTinta(pygame.sprite.Sprite):
         self._dano = int(dano)
 
         self._sprite = sprite
-        self._rect = self._sprite.get_rect()
+        self._rect = self._sprite.get_rect(center=(pos_x, pos_y))
 
         self._pos_x = pos_x - (self._sprite.get_width() / 2)
         self._pos_y = pos_y - (self._sprite.get_height() / 2)
-        
+        self._speed_x, self._speed_y = 0, 0
+
         self._hitbox = (self._pos_x, self._pos_y, self._sprite.get_width(), self._sprite.get_height())
 
         self._settings = Settings()
@@ -36,6 +37,14 @@ class BombaTinta(pygame.sprite.Sprite):
     @property
     def pos_y(self):
         return self._pos_y
+
+    @property
+    def speed_x(self) -> int:
+        return self._speed_x
+    
+    @property
+    def speed_y(self) -> int:
+        return self._speed_y
 
     @property
     def sprite(self):
