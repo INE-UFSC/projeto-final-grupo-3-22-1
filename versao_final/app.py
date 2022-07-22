@@ -1,14 +1,9 @@
 import pygame
 from pygame.locals import *
 import sys
-import os
-import random as rd
-import numpy as np
-
 
 from Jogador import Jogador
 from InimigoBasico import InimigoBasico
-from Arma import Arma
 from InimigoRastreador import InimigoRastreador
 from InimigoAtirador import InimigoAtirador
 from InimigoDirecional import InimigoDirecional
@@ -67,7 +62,7 @@ inimigos_direcionais = [InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
 controleArmas = ControleArmas(jogador)
-controleArmas.trocar_arma("rede")
+controleArmas.trocar_arma("arpao")
 
 controleArmas = ControleArmas(jogador)
 controleJogador = ControleJogador(jogador)

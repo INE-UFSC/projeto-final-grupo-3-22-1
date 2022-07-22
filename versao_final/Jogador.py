@@ -150,7 +150,7 @@ class Jogador(pygame.sprite.Sprite):
                 speed_y,
                 pygame.transform.rotate(self.arma.sprite_bala, -degrees(angulo) - 90),
                 self.arma.stats["dano"],
-                self.arma.stats["durabilidade_bala"]
+                self.arma.stats["durabilidade_bala"],
             )
 
             return nova_bala
@@ -163,16 +163,12 @@ class Jogador(pygame.sprite.Sprite):
         copia_arma = pygame.transform.rotate(
             self.arma.sprite_bala, -degrees(angulo) - 90
         )
+        
         self.globals.DISPLAY_SURF.blit(
             copia_arma,
             (
-                (
-                    self.x
-                    + self.sprite.get_width()
-                    - 10
-                    - int(copia_arma.get_width() / 2)
-                ),
-                (self.y + self.sprite.get_height() - 3 - int(copia_arma.get_height())),
+                self.x + self.sprite.get_width() - 10 - int(copia_arma.get_width() / 2),
+                (self.y + self.sprite.get_height() - 3 - int(copia_arma.get_height()))
             ),
         )
 
