@@ -142,6 +142,8 @@ class new_Game:
         return self.__collisionHandler
 
     def jogar(self):
+        # TODO: chamar os menus primeiro
+
         while self.jogando:
             if self.jogador.morto:
                 # TODO: trocar por tela de fim de jogo
@@ -162,12 +164,10 @@ class new_Game:
                         self.grupoBalasJogador.nova_bala(tiro)
 
             # ! inicio seção transitória
-            # TODO: implementar mapa, colocar função de renderizar o mapa
-            # fundo branco da tela
+            # TODO: implementar mapa; substituir por função de renderizar o mapa
+            # fundo de tela branco
             self.globals.DISPLAY_SURF.fill((255, 255, 255))
-            # ! fim seção transitória
 
-            # ! inicio seção transitória
             # TODO: implementar controleInimigos
             # percorre todos os inimigos atiradores e executa suas funções
             for atirador in grupo_inimigos_atiradores:
@@ -213,7 +213,7 @@ class new_Game:
                 self.globals.DISPLAY_SURF.blit(entity.sprite, entity.rect)
 
             self.collisionHandler.verificar_colisoes(
-                grupo_inimigos,
+                grupo_inimigos,  # TODO: trocar pela implementação feita para o grupo de inimigos
                 self.jogador,
                 self.grupoBalasJogador.grupo_balas,
                 self.grupoBalasInimigo.grupo_balas,
