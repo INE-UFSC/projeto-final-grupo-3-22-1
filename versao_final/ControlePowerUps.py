@@ -15,10 +15,10 @@ class ControlePowerUps:
 
         self.__powerUps_temporarios = {}
         self.__powerUps_temporarios["adilson"] = PowerUpTemporario(
-            "adilson", "adilson", {"dano": 2, "cadencia": -250}, 15
+            "adilson", "adilson", {"dano": 2, "cadencia": -250}, 15000  # tempo em ms
         )
         self.__powerUps_temporarios["pureza"] = PowerUpTemporario(
-            "pureza", "pureza", {"velocidade_movimento": 3}, 15
+            "pureza", "pureza", {"velocidade_movimento": 3}, 25000
         )
 
     @property
@@ -43,12 +43,9 @@ class ControlePowerUps:
         powerUp.definir_coordenadas(pos_x, pos_y)
         powerUp.desenhar()
 
-    # TODO: verificar implementação de fim de tempo de uso
     def verificar_fim_temporarios(self):
         tempo_atual = pygame.time.get_ticks()
         for powerUp in self.jogador.powerUps_temporarios:
-
             # verifica se ja passou o tempo que o powerUp dura
             if tempo_atual - powerUp.tempo_pego > powerUp.duracao:
-                print("powerup encerrado")
-                powerUp.encerrar()
+                self.jogador.encerrar_powerUp(powerUp)

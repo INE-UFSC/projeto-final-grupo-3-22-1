@@ -46,5 +46,5 @@ class CollisionHandler(pygame.sprite.Sprite):
         for powerUp in grupo_powerUps:
             colision = jogador.rect.colliderect(powerUp.rect)
             if colision:
-                jogador.usar_melhoria(powerUp)
+                jogador.usar_powerUp(powerUp)
                 powerUp.kill()

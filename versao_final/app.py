@@ -164,6 +164,7 @@ while jogando:
     grupoBalasInimigo.desenhar()
 
     controle_powerUps.grupo_powerUps.desenhar()
+    controle_powerUps.verificar_fim_temporarios()
 
     for entity in sprites:
         globals.DISPLAY_SURF.blit(entity.sprite, entity.rect)

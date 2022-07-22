@@ -163,12 +163,12 @@ class Jogador(pygame.sprite.Sprite):
         copia_arma = pygame.transform.rotate(
             self.arma.sprite_bala, -degrees(angulo) - 90
         )
-        
+
         self.globals.DISPLAY_SURF.blit(
             copia_arma,
             (
                 self.x + self.sprite.get_width() - 10 - int(copia_arma.get_width() / 2),
-                (self.y + self.sprite.get_height() - 3 - int(copia_arma.get_height()))
+                (self.y + self.sprite.get_height() - 3 - int(copia_arma.get_height())),
             ),
         )
 
@@ -187,7 +187,7 @@ class Jogador(pygame.sprite.Sprite):
         self.globals.DISPLAY_SURF.blit(self.sprite, self.rect)
 
     # adiciona a lista de power-up daquele tipo; controlePowerUps faz lógica
-    def usar_melhoria(self, powerUp: PowerUp):
+    def usar_powerUp(self, powerUp: PowerUp):
         powerUp.tempo_pego = pygame.time.get_ticks()
 
         if isinstance(powerUp, PowerUpPermanente):
@@ -200,3 +200,12 @@ class Jogador(pygame.sprite.Sprite):
                 self.stats[stat] += value
             else:
                 self.arma.stats[stat] += value
+
+    def encerrar_powerUp(self, powerUp):
+        for stat, value in powerUp.mudancas.items():
+            if stat in self.stats.keys():
+                self.stats[stat] -= value
+            else:
+                self.arma.stats[stat] -= value
+
+            self.powerUps_temporarios.remove(powerUp)
