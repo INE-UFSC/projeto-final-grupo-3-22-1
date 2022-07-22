@@ -24,17 +24,9 @@ pygame.init()
 settings = Settings()
 globals = Globals()
 
-settings.FPS_VALUE = 20
-
 FPS = pygame.time.Clock()
 
-settings.largura_tela = 640
-settings.altura_tela = 640
-
 # tela
-globals.DISPLAY_SURF = pygame.display.set_mode(
-    (settings.largura_tela, settings.altura_tela)
-)
 globals.DISPLAY_SURF.fill((255, 255, 255))
 pygame.display.set_caption("Game")
 
