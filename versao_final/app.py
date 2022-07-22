@@ -53,8 +53,8 @@ inimigos_atiradores = [
 ]
 
 inimigos_rastreadores = [
-    InimigoRastreador(330, 100, 3, 1, "assets/cobraD'agua.png"),
-    InimigoRastreador(380, 120, 3, 1, "assets/cobraD'agua.png"),
+    InimigoRastreador(330, 100, 3, 1, "assets/cobra.png"),
+    InimigoRastreador(380, 120, 3, 1, "assets/cobra-esticada.png"),
 ]
 
 inimigos_direcionais = [InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")]
