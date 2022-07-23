@@ -1,7 +1,7 @@
 import pygame
-from Interface import Interface
-from ToMenuButton import ToMenuButton
-from Settings import Settings
+from .Interface import Interface
+from .ToMenuButton import ToMenuButton
+from .Settings import Settings
 
 settings = Settings()
 
@@ -9,7 +9,7 @@ class RankingInterface(Interface):
 
     def __init__(self):
         super().__init__()
-        self.__background = pygame.image.load(f'./ranking_background.png')
+        self.__background = pygame.image.load(f'Interface/ranking_background.png')
         self.__buttons_list = [ToMenuButton(650, 590, "Voltar")]
 
     @property
