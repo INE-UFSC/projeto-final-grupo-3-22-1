@@ -16,6 +16,7 @@ class Interface(ABC):
         #falta implementar
         settings.FPS_VALUE = 20
         FPS = pygame.time.Clock()
+        self.__settings = Settings()
         
         import os, sys
 
@@ -28,15 +29,11 @@ class Interface(ABC):
         return self.__vidas_atuais
 
     @property
-    def button_surface(self):
-        return self.__button_surface
-    
-    @button_surface.setter
-    def button_surface(self, button_surface):
-        self.__button_surface = button_surface
+    def settings(self) -> Settings:
+        return self.__settings
 
     def interfaceLoop(self):
-        settings.screen.blit(self.background, (0,0))
+        self.settings.screen.blit(self.background, (0, 0))
         while True:
             
             for event in pygame.event.get():
