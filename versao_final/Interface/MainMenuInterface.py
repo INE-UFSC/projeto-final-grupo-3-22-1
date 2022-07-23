@@ -7,10 +7,8 @@ from RankingButton import RankingButton
 from QuitButton import QuitButton
 from Settings import Settings
 
-settings = Settings()
 
 class MainMenuInterface(Interface):
-
     def __init__(self):
         super().__init__()
         self.__background = pygame.image.load(f'./main_menu_background.png')

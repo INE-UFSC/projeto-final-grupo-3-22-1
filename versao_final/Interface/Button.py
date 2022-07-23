@@ -1,5 +1,5 @@
 import pygame
-from Settings import Settings
+from .Settings import Settings
 from abc import ABC, abstractmethod
 
 settings = Settings()
@@ -10,7 +10,7 @@ class Button(ABC):
 		self.__pos_x = pos_x
 		self.__pos_y = pos_y
 		self.__text_input = text_input
-		button_surface = pygame.image.load(f"./button.png")
+		button_surface = pygame.image.load(f"Interface/button.png")
 		self.image = pygame.transform.scale(button_surface, (200, 75))
 		self.rect = self.image.get_rect(center=(self.pos_x, self.pos_y))
 		self.text = settings.main_font.render(self.text_input, True, (255,255,255))

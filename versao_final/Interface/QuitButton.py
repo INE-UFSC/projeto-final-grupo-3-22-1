@@ -1,6 +1,6 @@
 import pygame
 import sys
-from Button import Button
+from .Button import Button
 
 class QuitButton(Button):
     def __init__(self, pos_x, pos_y, text_input):

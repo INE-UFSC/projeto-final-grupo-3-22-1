@@ -1,8 +1,8 @@
 import pygame
 import sys
 from abc import ABC, abstractmethod
-from Pontuacao import Pontuacao
-from Settings import Settings
+from .Pontuacao import Pontuacao
+from .Settings import Settings
 
 settings = Settings()
 pygame.init()
@@ -16,11 +16,8 @@ class Interface(ABC):
         #falta implementar
         settings.FPS_VALUE = 20
         FPS = pygame.time.Clock()
-        settings.largura_tela = 1280
-        settings.altura_tela = 720
-        settings.main_font = pygame.font.Font(f"./alterebro-pixel-font.ttf", 50)
-        settings.screen = pygame.display.set_mode((settings.largura_tela, 
-				settings.altura_tela))
+        
+        import os, sys
 
     @property
     def pontuacao(self) -> Pontuacao:
