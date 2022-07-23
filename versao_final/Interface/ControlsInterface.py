@@ -1,8 +1,8 @@
 import pygame
 import sys
-from Interface import Interface
-from ToMenuButton import ToMenuButton
-from Settings import Settings
+from .Interface import Interface
+from .ToMenuButton import ToMenuButton
+from .Settings import Settings
 
 settings = Settings()
 
@@ -10,7 +10,7 @@ class ControlsInterface(Interface):
 
     def __init__(self):
         super().__init__()
-        self.__controls_background = pygame.image.load(f'./controls_background.png')
+        self.__controls_background = pygame.image.load('Interface/controls_background.png')
 
     @property
     def controls_background(self):

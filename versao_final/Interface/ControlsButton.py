@@ -1,6 +1,6 @@
-from Button import Button
-from Settings import Settings
-from ControlsInterface import ControlsInterface
+from .Button import Button
+from .Settings import Settings
+from .ControlsInterface import ControlsInterface
 
 settings = Settings
 controls = ControlsInterface()

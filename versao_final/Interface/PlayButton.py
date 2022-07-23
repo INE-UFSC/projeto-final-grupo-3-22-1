@@ -1,4 +1,4 @@
-from Button import Button
+from .Button import Button
 
 class PlayButton(Button):
     def __init__(self, pos_x, pos_y, text_input):

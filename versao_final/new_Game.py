@@ -5,6 +5,8 @@ import sys
 from Settings import Settings
 from Globals import Globals
 
+from Interface.MainMenuInterface import MainMenuInterface
+
 from Jogador import Jogador
 from CollisionHandler import CollisionHandler
 
@@ -143,7 +145,10 @@ class new_Game:
 
     def jogar(self):
         # TODO: chamar os menus primeiro
-
+        main_menu = MainMenuInterface()
+        main_menu.interfaceLoop()
+        
+        
         while self.jogando:
             if self.jogador.morto:
                 # TODO: trocar por tela de fim de jogo

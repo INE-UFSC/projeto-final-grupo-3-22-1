@@ -1,20 +1,21 @@
 import pygame
 import sys
-from Interface import Interface
-from PlayButton import PlayButton
-from OptionsButton import OptionsButton
-from ControlsButton import ControlsButton
-from RankingButton import RankingButton
-from QuitButton import QuitButton
-from Settings import Settings
+from .Interface import Interface
+from .PlayButton import PlayButton
+from .OptionsButton import OptionsButton
+from .ControlsButton import ControlsButton
+from .RankingButton import RankingButton
+from .QuitButton import QuitButton
+from .Settings import Settings
 
-settings = Settings()
 
 class MainMenuInterface(Interface):
-
     def __init__(self):
         super().__init__()
-        self.__main_menu_background = pygame.image.load(f'./main_menu_background.png')
+        self.__main_menu_background = pygame.image.load(
+            f"Interface/main_menu_background.png"
+        )
+        self.__settings = Settings()
 
     @property
     def main_menu_background(self):
@@ -24,8 +25,12 @@ class MainMenuInterface(Interface):
     def main_menu_background(self, main_menu_background):
         self.__main_menu_background = main_menu_background
 
+    @property
+    def settings(self) -> Settings:
+        return self.__settings
+
     def interfaceLoop(self):
-        while True:            
+        while True:
             play_button = PlayButton(665, 220, "Jogar")
             options_button = OptionsButton(665, 320, "Opções")
             controls_button = ControlsButton(665, 420, "Controles")
@@ -42,8 +47,8 @@ class MainMenuInterface(Interface):
                     controls_button.nextStep(pygame.mouse.get_pos())
                     ranking_button.nextStep(pygame.mouse.get_pos())
                     quit_button.nextStep(pygame.mouse.get_pos())
-            
-            settings.screen.blit(self.main_menu_background, (0,0))
+
+            self.settings.screen.blit(self.main_menu_background, (0, 0))
 
             play_button.changeColor(pygame.mouse.get_pos())
             options_button.changeColor(pygame.mouse.get_pos())
@@ -56,5 +61,5 @@ class MainMenuInterface(Interface):
             controls_button.update()
             ranking_button.update()
             quit_button.update()
-            
+
             pygame.display.update()

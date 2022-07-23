@@ -1,16 +1,18 @@
 import pygame
 import sys
-from Interface import Interface
-from ToMenuButton import ToMenuButton
-from Settings import Settings
+from .Interface import Interface
+from .ToMenuButton import ToMenuButton
+from .Settings import Settings
 
 settings = Settings()
 
-class OptionsInterface(Interface):
 
+class OptionsInterface(Interface):
     def __init__(self):
         super().__init__()
-        self.__options_background = pygame.image.load(f'./options_background.png')
+        self.__options_background = pygame.image.load(
+            "Interface/options_background.png"
+        )
 
     @property
     def options_background(self):
@@ -33,12 +35,12 @@ class OptionsInterface(Interface):
                     return_button.nextStep(pygame.mouse.get_pos())
                     confirm_button.nextStep(pygame.mouse.get_pos())
 
-            settings.screen.blit(self.options_background, (0,0))
+            settings.screen.blit(self.options_background, (0, 0))
 
             return_button.changeColor(pygame.mouse.get_pos())
             confirm_button.changeColor(pygame.mouse.get_pos())
 
             return_button.update()
             confirm_button.update()
-            
+
             pygame.display.update()
