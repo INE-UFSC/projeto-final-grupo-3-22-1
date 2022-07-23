@@ -1,4 +1,4 @@
-from Singleton import Singleton
+from .Singleton import Singleton
 
 
 # classe usada para guardar variáveis de acesso global e de configuração

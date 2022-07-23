@@ -1,12 +1,12 @@
 import pygame
 import sys
 from Interface import Interface
-from PlayButton import PlayButton
-from OptionsButton import OptionsButton
-from ControlsButton import ControlsButton
-from RankingButton import RankingButton
-from QuitButton import QuitButton
-from Settings import Settings
+from .PlayButton import PlayButton
+from .OptionsButton import OptionsButton
+from .ControlsButton import ControlsButton
+from .RankingButton import RankingButton
+from .QuitButton import QuitButton
+from .Settings import Settings
 
 settings = Settings()
 

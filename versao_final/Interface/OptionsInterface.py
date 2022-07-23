@@ -1,8 +1,8 @@
 import pygame
 import sys
-from Interface import Interface
-from ToMenuButton import ToMenuButton
-from Settings import Settings
+from .Interface import Interface
+from .ToMenuButton import ToMenuButton
+from .Settings import Settings
 
 settings = Settings()
 

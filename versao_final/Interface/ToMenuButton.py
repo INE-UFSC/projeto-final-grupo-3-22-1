@@ -1,5 +1,5 @@
-from Button import Button
-from Settings import Settings
+from .Button import Button
+from .Settings import Settings
 
 settings = Settings
 

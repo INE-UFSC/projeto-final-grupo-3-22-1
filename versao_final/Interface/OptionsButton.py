@@ -1,6 +1,6 @@
-from Button import Button
-from Settings import Settings
-from OptionsInterface import OptionsInterface
+from .Button import Button
+from .Settings import Settings
+from .OptionsInterface import OptionsInterface
 
 settings = Settings
 options = OptionsInterface()

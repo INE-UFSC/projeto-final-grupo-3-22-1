@@ -1,6 +1,6 @@
-from Button import Button
-from Settings import Settings
-from RankingInterface import RankingInterface
+from .Button import Button
+from .Settings import Settings
+from .RankingInterface import RankingInterface
 
 settings = Settings
 ranking = RankingInterface()
