@@ -1,4 +1,5 @@
 import pygame
+import sys
 from abc import ABC, abstractmethod
 from Pontuacao import Pontuacao
 from Settings import Settings
@@ -37,6 +38,20 @@ class Interface(ABC):
     def button_surface(self, button_surface):
         self.__button_surface = button_surface
 
-    @abstractmethod
     def interfaceLoop(self):
-        pass
+        settings.screen.blit(self.background, (0,0))
+        while True:
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                
+                for button in self.buttons_list:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        button.nextStep(pygame.mouse.get_pos())
+                    button.changeColor(pygame.mouse.get_pos())
+
+                    button.update()
+
+            pygame.display.update()
