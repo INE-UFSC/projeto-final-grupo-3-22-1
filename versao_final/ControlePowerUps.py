@@ -1,3 +1,4 @@
+from numpy import power
 import pygame
 from pygame.locals import *
 
@@ -21,6 +22,18 @@ class ControlePowerUps:
             "pureza", "pureza", {"velocidade_movimento": 3}, 25000
         )
 
+        self.__powerUps_permanentes = {}
+        self.__powerUps_permanentes["chinelo"] = PowerUpPermanente(
+            "chinelo", "chinelo", {"velocidade_movimento": 5}
+        )
+
+        self.__lista_nomes_powerUps_temporarios = []
+        self.__lista_nomes_powerUps_permanentes = []
+        for powerUpTemporario in self.powerUps_temporarios:
+            self.__lista_nomes_powerUps_temporarios.append(powerUpTemporario)
+        for powerUpPermanente in self.powerUps_permanentes:
+            self.__lista_nomes_powerUps_permanentes.append(powerUpPermanente)
+
     @property
     def jogador(self):
         return self.__jogador
@@ -30,16 +43,29 @@ class ControlePowerUps:
         return self.__grupo_powerUps
 
     @property
-    def powerUps_temporarios(self):
+    def powerUps_temporarios(self) -> dict:
         return self.__powerUps_temporarios
 
-    # cria um powerUp em uma posicao na tela
-    def spawn_powerUp_temporario(self, nome, pos_x, pos_y):
-        # seleciona do dicionario pelo nome
-        powerUp = self.powerUps_temporarios[nome]
-        self.grupo_powerUps.novo_powerUp_caido(powerUp)
+    @property
+    def powerUps_permanentes(self) -> dict:
+        return self.__powerUps_permanentes
 
-        # desenha na tela usando a função desenhar() que todo powerUp possui e def. posicao
+    @property
+    def lista_nomes_powerUps_temporarios(self) -> list:
+        return self.__lista_nomes_powerUps_temporarios
+
+    @property
+    def lista_nomes_powerUps_permanentes(self) -> list:
+        return self.__lista_nomes_powerUps_permanentes
+
+    # cria um powerUp em uma posicao na tela
+    def spawn_powerUp(self, nome, pos_x, pos_y):
+        if nome in self.lista_nomes_powerUps_temporarios:
+            powerUp = self.powerUps_temporarios[nome]
+        else:
+            powerUp = self.powerUps_permanentes[nome]
+
+        self.grupo_powerUps.novo_powerUp_caido(powerUp)
         powerUp.definir_coordenadas(pos_x, pos_y)
         powerUp.desenhar()
 

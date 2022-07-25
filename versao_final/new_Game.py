@@ -17,7 +17,7 @@ from GrupoBalasJogador import GrupoBalasJogador
 from GrupoBalasInimigo import GrupoBalasInimigo
 
 # TODO: remover e substituir pelas classes comentadas em jogar()
-# código procedural para testes
+# ! início código procedural para testes
 from InimigoBasico import InimigoBasico
 from InimigoAtirador import InimigoAtirador
 from InimigoRastreador import InimigoRastreador
@@ -66,7 +66,7 @@ for inimigo in inimigos_direcionais:
     grupo_inimigos_direcionais.add(inimigo)
     sprites.add(inimigo)
     grupo_inimigos.add(inimigo)
-
+# ! fim código procedural
 
 class new_Game:
     def __init__(self):
