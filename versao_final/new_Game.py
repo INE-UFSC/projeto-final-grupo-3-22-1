@@ -148,7 +148,7 @@ class new_Game:
         main_menu = MainMenuInterface()
         main_menu.interfaceLoop()
         
-        
+        # TODO: criar outra função que inicie o main loop em si
         while self.jogando:
             if self.jogador.morto:
                 # TODO: trocar por tela de fim de jogo

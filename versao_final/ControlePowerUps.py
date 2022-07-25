@@ -24,7 +24,7 @@ class ControlePowerUps:
 
         self.__powerUps_permanentes = {}
         self.__powerUps_permanentes["chinelo"] = PowerUpPermanente(
-            "chinelo", "chinelo", {"velocidade_movimento": 5}
+            "chinelo", "chinelo", {"velocidade_movimento": 4}
         )
 
         self.__lista_nomes_powerUps_temporarios = []

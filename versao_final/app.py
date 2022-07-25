@@ -93,6 +93,7 @@ for inimigo in inimigos_direcionais:
 
 controle_powerUps = ControlePowerUps(jogador)
 controle_powerUps.spawn_powerUp("pureza", 100, 100)
+controle_powerUps.spawn_powerUp("chinelo", 200, 100)
 
 #######################################
 
