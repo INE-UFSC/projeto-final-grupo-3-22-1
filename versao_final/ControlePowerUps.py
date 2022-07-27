@@ -1,4 +1,3 @@
-from numpy import power
 import pygame
 from pygame.locals import *
 
@@ -24,7 +23,11 @@ class ControlePowerUps:
 
         self.__powerUps_permanentes = {}
         self.__powerUps_permanentes["chinelo"] = PowerUpPermanente(
-            "chinelo", "chinelo", {"velocidade_movimento": 4}
+            "chinelo", "chinelo", {"velocidade_movimento": 3}
+        )
+        # mais uma vida é tratada como um powerUp
+        self.__powerUps_permanentes["umaVida"] = PowerUpPermanente(
+            "umaVida", "umaVida", {"vida": 1}
         )
 
         self.__lista_nomes_powerUps_temporarios = []
