@@ -74,6 +74,12 @@ class new_Game:
         pygame.display.set_caption("O mar não está pra gente")
         self.__FPS = pygame.time.Clock()
 
+        self.__playlist = ["Interface/songs/bosun_bill_song.mp3",
+                        "Interface/songs/grogg_mayles_song.mp3",
+                        "Interface/songs/ride_of_the_valkyries_song.mp3",
+                        "Interface/songs/summon_the_megalodon_song.mp3"
+                        ]
+
         self.__jogando = True
         self.__jogador = Jogador(vida=20, velocidade_movimento=8)
 
@@ -98,6 +104,10 @@ class new_Game:
     @property
     def FPS(self) -> pygame.time.Clock:
         return self.__FPS
+
+    @property
+    def playlist(self) -> list:
+        return self.__playlist
 
     @property
     def jogando(self) -> bool:
