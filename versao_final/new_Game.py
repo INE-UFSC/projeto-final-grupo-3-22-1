@@ -68,17 +68,19 @@ for inimigo in inimigos_direcionais:
     grupo_inimigos.add(inimigo)
 # ! fim código procedural
 
+
 class new_Game:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption("O mar não está pra gente")
         self.__FPS = pygame.time.Clock()
 
-        self.__playlist = ["Interface/songs/bosun_bill_song.mp3",
-                        "Interface/songs/grogg_mayles_song.mp3",
-                        "Interface/songs/ride_of_the_valkyries_song.mp3",
-                        "Interface/songs/summon_the_megalodon_song.mp3"
-                        ]
+        self.__playlist = [
+            "Interface/songs/bosun_bill_song.mp3",
+            "Interface/songs/grogg_mayles_song.mp3",
+            "Interface/songs/ride_of_the_valkyries_song.mp3",
+            "Interface/songs/summon_the_megalodon_song.mp3",
+        ]
 
         self.__jogando = True
         self.__jogador = Jogador(vida=20, velocidade_movimento=8)
@@ -93,7 +95,7 @@ class new_Game:
         self.__grupoBalasJogador = GrupoBalasJogador()
         self.__grupoBalasInimigo = GrupoBalasInimigo()
 
-        self.__collisionHandler = CollisionHandler()
+        self.__collisionHandler = CollisionHandler(self.jogador, self.controlePowerUps)
 
         # ! início seção transitória; remover após implementação
         # TODO: remover essa seção de código (implementação transitória)
@@ -157,7 +159,7 @@ class new_Game:
         # TODO: chamar os menus primeiro
         main_menu = MainMenuInterface()
         main_menu.interfaceLoop()
-        
+
         # TODO: criar outra função que inicie o main loop em si
         while self.jogando:
             if self.jogador.morto:
@@ -229,7 +231,6 @@ class new_Game:
 
             self.collisionHandler.verificar_colisoes(
                 grupo_inimigos,  # TODO: trocar pela implementação feita para o grupo de inimigos
-                self.jogador,
                 self.grupoBalasJogador.grupo_balas,
                 self.grupoBalasInimigo.grupo_balas,
                 self.controlePowerUps.grupo_powerUps.grupo_todos_caidos,

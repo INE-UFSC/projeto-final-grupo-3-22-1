@@ -60,7 +60,12 @@ controleArmas = ControleArmas(jogador)
 controleJogador = ControleJogador(jogador)
 grupoBalasJogador = GrupoBalasJogador()
 grupoBalasInimigo = GrupoBalasInimigo()
-collisionHandler = CollisionHandler()
+controle_powerUps = ControlePowerUps(jogador)
+collisionHandler = CollisionHandler(jogador, controle_powerUps)
+
+controle_powerUps.spawn_powerUp("pureza", 100, 100)
+controle_powerUps.spawn_powerUp("tresVidas", 200, 100)
+
 
 sprites = pygame.sprite.Group()
 sprites.add(jogador)
@@ -91,9 +96,6 @@ for inimigo in inimigos_direcionais:
     sprites.add(inimigo)
     grupo_inimigos.add(inimigo)
 
-controle_powerUps = ControlePowerUps(jogador)
-controle_powerUps.spawn_powerUp("pureza", 100, 100)
-controle_powerUps.spawn_powerUp("tresVidas", 200, 100)
 
 #######################################
 
@@ -164,7 +166,6 @@ while jogando:
 
     collisionHandler.verificar_colisoes(
         grupo_inimigos,
-        jogador,
         grupoBalasJogador.grupo_balas,
         grupoBalasInimigo.grupo_balas,
         controle_powerUps.grupo_powerUps.grupo_todos_caidos,
