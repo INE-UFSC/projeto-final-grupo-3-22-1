@@ -29,6 +29,9 @@ class ControlePowerUps:
         self.__powerUps_permanentes["umaVida"] = PowerUpPermanente(
             "umaVida", "umaVida", {"vida": 1}
         )
+        self.__powerUps_permanentes["tresVidas"] = PowerUpPermanente(
+            "tresVidas", "tresVidas", {"vida": 3}
+        )
 
         self.__lista_nomes_powerUps_temporarios = []
         self.__lista_nomes_powerUps_permanentes = []

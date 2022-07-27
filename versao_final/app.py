@@ -93,7 +93,7 @@ for inimigo in inimigos_direcionais:
 
 controle_powerUps = ControlePowerUps(jogador)
 controle_powerUps.spawn_powerUp("pureza", 100, 100)
-controle_powerUps.spawn_powerUp("umaVida", 200, 100)
+controle_powerUps.spawn_powerUp("tresVidas", 200, 100)
 
 #######################################
 
