@@ -7,6 +7,7 @@ from InimigoBasico import InimigoBasico
 from InimigoRastreador import InimigoRastreador
 from InimigoAtirador import InimigoAtirador
 from InimigoDirecional import InimigoDirecional
+from Boss import Boss
 
 from ControleArmas import ControleArmas
 from ControleJogador import ControleJogador
@@ -50,6 +51,9 @@ inimigos_rastreadores = [
 ]
 
 inimigos_direcionais = [InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")]
+
+# TESTE BOSS
+# boss = Boss(400, 400, 5, 20, "assets/ChicoCunha.png", 6, 500)
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
@@ -96,6 +100,9 @@ for inimigo in inimigos_direcionais:
     sprites.add(inimigo)
     grupo_inimigos.add(inimigo)
 
+# TESTE BOSS
+# grupo_inimigos.add(boss)
+# sprites.add(boss)
 
 #######################################
 
@@ -151,6 +158,9 @@ while jogando:
 
         # movendo o corredor com os resultados obtidos
         direcional.mover(x, y)
+    
+    # TESTE BOSS
+    # boss.mover()
 
     jogador.mover()
     jogador.mover_arma(mouse_x, mouse_y)
