@@ -9,15 +9,15 @@ class CollisionHandler(pygame.sprite.Sprite):
     def __init__(self, jogador: Jogador, controlePowerUps: ControlePowerUps):
         self.__jogador = jogador
         self.__controlePowerUps = controlePowerUps
-    
+
     @property
     def jogador(self) -> Jogador:
         return self.__jogador
-    
+
     @property
     def controlePowerUps(self) -> ControlePowerUps:
         return self.__controlePowerUps
-    
+
     # funcao que chama todas verificaoes de colisao necessarias
     def verificar_colisoes(
         self,
@@ -44,7 +44,7 @@ class CollisionHandler(pygame.sprite.Sprite):
             if hits:
                 hits[0].reduzir_durabilidade()
                 inimigo.receber_dano(hits[0].dano)
-                
+
                 if inimigo.vida <= 0:
                     self.controlePowerUps.calcular_drop(inimigo.x, inimigo.y)
 

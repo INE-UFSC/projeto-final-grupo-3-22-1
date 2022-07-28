@@ -1,4 +1,3 @@
-from numpy import power
 import pygame
 from pygame.locals import *
 from math import sin, cos, atan2, degrees

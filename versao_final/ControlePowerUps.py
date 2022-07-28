@@ -1,10 +1,7 @@
-from numpy import power
 import pygame
 from pygame.locals import *
 
 from random import randint, choice
-
-from soupsieve import escape
 
 from PowerUpPermanente import PowerUpPermanente
 from PowerUpTemporario import PowerUpTemporario
