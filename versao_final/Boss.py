@@ -22,8 +22,14 @@ class Boss():
 
         self._tempo_comeco_ataque = 0 
 
-    def atacar(self):
-        pass
+    def atacar(self, x, y):
+        choice = rd.choice[0, 1, 2]
+        
+        if choice == 0:
+            return self._ataque_distancia(x, y)
+        if choice == 1:
+            return self._ataque_proximo(x, y)
+        return self._ataque_especial(x, y)
 
     def _ataque_distancia(self, jogador_x, jogador_y):
         """O InimigoAtirador vai atirar projéteis na direção do Jogador"""
