@@ -46,10 +46,6 @@ class MainMenuInterface(Interface):
 
     def interfaceLoop(self):
         self.settings.screen.blit(self.background, (0, 0))
-        pygame.mixer.music.load(self.playlist[0])
-        for x in range(1,3):
-            pygame.mixer.music.queue(self.playlist[x])
-        pygame.mixer.music.play()
 
         while True:
             

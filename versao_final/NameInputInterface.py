@@ -16,6 +16,7 @@ class NameInputInterface(Interface):
         self.__buttons_list = [ToMenuButton(510, 590, "Voltar"),
                             ToMenuButton(790, 590, "Confirmar")]
         self.__text_input = TextInput(490, 400, 300, 32, "Digite seu nome aqui")
+        self.__clock = pygame.time.Clock()
 
     @property
     def background(self):
@@ -28,6 +29,10 @@ class NameInputInterface(Interface):
     @property
     def text_input(self):
         return self.__text_input
+    
+    @property
+    def clock(self):
+        return self.__clock
 
     def interfaceLoop(self):
         self.settings.screen.blit(self.background, (0, 0))
@@ -47,5 +52,6 @@ class NameInputInterface(Interface):
 
                 self.text_input.event_handler(event)
 
+            self.settings.screen.blit(self.background, (0, 0))
             self.text_input.desenhar(settings.screen)
             pygame.display.update()
