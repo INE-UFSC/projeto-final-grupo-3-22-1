@@ -1,17 +1,13 @@
 import pygame
 from pygame.locals import *
-import os
 from Globals import Globals
-
-from Settings import Settings
 
 
 class BombaTinta(pygame.sprite.Sprite):
-    def __init__(self, pos_x: float, pos_y: float,
-                    sprite: str, dano: int):
+    def __init__(self, pos_x: float, pos_y: float, sprite: str, dano: int):
         super().__init__()
-        #self._pos_x = int(pos_x)
-        #self._pos_y = int(pos_y)
+        # self._pos_x = int(pos_x)
+        # self._pos_y = int(pos_y)
         self._dano = int(dano)
 
         self._sprite = sprite
@@ -21,9 +17,13 @@ class BombaTinta(pygame.sprite.Sprite):
         self._pos_y = pos_y - (self._sprite.get_height() / 2)
         self._speed_x, self._speed_y = 0, 0
 
-        self._hitbox = (self._pos_x, self._pos_y, self._sprite.get_width(), self._sprite.get_height())
+        self._hitbox = (
+            self._pos_x,
+            self._pos_y,
+            self._sprite.get_width(),
+            self._sprite.get_height(),
+        )
 
-        self._settings = Settings()
         self._globals = Globals()
 
     @property
@@ -41,7 +41,7 @@ class BombaTinta(pygame.sprite.Sprite):
     @property
     def speed_x(self) -> int:
         return self._speed_x
-    
+
     @property
     def speed_y(self) -> int:
         return self._speed_y
@@ -69,15 +69,11 @@ class BombaTinta(pygame.sprite.Sprite):
     @property
     def dano(self):
         return self._dano
-    
+
     @sprite.setter
     def sprite(self, sprite):
         self._sprite = sprite
-    
-    @property
-    def settings(self) -> Settings:
-        return self._settings
-    
+
     @property
     def globals(self) -> Globals:
         return self._globals
@@ -85,7 +81,7 @@ class BombaTinta(pygame.sprite.Sprite):
     @property
     def hitbox(self):
         return self._hitbox
-    
+
     @hitbox.setter
     def hitbox(self, hitbox):
         self._hitbox = hitbox
