@@ -1,4 +1,4 @@
-from .Interface import Interface
+from Interface import Interface
 
 
 class InGameInterface(Interface):

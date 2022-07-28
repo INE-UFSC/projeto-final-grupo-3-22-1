@@ -1,3 +1,5 @@
+from cmath import cos, sin
+from math import atan2
 import pygame
 import random as rd
 from math import sin, cos, atan2
