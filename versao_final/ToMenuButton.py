@@ -1,5 +1,5 @@
-from .Button import Button
-from .Settings import Settings
+from Button import Button
+from Settings import Settings
 
 settings = Settings()
 
@@ -11,6 +11,6 @@ class ToMenuButton(Button):
         if position[0] in range(self.rect.left, self.rect.right) \
            and position[1] in range(self.rect.top, self.rect.bottom):
                
-            from .MainMenuInterface import MainMenuInterface
+            from MainMenuInterface import MainMenuInterface
             main_menu = MainMenuInterface()
             main_menu.interfaceLoop()

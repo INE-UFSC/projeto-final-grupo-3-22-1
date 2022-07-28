@@ -1,8 +1,8 @@
 import pygame
 import sys
 from abc import ABC, abstractmethod
-from .Pontuacao import Pontuacao
-from .Settings import Settings
+from Pontuacao import Pontuacao
+from Settings import Settings
 
 settings = Settings()
 pygame.init()

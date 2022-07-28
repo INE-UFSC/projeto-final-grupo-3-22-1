@@ -5,7 +5,7 @@ import sys
 from Settings import Settings
 from Globals import Globals
 
-from Interface.MainMenuInterface import MainMenuInterface
+from MainMenuInterface import MainMenuInterface
 
 from Jogador import Jogador
 from CollisionHandler import CollisionHandler

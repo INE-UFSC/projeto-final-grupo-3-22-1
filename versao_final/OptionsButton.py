@@ -1,5 +1,5 @@
-from .Button import Button
-from .OptionsInterface import OptionsInterface
+from Button import Button
+from OptionsInterface import OptionsInterface
 
 
 class OptionsButton(Button):

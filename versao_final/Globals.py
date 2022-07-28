@@ -8,5 +8,5 @@ from Settings import Settings
 class Globals(Singleton):
     settings = Settings()
     DISPLAY_SURF = pygame.display.set_mode(
-        (settings.largura_tela, settings.altura_tela)
+        (settings.largura_tela_interface, settings.altura_tela_interface)
     )

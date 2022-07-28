@@ -21,5 +21,4 @@ class Boss():
 
 
     def ataque_distancia(self, jogador_x, jogador_y):
-        
 
