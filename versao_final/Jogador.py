@@ -17,7 +17,7 @@ class Jogador(pygame.sprite.Sprite):
         self,
         vida: int,
         velocidade_movimento: int,
-        arma: Arma = Arma(0, 20, 4, 250, "isca", 1),
+        arma: Arma = Arma(20, 4, 250, "isca", 1),
     ):
         super().__init__()
         self.__stats = {"vida": vida, "velocidade_movimento": velocidade_movimento}

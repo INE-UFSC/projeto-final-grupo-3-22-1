@@ -1,8 +1,6 @@
 import pygame
 from pygame.locals import *
-import os
 
-from Settings import Settings
 from Globals import Globals
 
 
@@ -23,7 +21,6 @@ class Bala(pygame.sprite.Sprite):
 
         # self.__hitbox = (self.__pos_x, self.__pos_y, 20, 20)
 
-        self.__settings = Settings()
         self.__globals = Globals()
 
     @property
@@ -85,10 +82,6 @@ class Bala(pygame.sprite.Sprite):
     @sprite.setter
     def sprite(self, sprite):
         self.__sprite = sprite
-
-    @property
-    def settings(self) -> Settings:
-        return self.__settings
 
     @property
     def globals(self) -> Globals:
