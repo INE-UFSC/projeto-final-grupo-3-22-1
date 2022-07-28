@@ -67,9 +67,7 @@ grupoBalasInimigo = GrupoBalasInimigo()
 controle_powerUps = ControlePowerUps(jogador)
 collisionHandler = CollisionHandler(jogador, controle_powerUps)
 
-controle_powerUps.spawn_powerUp("pureza", 100, 100)
-controle_powerUps.spawn_powerUp("tresVidas", 200, 100)
-
+controle_powerUps.spawn_powerUp("pocao", 100, 100)
 
 sprites = pygame.sprite.Group()
 sprites.add(jogador)

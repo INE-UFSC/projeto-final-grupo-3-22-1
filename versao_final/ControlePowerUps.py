@@ -22,6 +22,9 @@ class ControlePowerUps:
         self.__powerUps_temporarios["pureza"] = PowerUpTemporario(
             "pureza", "pureza", {"velocidade_movimento": 3}, 25000
         )
+        self.__powerUps_temporarios["pocao"] = PowerUpTemporario(
+            "pocao", "pocao", {"velocidade_movimento": -4, "cadencia": -200}, 10000
+        )
 
         self.__powerUps_permanentes = {}
         self.__powerUps_permanentes["chinelo"] = PowerUpPermanente(
@@ -34,11 +37,11 @@ class ControlePowerUps:
         self.__powerUps_permanentes["tresVidas"] = PowerUpPermanente(
             "tresVidas", "tresVidas", {"vida": 3}
         )
-        
+
         self.__lista_nomes_powerUps_temporarios = []
         self.__lista_nomes_powerUps_permanentes = []
         self.__lista_nomes_powerUps = []
-        
+
         for powerUpTemporario in self.powerUps_temporarios:
             self.lista_nomes_powerUps_temporarios.append(powerUpTemporario)
             self.lista_nomes_powerUps.append(powerUpTemporario)
@@ -69,7 +72,7 @@ class ControlePowerUps:
     @property
     def lista_nomes_powerUps_permanentes(self) -> list:
         return self.__lista_nomes_powerUps_permanentes
-    
+
     @property
     def lista_nomes_powerUps(self) -> list:
         return self.__lista_nomes_powerUps
@@ -79,9 +82,9 @@ class ControlePowerUps:
 
         if (porcentagem >= 1) and (porcentagem <= 10):
             powerUp_escolhido = choice(self.lista_nomes_powerUps)
-            
+
             self.spawn_powerUp(powerUp_escolhido, pos_x, pos_y)
-    
+
     # cria um powerUp em uma posicao na tela
     def spawn_powerUp(self, nome, pos_x, pos_y):
         if nome in self.lista_nomes_powerUps_temporarios:
@@ -90,7 +93,7 @@ class ControlePowerUps:
             powerUp = self.powerUps_permanentes[nome]
 
         self.grupo_powerUps.novo_powerUp_caido(powerUp)
-        
+
         powerUp.definir_coordenadas(pos_x, pos_y)
         powerUp.desenhar()
 
