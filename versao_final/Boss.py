@@ -33,16 +33,19 @@ class Boss(pygame.sprite.Sprite):
         self._settings = Settings()
         self._globals = Globals()
 
-        self._tempo_comeco_ataque = 0
+        self._tempo_ultimo_especial = 0
+        self._tempo_ultimo_mov = 0
+        self._tempo_ultimo_tiro = 0
 
-    def atacar(self, x, y):
-        choice = rd.choice[0, 1, 2]
+    def atacar(self, jogador_x, jogador_y):
+        choice = rd.choice([0, 1])
+
+        if abs(jogador_x - self._rect.x) < 20:
+            return self._ataque_proximo(self._rect.x, self._rect.y)
 
         if choice == 0:
-            return self._ataque_distancia(x, y)
-        if choice == 1:
-            return self._ataque_proximo(x, y)
-        return self._ataque_especial(x, y)
+            return self._ataque_distancia(jogador_x, jogador_y)
+        return self._ataque_especial(jogador_x, jogador_y)
 
     def _ataque_distancia(self, jogador_x, jogador_y):
         """O InimigoAtirador vai atirar projéteis na direção do Jogador"""
@@ -63,8 +66,8 @@ class Boss(pygame.sprite.Sprite):
             # calcula o ângulo entre essas distâncias e com isso calcula a velocidade do projétil
             angulo = atan2(distancia_y, distancia_x)
 
-            speed_x = self._velocidade_ataque * cos(angulo)
-            speed_y = self._velocidade_ataque * sin(angulo)
+            speed_x = self._vel_atq * cos(angulo)
+            speed_y = self._vel_atq * sin(angulo)
 
             # instancia uma nova Bala de acordo com as informações obtidas e retorna a mesma
             incr = -0.05
@@ -101,14 +104,49 @@ class Boss(pygame.sprite.Sprite):
 
         tempo_agora = pygame.time.get_ticks()
 
-        signal = 1
-        while tempo_agora - self._tempo_comeco_ataque <= 500:
-            self._rect.x += signal * 5
-            signal *= -1
+        if tempo_agora - self._tempo_ultimo_especial  > 1000:
+            self._tempo_ultimo_especial = tempo_agora
 
-        return BombaLava(
-            x + rd.choice([-7, -5, -2, 2, 5, 7]),
-            y + rd.choice([-7, -5, -2, 2, 5, 7]),
-            pygame.image.load("assets/mancha_lava.png"),
-            5,
-        )
+            return BombaLava(
+                x + rd.choice([-50, -70, 50, 70]),
+                y + rd.choice([-50, -70, 50, 70]),
+                pygame.image.load("assets/mancha_lava.png"),
+                5,
+             )
+
+    def mover(self):
+        
+        tempo_agora = pygame.time.get_ticks()
+
+        if tempo_agora - self._tempo_ultimo_mov >= 500:
+            self._tempo_ultimo_mov = tempo_agora
+
+            self._rect.x += rd.choice([-2, -1.5, -1, 1, 1.5, 2]) * self._vel_mov
+            self._rect.y += rd.choice([-2, -1.5, -1, 1, 1.5, 2]) * self._vel_mov
+    
+    def receber_dano(self, dano):
+        self._vida -= dano
+    
+    @property
+    def sprite(self) -> str:
+        return self._sprite
+    
+    @property
+    def vida(self) -> int:
+        return self._vida
+    
+    @property
+    def rect(self) -> tuple:
+        return self._rect
+    
+    @property
+    def x(self) -> int:
+        return self._rect.x
+    
+    @property
+    def y(self) -> int:
+        return self._rect.y
+    
+    @property
+    def dano(self) -> int:
+        return self._dano
