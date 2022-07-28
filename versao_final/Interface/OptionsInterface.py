@@ -31,6 +31,7 @@ class OptionsInterface(Interface):
         return self.__slider
 
     def interfaceLoop(self):
+        self.settings.screen.blit(self.background, (0, 0))
         while True:
             
             for event in pygame.event.get():
