@@ -34,6 +34,6 @@ class Button(ABC):
 
 	def changeColor(self, position):
 		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
-			self.text = settings.main_font.render(self.text_input, True, (255,0,255))
+			self.text = settings.main_font.render(self.text_input, True, (60,23,82))
 		else:
 			self.text = settings.main_font.render(self.text_input, True, (255,255,255))

@@ -11,7 +11,7 @@ class TextInput():
         self.__altura = altura
         self.__texto = texto
         self.rect = pygame.Rect(pos_x, pos_y, largura, altura)
-        self.cor = (0,0,255)
+        self.cor = (0,49,83)
         self.font = pygame.font.Font(f"fonts/alterebro-pixel-font.ttf", 32)
         self.texto_render = self.font.render(self.texto, True, self.cor)
         self.ativo = False
@@ -64,7 +64,7 @@ class TextInput():
                 self.texto_render = self.font.render(self.texto, True, self.cor)
             else:
                 self.ativo = False
-            self.cor = (255,255,255) if self.ativo else (0,0,255)
+            self.cor = (60,23,82) if self.ativo else (0,49,83)
 
         if event.type == pygame.KEYDOWN:
             if self.ativo:
@@ -79,5 +79,5 @@ class TextInput():
                 self.texto_render = self.font.render(self.texto, True, self.cor)
 
     def desenhar(self, screen):
-        screen.blit(self.texto_render, (self.pos_x+7, self.pos_y+2))
-        pygame.draw.rect(screen, self.cor, self.rect, 2)
+        screen.blit(self.texto_render, (self.pos_x+10, self.pos_y+2))
+        pygame.draw.rect(screen, self.cor, self.rect, 4)
