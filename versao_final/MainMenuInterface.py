@@ -1,4 +1,5 @@
 import pygame
+import sys
 from Interface import Interface
 from PlayButton import PlayButton
 from OptionsButton import OptionsButton
@@ -20,6 +21,12 @@ class MainMenuInterface(Interface):
                             ControlsButton(665, 420, "Controles"),
                             RankingButton(665, 520, "Ranking"),
                             QuitButton(665, 620, "Sair")]
+        self.__playlist = [
+            "songs/bosun_bill_song.mp3",
+            "songs/grogg_mayles_song.mp3",
+            "songs/ride_of_the_valkyries_song.mp3",
+            "songs/summon_the_megalodon_song.mp3",
+            ]
 
     @property
     def background(self):
@@ -32,3 +39,30 @@ class MainMenuInterface(Interface):
     @property
     def buttons_list(self) -> list:
         return self.__buttons_list
+
+    @property
+    def playlist(self):
+        return self.__playlist
+
+    def interfaceLoop(self):
+        self.settings.screen.blit(self.background, (0, 0))
+        pygame.mixer.music.load(self.playlist[0])
+        for x in range(1,3):
+            pygame.mixer.music.queue(self.playlist[x])
+        pygame.mixer.music.play()
+
+        while True:
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                
+                for button in self.buttons_list:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        button.nextStep(pygame.mouse.get_pos())
+                    button.changeColor(pygame.mouse.get_pos())
+
+                    button.update()
+
+            pygame.display.update()
