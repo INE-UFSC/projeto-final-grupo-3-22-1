@@ -19,7 +19,9 @@ from ControlePowerUps import ControlePowerUps
 from Settings import Settings
 from Globals import Globals
 
+# não ficará no app, apenas teste provisório
 from GameOverInterface import GameOverInterface
+from PauseMenuInterface import PauseMenuInterface
 
 #######################################
 # parte do pygame (ficara no app.py)
@@ -35,7 +37,9 @@ pygame.display.set_caption("Game")
 
 #######################################
 
+# não ficará no app, apenas teste provisório
 game_over_interface = GameOverInterface()
+pause = PauseMenuInterface()
 
 inimigos_basicos = [
     InimigoBasico(350, 350, 15, 2, "assets/peixe_palhaco.png"),
@@ -119,6 +123,11 @@ while jogando:
         if event.type == QUIT:
             pygame.quit()
             sys.exit
+        
+        # não ficará no app, apenas teste provisório
+        if event.type == pygame.KEYDOWN:
+            if event.key == K_ESCAPE:
+                pause.interfaceLoop()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             tiro = jogador.atirar(mouse_x, mouse_y)
