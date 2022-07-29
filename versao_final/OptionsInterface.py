@@ -3,9 +3,6 @@ import sys
 from Interface import Interface
 from ToMenuButton import ToMenuButton
 from Slider import Slider
-from Settings import Settings
-
-settings = Settings()
 
 
 class OptionsInterface(Interface):
