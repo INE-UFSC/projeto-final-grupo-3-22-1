@@ -19,6 +19,8 @@ from ControlePowerUps import ControlePowerUps
 from Settings import Settings
 from Globals import Globals
 
+from GameOverInterface import GameOverInterface
+
 #######################################
 # parte do pygame (ficara no app.py)
 pygame.init()
@@ -32,6 +34,8 @@ globals.DISPLAY_SURF.fill((255, 255, 255))
 pygame.display.set_caption("Game")
 
 #######################################
+
+game_over_interface = GameOverInterface()
 
 inimigos_basicos = [
     InimigoBasico(350, 350, 15, 2, "assets/peixe_palhaco.png"),
@@ -107,9 +111,7 @@ for inimigo in inimigos_direcionais:
 jogando = True
 while jogando:
     if jogador.morto:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                jogando = False
+        game_over_interface.interfaceLoop()
         continue  # continue faz com que se esse if seja ativado, o while loop vai continuar aqui dentro e não passar pros próximos
 
     mouse_x, mouse_y = pygame.mouse.get_pos()

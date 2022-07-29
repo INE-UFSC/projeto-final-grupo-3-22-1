@@ -21,12 +21,7 @@ class MainMenuInterface(Interface):
                             ControlsButton(665, 420, "Controles"),
                             RankingButton(665, 520, "Ranking"),
                             QuitButton(665, 620, "Sair")]
-        self.__playlist = [
-            "songs/bosun_bill_song.mp3",
-            "songs/grogg_mayles_song.mp3",
-            "songs/ride_of_the_valkyries_song.mp3",
-            "songs/summon_the_megalodon_song.mp3",
-            ]
+        self.__song = "songs/game_soundtrack.mp3"
 
     @property
     def background(self):
@@ -41,11 +36,13 @@ class MainMenuInterface(Interface):
         return self.__buttons_list
 
     @property
-    def playlist(self):
-        return self.__playlist
+    def song(self):
+        return self.__song
 
     def interfaceLoop(self):
         self.settings.screen.blit(self.background, (0, 0))
+        pygame.mixer.music.load(self.song)
+        pygame.mixer.music.play(-1)
 
         while True:
             
