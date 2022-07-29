@@ -163,10 +163,11 @@ while jogando:
     boss.mover()
     ataque = boss.atacar(jogador.rect.center[0], jogador.rect.center[1])
     if ataque:
-        if isinstance(ataque, list):
-            [grupoBalasInimigo.nova_bala(atq) for atq in ataque]
-        else:
-            grupoBalasInimigo.nova_bala(ataque)
+     #   if isinstance(ataque, list):
+        for atq in ataque:
+            grupoBalasInimigo.nova_bala(atq)
+        #else:
+           # grupoBalasInimigo.nova_bala(ataque)
 
     jogador.mover()
     jogador.mover_arma(mouse_x, mouse_y)

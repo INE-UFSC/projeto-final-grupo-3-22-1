@@ -44,12 +44,12 @@ class Boss(pygame.sprite.Sprite):
 
             self._tempo_ultimo_atq = tempo_agora
 
-            if abs(jogador_x - self._rect.x) < 200:
+            if abs(jogador_x - self._rect.x) < 100:
                 return self._ataque_proximo(self._rect.center[0], self._rect.center[1])
 
-            if choice == 0:
-                return self._ataque_distancia(jogador_x, jogador_y)
-            return self._ataque_especial(jogador_x, jogador_y)
+            #if choice == 0:
+            return self._ataque_distancia(jogador_x, jogador_y)
+            #return self._ataque_especial(jogador_x, jogador_y)
 
     def _ataque_distancia(self, jogador_x, jogador_y):
         # calcula as distâncias da posição do jogador à posição do inimigo
@@ -62,22 +62,13 @@ class Boss(pygame.sprite.Sprite):
         speed_x = self._vel_atq * cos(angulo)
         speed_y = self._vel_atq * sin(angulo)
 
-        # instancia uma nova Bala de acordo com as informações obtidas e retorna a mesma
-        incr = -0.05
-        balas_boss = []
-        for _ in range(5):
-            nova_bala = Bala(
-                self._rect.x,
-                self._rect.y,
-                speed_x + incr,
-                speed_y + incr,
-                pygame.image.load("assets/isca.png"),
-                3,
-                20,
-            )
-
-            incr += 0.25
-            balas_boss.append(nova_bala)
+        balas_boss = [
+            Bala(self._rect.x, self._rect.y, speed_x-0.05, speed_y-0.05, pygame.image.load("assets/isca.png"), 3, 20),
+            Bala(self._rect.x, self._rect.y, speed_x-0.025, speed_y-0.025, pygame.image.load("assets/isca.png"), 3, 20),
+            Bala(self._rect.x, self._rect.y, speed_x, speed_y, pygame.image.load("assets/isca.png"), 3, 20),
+            Bala(self._rect.x, self._rect.y, speed_x+0.025, speed_y+0.025, pygame.image.load("assets/isca.png"), 3, 20),
+            Bala(self._rect.x, self._rect.y, speed_x+0.05, speed_y+0.05, pygame.image.load("assets/isca.png"), 3, 20)
+        ]
 
         return balas_boss
 
@@ -93,8 +84,8 @@ class Boss(pygame.sprite.Sprite):
     def _ataque_especial(self, x, y):
 
         return BombaLava(
-            x + rd.choice([-50, -70, 50, 70]),
-            y + rd.choice([-50, -70, 50, 70]),
+            x + rd.choice([-80, -110, 80, 110]),
+            y + rd.choice([-80, -110, 80, 110]),
             pygame.image.load("assets/mancha_lava.png"),
             5,
             )
