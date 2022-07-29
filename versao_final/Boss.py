@@ -59,15 +59,19 @@ class Boss(pygame.sprite.Sprite):
         # calcula o ângulo entre essas distâncias e com isso calcula a velocidade do projétil
         angulo = atan2(distancia_y, distancia_x)
 
-        speed_x = self._vel_atq * cos(angulo)
-        speed_y = self._vel_atq * sin(angulo)
+        speed_x1, speed_y1 = self._vel_atq * cos(angulo), self._vel_atq * sin(angulo)
+        speed_x2, speed_y2 = self._vel_atq * cos(angulo-0.75), self._vel_atq * sin(angulo-0.75)
+        speed_x3, speed_y3 = self._vel_atq * cos(angulo-0.325), self._vel_atq * sin(angulo-0.325)
+        speed_x4, speed_y4 = self._vel_atq * cos(angulo+0.75), self._vel_atq * sin(angulo+0.75)
+        speed_x5, speed_y5 = self._vel_atq * cos(angulo+0.325), self._vel_atq * sin(angulo+0.325)
+        
 
         balas_boss = [
-            Bala(self._rect.x, self._rect.y, speed_x-0.05, speed_y-0.05, pygame.image.load("assets/isca.png"), 3, 20),
-            Bala(self._rect.x, self._rect.y, speed_x-0.025, speed_y-0.025, pygame.image.load("assets/isca.png"), 3, 20),
-            Bala(self._rect.x, self._rect.y, speed_x, speed_y, pygame.image.load("assets/isca.png"), 3, 20),
-            Bala(self._rect.x, self._rect.y, speed_x+0.025, speed_y+0.025, pygame.image.load("assets/isca.png"), 3, 20),
-            Bala(self._rect.x, self._rect.y, speed_x+0.05, speed_y+0.05, pygame.image.load("assets/isca.png"), 3, 20)
+            Bala(self._rect.x, self._rect.y, speed_x1, speed_y1, pygame.image.load("assets/isca.png"), 3, 20),
+            Bala(self._rect.x, self._rect.y, speed_x2, speed_y2, pygame.image.load("assets/isca.png"), 3, 20),
+            Bala(self._rect.x, self._rect.y, speed_x3, speed_y3, pygame.image.load("assets/isca.png"), 3, 20),
+            Bala(self._rect.x, self._rect.y, speed_x4, speed_y4, pygame.image.load("assets/isca.png"), 3, 20),
+            Bala(self._rect.x, self._rect.y, speed_x5, speed_y5, pygame.image.load("assets/isca.png"), 3, 20)
         ]
 
         return balas_boss

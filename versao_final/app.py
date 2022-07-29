@@ -53,7 +53,7 @@ inimigos_rastreadores = [
 inimigos_direcionais = [InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")]
 
 # TESTE BOSS
-boss = Boss(400, 400, 5, 20, "assets/ChicoCunha.png", 10, 500)
+boss = Boss(400, 400, 5, 20, "assets/ChicoCunha.png", 10, 2)
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
