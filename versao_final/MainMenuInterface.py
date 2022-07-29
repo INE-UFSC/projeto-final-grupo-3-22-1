@@ -8,7 +8,6 @@ from RankingButton import RankingButton
 from QuitButton import QuitButton
 from Settings import Settings
 
-
 class MainMenuInterface(Interface):
     def __init__(self):
         super().__init__()
@@ -43,6 +42,7 @@ class MainMenuInterface(Interface):
         self.settings.screen.blit(self.background, (0, 0))
         pygame.mixer.music.load(self.song)
         pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(self.settings.volume_musica)
 
         while True:
             

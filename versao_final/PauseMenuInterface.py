@@ -13,14 +13,14 @@ class PauseMenuInterface(Interface):
     def __init__(self):
         super().__init__()
         self.__background = pygame.image.load(
-            f"backgrounds/main_menu_background.png"
+            f"backgrounds/pause_menu_background.png"
         )
         self.__settings = Settings()
-        self.__buttons_list = [ContinueButton(665, 220, "Continuar"), 
-                            OptionsButton(665, 320, "Opções"),
-                            ControlsButton(665, 420, "Controles"),
-                            RankingButton(665, 520, "Ranking"),
-                            ToMenuButton(665, 620, "Menu Principal")]
+        self.__buttons_list = [ContinueButton(653, 190, "Continuar"), 
+                            OptionsButton(653, 282, "Opções"),
+                            ControlsButton(653, 374, "Controles"),
+                            RankingButton(653, 466, "Ranking"),
+                            ToMenuButton(653, 558, "Menu Principal")]
 
     @property
     def background(self):
@@ -36,8 +36,9 @@ class PauseMenuInterface(Interface):
 
     def interfaceLoop(self):
         self.settings.screen.blit(self.background, (0, 0))
+        self.settings.paused = True
 
-        while True:
+        while self.settings.paused == True:
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
