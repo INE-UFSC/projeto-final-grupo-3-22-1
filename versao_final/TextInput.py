@@ -10,43 +10,27 @@ class TextInput():
         self.__largura = largura
         self.__altura = altura
         self.__texto = texto
-        self.rect = pygame.Rect(pos_x, pos_y, largura, altura)
-        self.cor = (0,49,83)
-        self.font = pygame.font.Font(f"fonts/alterebro-pixel-font.ttf", 32)
-        self.texto_render = self.font.render(self.texto, True, self.cor)
-        self.ativo = False
+        self.__rect = pygame.Rect(pos_x, pos_y, largura, altura)
+        self.__cor = (0,49,83)
+        self.__font = pygame.font.Font(f"fonts/alterebro-pixel-font.ttf", 32)
+        self.__texto_render = self.font.render(self.texto, True, self.cor)
+        self.__ativo = False
 
     @property
     def pos_x(self):
         return self.__pos_x
 
-    @pos_x.setter
-    def pos_x(self, pos_x):
-        self.__pos_x = pos_x
-
     @property
     def pos_y(self):
         return self.__pos_y
-    
-    @pos_y.setter
-    def pos_y(self, pos_y):
-        self.__pos_y = pos_y
 
     @property
     def largura(self):
         return self.__largura
 
-    @largura.setter
-    def largura(self, largura):
-        self.__largura = largura
-
     @property
     def altura(self):
         return self.__altura
-
-    @altura.setter
-    def altura(self, altura):
-        self.__altura = altura
 
     @property
     def texto(self):
@@ -55,6 +39,38 @@ class TextInput():
     @texto.setter
     def texto(self, texto):
         self.__texto = texto
+
+    @property
+    def rect(self):
+        return self.__rect
+
+    @property
+    def cor(self):
+        return self.__cor
+
+    @cor.setter
+    def cor(self, cor):
+        self.__cor = cor
+
+    @property
+    def font(self):
+        return self.__font
+
+    @property
+    def texto_render(self):
+        return self.__texto_render
+
+    @texto_render.setter
+    def texto_render(self, texto_render):
+        self.__texto_render = texto_render
+
+    @property
+    def ativo(self):
+        return self.__ativo
+
+    @ativo.setter
+    def ativo(self, ativo):
+        self.__ativo = ativo
 
     def event_handler(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:

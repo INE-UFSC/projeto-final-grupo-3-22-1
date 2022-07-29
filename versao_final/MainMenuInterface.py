@@ -6,7 +6,7 @@ from OptionsButton import OptionsButton
 from ControlsButton import ControlsButton
 from RankingButton import RankingButton
 from QuitButton import QuitButton
-from Settings import Settings
+
 
 class MainMenuInterface(Interface):
     def __init__(self):
@@ -14,7 +14,6 @@ class MainMenuInterface(Interface):
         self.__background = pygame.image.load(
             f"backgrounds/main_menu_background.png"
         )
-        self.__settings = Settings()
         self.__buttons_list = [PlayButton(665, 220, "Jogar"), 
                             OptionsButton(665, 320, "Opções"),
                             ControlsButton(665, 420, "Controles"),
@@ -25,10 +24,6 @@ class MainMenuInterface(Interface):
     @property
     def background(self):
         return self.__background
-
-    @property
-    def settings(self) -> Settings:
-        return self.__settings
 
     @property
     def buttons_list(self) -> list:

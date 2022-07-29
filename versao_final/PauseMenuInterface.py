@@ -6,7 +6,6 @@ from OptionsButton import OptionsButton
 from ControlsButton import ControlsButton
 from RankingButton import RankingButton
 from ToMenuButton import ToMenuButton
-from Settings import Settings
 
 
 class PauseMenuInterface(Interface):
@@ -15,7 +14,6 @@ class PauseMenuInterface(Interface):
         self.__background = pygame.image.load(
             f"backgrounds/pause_menu_background.png"
         )
-        self.__settings = Settings()
         self.__buttons_list = [ContinueButton(653, 190, "Continuar"), 
                             OptionsButton(653, 282, "Opções"),
                             ControlsButton(653, 374, "Controles"),
@@ -25,10 +23,6 @@ class PauseMenuInterface(Interface):
     @property
     def background(self):
         return self.__background
-
-    @property
-    def settings(self) -> Settings:
-        return self.__settings
 
     @property
     def buttons_list(self) -> list:

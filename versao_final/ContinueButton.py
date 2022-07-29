@@ -1,6 +1,7 @@
 from Button import Button
 from Settings import Settings
 
+
 class ContinueButton(Button):
     def __init__(self, pos_x, pos_y, text_input):
         super().__init__(pos_x, pos_y, text_input)
