@@ -13,9 +13,7 @@ from CollisionHandler import CollisionHandler
 from ControleJogador import ControleJogador
 from ControleArmas import ControleArmas
 from ControlePowerUps import ControlePowerUps
-from GrupoBalasJogador import GrupoBalasJogador
-from GrupoBalasInimigo import GrupoBalasInimigo
-
+from GrupoAtaques import GrupoAtaques
 # TODO: remover e substituir pelas classes comentadas em jogar()
 # ! início código procedural para testes
 from InimigoBasico import InimigoBasico
@@ -85,8 +83,8 @@ class new_Game:
         self.__controleJogador = ControleJogador(self.jogador)
         self.__controleArmas = ControleArmas(self.jogador)
         self.__controlePowerUps = ControlePowerUps(self.jogador)
-        self.__grupoBalasJogador = GrupoBalasJogador()
-        self.__grupoBalasInimigo = GrupoBalasInimigo()
+        self.__grupoBalasJogador = GrupoAtaques()
+        self.__grupoBalasInimigo = GrupoAtaques()
 
         self.__collisionHandler = CollisionHandler(self.jogador, self.controlePowerUps)
 
