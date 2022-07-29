@@ -61,7 +61,7 @@ inimigos_rastreadores = [
 inimigos_direcionais = [InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")]
 
 # TESTE BOSS
-# boss = Boss(400, 400, 5, 20, "assets/ChicoCunha.png", 6, 500)
+boss = Boss(400, 400, 5, 20, "assets/ChicoCunha.png", 10, 5)
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
@@ -86,29 +86,29 @@ grupo_inimigos_rastreadores = pygame.sprite.Group()
 grupo_inimigos_direcionais = pygame.sprite.Group()
 grupo_inimigos = pygame.sprite.Group()
 
-for inimigo in inimigos_basicos:
-    grupo_inimigos_basicos.add(inimigo)
-    sprites.add(inimigo)
-    grupo_inimigos.add(inimigo)
+#for inimigo in inimigos_basicos:
+#    grupo_inimigos_basicos.add(inimigo)
+#    sprites.add(inimigo)
+#    grupo_inimigos.add(inimigo)
 
-for inimigo in inimigos_atiradores:
-    grupo_inimigos_atiradores.add(inimigo)
-    sprites.add(inimigo)
-    grupo_inimigos.add(inimigo)
+#for inimigo in inimigos_atiradores:
+#    grupo_inimigos_atiradores.add(inimigo)
+#    sprites.add(inimigo)
+#    grupo_inimigos.add(inimigo)
 
-for inimigo in inimigos_rastreadores:
-    grupo_inimigos_rastreadores.add(inimigo)
-    sprites.add(inimigo)
-    grupo_inimigos.add(inimigo)
+#for inimigo in inimigos_rastreadores:
+#    grupo_inimigos_rastreadores.add(inimigo)
+#    sprites.add(inimigo)
+#    grupo_inimigos.add(inimigo)
 
-for inimigo in inimigos_direcionais:
-    grupo_inimigos_direcionais.add(inimigo)
-    sprites.add(inimigo)
-    grupo_inimigos.add(inimigo)
+#for inimigo in inimigos_direcionais:
+#    grupo_inimigos_direcionais.add(inimigo)
+#    sprites.add(inimigo)
+#    grupo_inimigos.add(inimigo)
 
 # TESTE BOSS
-# grupo_inimigos.add(boss)
-# sprites.add(boss)
+grupo_inimigos.add(boss)
+sprites.add(boss)
 
 #######################################
 
@@ -151,25 +151,32 @@ while jogando:
         # movendo o atirador com os resultados obtidos anteriormente
         atirador.mover(x, y)
 
-    for basico in grupo_inimigos_basicos:
-        basico.mover()
+    #for basico in grupo_inimigos_basicos:
+    #    basico.mover()
 
-    for rastreador in grupo_inimigos_rastreadores:
+    #for rastreador in grupo_inimigos_rastreadores:
         # achando o caminho do rastreador
-        x, y = rastreador.achar_caminho(jogador.x, jogador.y)
+    #    x, y = rastreador.achar_caminho(jogador.x, jogador.y)
 
         # movendo o rastreador com os resultados obtidos
-        rastreador.mover(x, y)
+    #    rastreador.mover(x, y)
 
-    for direcional in grupo_inimigos_direcionais:
+    #for direcional in grupo_inimigos_direcionais:
         # achando o caminho do corredor
-        x, y = direcional.achar_caminho(jogador.x, jogador.y)
+    #    x, y = direcional.achar_caminho(jogador.x, jogador.y)
 
         # movendo o corredor com os resultados obtidos
-        direcional.mover(x, y)
+    #    direcional.mover(x, y)
     
     # TESTE BOSS
-    # boss.mover()
+    boss.mover()
+    ataque = boss.atacar(jogador.rect.center[0], jogador.rect.center[1])
+    if ataque:
+        if isinstance(ataque, list):
+            for atq in ataque:
+                grupoBalasInimigo.nova_bala(atq)
+        else:
+            grupoBalasInimigo.nova_bala(ataque)
 
     jogador.mover()
     jogador.mover_arma(mouse_x, mouse_y)
