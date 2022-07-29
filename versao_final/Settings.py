@@ -16,3 +16,7 @@ class Settings(Singleton):
 
     main_font = pygame.font.Font(os.path.join("fonts", "alterebro-pixel-font.ttf"), 50)
     screen = pygame.display.set_mode((largura_tela_interface, altura_tela_interface))
+
+    volume_musica = 0.05
+
+    paused = False

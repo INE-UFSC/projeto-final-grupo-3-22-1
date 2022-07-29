@@ -91,5 +91,5 @@ class BombaLava(pygame.sprite.Sprite):
         self._hitbox = hitbox
 
     def desenhar(self):
-        pygame.draw.rect(self.globals.DISPLAY_SURF, (0, 255, 0), self._hitbox, 1)
+        #pygame.draw.rect(self.globals.DISPLAY_SURF, (0, 255, 0), self._hitbox, 1)
         self.globals.DISPLAY_SURF.blit(self._sprite, (self._pos_x, self._pos_y))

@@ -19,6 +19,10 @@ from ControlePowerUps import ControlePowerUps
 from Settings import Settings
 from Globals import Globals
 
+# não ficará no app, apenas teste provisório
+from GameOverInterface import GameOverInterface
+from PauseMenuInterface import PauseMenuInterface
+
 #######################################
 # parte do pygame (ficara no app.py)
 pygame.init()
@@ -33,6 +37,10 @@ pygame.display.set_caption("Game")
 
 #######################################
 
+# não ficará no app, apenas teste provisório
+game_over_interface = GameOverInterface()
+pause = PauseMenuInterface()
+
 inimigos_basicos = [
     InimigoBasico(350, 350, 15, 2, "assets/peixe_palhaco.png"),
     InimigoBasico(200, 470, 15, 2, "assets/bacalhau_radioativo.png"),
@@ -46,14 +54,14 @@ inimigos_atiradores = [
 ]
 
 inimigos_rastreadores = [
-    InimigoRastreador(330, 100, 3, 1, "assets/cobra.png"),
+    InimigoRastreador(330, 100, 3, 1, "assets/boitata.png"),
     InimigoRastreador(380, 120, 3, 1, "assets/cobra-esticada.png"),
 ]
 
 inimigos_direcionais = [InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")]
 
 # TESTE BOSS
-# boss = Boss(400, 400, 5, 20, "assets/ChicoCunha.png", 6, 500)
+boss = Boss(400, 400, 5, 20, "assets/ChicoCunha.png", 10, 5)
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
@@ -67,9 +75,7 @@ grupoBalasInimigo = GrupoBalasInimigo()
 controle_powerUps = ControlePowerUps(jogador)
 collisionHandler = CollisionHandler(jogador, controle_powerUps)
 
-controle_powerUps.spawn_powerUp("pureza", 100, 100)
-controle_powerUps.spawn_powerUp("tresVidas", 200, 100)
-
+controle_powerUps.spawn_powerUp("pocao", 100, 100)
 
 sprites = pygame.sprite.Group()
 sprites.add(jogador)
@@ -80,38 +86,36 @@ grupo_inimigos_rastreadores = pygame.sprite.Group()
 grupo_inimigos_direcionais = pygame.sprite.Group()
 grupo_inimigos = pygame.sprite.Group()
 
-for inimigo in inimigos_basicos:
-    grupo_inimigos_basicos.add(inimigo)
-    sprites.add(inimigo)
-    grupo_inimigos.add(inimigo)
+#for inimigo in inimigos_basicos:
+#    grupo_inimigos_basicos.add(inimigo)
+#    sprites.add(inimigo)
+#    grupo_inimigos.add(inimigo)
 
-for inimigo in inimigos_atiradores:
-    grupo_inimigos_atiradores.add(inimigo)
-    sprites.add(inimigo)
-    grupo_inimigos.add(inimigo)
+#for inimigo in inimigos_atiradores:
+#    grupo_inimigos_atiradores.add(inimigo)
+#    sprites.add(inimigo)
+#    grupo_inimigos.add(inimigo)
 
-for inimigo in inimigos_rastreadores:
-    grupo_inimigos_rastreadores.add(inimigo)
-    sprites.add(inimigo)
-    grupo_inimigos.add(inimigo)
+#for inimigo in inimigos_rastreadores:
+#    grupo_inimigos_rastreadores.add(inimigo)
+#    sprites.add(inimigo)
+#    grupo_inimigos.add(inimigo)
 
-for inimigo in inimigos_direcionais:
-    grupo_inimigos_direcionais.add(inimigo)
-    sprites.add(inimigo)
-    grupo_inimigos.add(inimigo)
+#for inimigo in inimigos_direcionais:
+#    grupo_inimigos_direcionais.add(inimigo)
+#    sprites.add(inimigo)
+#    grupo_inimigos.add(inimigo)
 
 # TESTE BOSS
-# grupo_inimigos.add(boss)
-# sprites.add(boss)
+grupo_inimigos.add(boss)
+sprites.add(boss)
 
 #######################################
 
 jogando = True
 while jogando:
     if jogador.morto:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                jogando = False
+        game_over_interface.interfaceLoop()
         continue  # continue faz com que se esse if seja ativado, o while loop vai continuar aqui dentro e não passar pros próximos
 
     mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -119,6 +123,11 @@ while jogando:
         if event.type == QUIT:
             pygame.quit()
             sys.exit
+        
+        # não ficará no app, apenas teste provisório
+        if event.type == pygame.KEYDOWN:
+            if event.key == K_ESCAPE:
+                pause.interfaceLoop()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             tiro = jogador.atirar(mouse_x, mouse_y)
@@ -142,25 +151,32 @@ while jogando:
         # movendo o atirador com os resultados obtidos anteriormente
         atirador.mover(x, y)
 
-    for basico in grupo_inimigos_basicos:
-        basico.mover()
+    #for basico in grupo_inimigos_basicos:
+    #    basico.mover()
 
-    for rastreador in grupo_inimigos_rastreadores:
+    #for rastreador in grupo_inimigos_rastreadores:
         # achando o caminho do rastreador
-        x, y = rastreador.achar_caminho(jogador.x, jogador.y)
+    #    x, y = rastreador.achar_caminho(jogador.x, jogador.y)
 
         # movendo o rastreador com os resultados obtidos
-        rastreador.mover(x, y)
+    #    rastreador.mover(x, y)
 
-    for direcional in grupo_inimigos_direcionais:
+    #for direcional in grupo_inimigos_direcionais:
         # achando o caminho do corredor
-        x, y = direcional.achar_caminho(jogador.x, jogador.y)
+    #    x, y = direcional.achar_caminho(jogador.x, jogador.y)
 
         # movendo o corredor com os resultados obtidos
-        direcional.mover(x, y)
+    #    direcional.mover(x, y)
     
     # TESTE BOSS
-    # boss.mover()
+    boss.mover()
+    ataque = boss.atacar(jogador.rect.center[0], jogador.rect.center[1])
+    if ataque:
+        if isinstance(ataque, list):
+            for atq in ataque:
+                grupoBalasInimigo.nova_bala(atq)
+        else:
+            grupoBalasInimigo.nova_bala(ataque)
 
     jogador.mover()
     jogador.mover_arma(mouse_x, mouse_y)

@@ -5,7 +5,6 @@ from pygame.locals import *
 class Arma:
     def __init__(
         self,
-        preco: int,
         velocidade_projetil: int,
         dano: int,
         cadencia: int,
@@ -18,7 +17,6 @@ class Arma:
             "cadencia": cadencia,  # milisegundos
             "durabilidade_bala": durabilidade_bala,
         }
-        self.__preco = preco
 
         self.__sprite_bala = pygame.image.load(f"assets/{nome_sprite}.png")
         self.__nome_sprite = "assets/" + nome_sprite + ".png"
@@ -26,10 +24,6 @@ class Arma:
     @property
     def stats(self) -> dict:
         return self.__stats
-
-    @property
-    def preco(self) -> int:
-        return self.__preco
 
     @property
     def nome_sprite(self) -> str:

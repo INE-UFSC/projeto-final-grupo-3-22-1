@@ -83,7 +83,7 @@ class PowerUp(ABC, pygame.sprite.Sprite):
     def definir_coordenadas(self, pos_x, pos_y):
         self.__pos_x = pos_x
         self.__pos_y = pos_y
-        
+
         self.__rect.center = (
             int(pos_x),
             int(pos_y),
