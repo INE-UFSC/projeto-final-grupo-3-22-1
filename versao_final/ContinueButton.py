@@ -13,5 +13,4 @@ class ContinueButton(Button):
 
     def nextStep(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
-            #trocar pela função do main loop que será criada na interface InGame
             self.settings.paused = False
