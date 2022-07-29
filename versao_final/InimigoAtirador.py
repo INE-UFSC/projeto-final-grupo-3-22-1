@@ -8,7 +8,7 @@ from Settings import Settings
 from Globals import Globals
 from Bala import Bala
 from Inimigo import Inimigo
-from BombaTinta import BombaTinta
+from Bomba import Bomba
 
 class InimigoAtirador(Inimigo):
     """
@@ -120,7 +120,7 @@ class InimigoAtirador(Inimigo):
             if tempo_agora - self._tempo_ultimo_caminho > 1500:
                 self._tempo_ultimo_caminho = tempo_agora
 
-                bomba_tinta = BombaTinta(
+                bomba_tinta = Bomba(
                     x,
                     y,
                     pygame.image.load("assets/mancha_tinta.png"),

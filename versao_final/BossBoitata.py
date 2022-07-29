@@ -1,16 +1,10 @@
 from cmath import cos, sin
 from math import atan2
 import pygame
-import random as rd
-from math import sin, cos, atan2, hypot
+from math import sin, cos, atan2
 
 from Boss import Boss
-from Settings import Settings
-from Globals import Globals
 from Bala import Bala
-from BombaVeneno import BombaVeneno
-from BombaLava import BombaLava
-
 
 class BossBoitata(Boss):
     def __init__(

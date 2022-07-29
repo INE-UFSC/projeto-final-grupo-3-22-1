@@ -9,9 +9,7 @@ from Inimigo import Inimigo
 from Settings import Settings
 from Globals import Globals
 from Bala import Bala
-from BombaVeneno import BombaVeneno
-from BombaLava import BombaLava
-
+from Bomba import Bomba
 
 class Boss(pygame.sprite.Sprite):
     def __init__(
@@ -68,18 +66,18 @@ class Boss(pygame.sprite.Sprite):
         ang_diff = -0.75
         for _ in range(5):
             speed_x, speed_y = self._vel_atq * cos(angulo+ang_diff), self._vel_atq * sin(angulo+ang_diff)
-            bala = Bala(self._rect.x, self._rect.y, speed_x, speed_y, pygame.image.load("assets/isca.png"), 3, 20)
+            bala = Bala(self._rect.center[0], self._rect.center[1], speed_x, speed_y, pygame.image.load("assets/isca.png"), 3, 20)
             balas_boss.append(bala)
             ang_diff += 0.35
         
         return balas_boss
 
     def _ataque_proximo(self, x, y):
-        return BombaVeneno(x, y, pygame.image.load("assets/mancha_veneno.png"), 5)
+        return Bomba(x, y, pygame.image.load("assets/mancha_veneno.png"), 5)
 
     def _ataque_especial(self, x, y):
 
-        return BombaLava(
+        return Bomba(
             x + rd.choice([-80, -110, 80, 110]),
             y + rd.choice([-80, -110, 80, 110]),
             pygame.image.load("assets/mancha_lava.png"),

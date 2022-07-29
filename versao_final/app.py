@@ -8,6 +8,8 @@ from InimigoRastreador import InimigoRastreador
 from InimigoAtirador import InimigoAtirador
 from InimigoDirecional import InimigoDirecional
 from BossBoitata import BossBoitata
+from BossBaleia import BossBaleia
+from DragaoAgua import DragaoAgua
 
 from ControleArmas import ControleArmas
 from ControleJogador import ControleJogador
@@ -61,7 +63,8 @@ inimigos_rastreadores = [
 inimigos_direcionais = [InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")]
 
 # TESTE BOSS
-boss = BossBoitata(400, 400, 5, 20, "assets/boitata.png", 10, 5)
+#boss = BossBoitata(400, 400, 5, 20, "assets/boitata.png", 10, 5)
+boss = BossBaleia(400, 400, 5, 20, "assets/baleia_braba.png", 10, 5)
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
@@ -176,7 +179,11 @@ while jogando:
             for atq in ataque:
                 grupoBalasInimigo.nova_bala(atq)
         else:
-            grupoBalasInimigo.nova_bala(ataque)
+            if isinstance(ataque, DragaoAgua):
+                grupo_inimigos.add(ataque)
+                sprites.add(ataque)
+            else:
+                grupoBalasInimigo.nova_bala(ataque)
 
     jogador.mover()
     jogador.mover_arma(mouse_x, mouse_y)
