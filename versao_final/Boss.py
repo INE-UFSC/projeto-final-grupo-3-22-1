@@ -2,7 +2,7 @@ from cmath import cos, sin
 from math import atan2
 import pygame
 import random as rd
-from math import sin, cos, atan2
+from math import sin, cos, atan2, hypot
 
 from Settings import Settings
 from Globals import Globals
@@ -39,17 +39,20 @@ class Boss(pygame.sprite.Sprite):
     def atacar(self, jogador_x, jogador_y):
         tempo_agora = pygame.time.get_ticks()
 
-        if tempo_agora - self._tempo_ultimo_atq >= 1000:
+        if tempo_agora - self._tempo_ultimo_atq >= 3000:
             choice = rd.choice([0, 1])
 
             self._tempo_ultimo_atq = tempo_agora
 
-            if abs(jogador_x - self._rect.x) < 100:
+            distx, disty = jogador_x - self._rect.x, jogador_y - self._rect.y
+            hipotenusa = hypot(disty, distx)
+
+            if abs(hipotenusa) < 200:
                 return self._ataque_proximo(self._rect.center[0], self._rect.center[1])
 
-            #if choice == 0:
-            return self._ataque_distancia(jogador_x, jogador_y)
-            #return self._ataque_especial(jogador_x, jogador_y)
+            if choice == 0:
+                return self._ataque_distancia(jogador_x, jogador_y)
+            return self._ataque_especial(jogador_x, jogador_y)
 
     def _ataque_distancia(self, jogador_x, jogador_y):
         # calcula as distâncias da posição do jogador à posição do inimigo
@@ -59,30 +62,17 @@ class Boss(pygame.sprite.Sprite):
         # calcula o ângulo entre essas distâncias e com isso calcula a velocidade do projétil
         angulo = atan2(distancia_y, distancia_x)
 
-        speed_x1, speed_y1 = self._vel_atq * cos(angulo), self._vel_atq * sin(angulo)
-        speed_x2, speed_y2 = self._vel_atq * cos(angulo-0.75), self._vel_atq * sin(angulo-0.75)
-        speed_x3, speed_y3 = self._vel_atq * cos(angulo-0.325), self._vel_atq * sin(angulo-0.325)
-        speed_x4, speed_y4 = self._vel_atq * cos(angulo+0.75), self._vel_atq * sin(angulo+0.75)
-        speed_x5, speed_y5 = self._vel_atq * cos(angulo+0.325), self._vel_atq * sin(angulo+0.325)
+        balas_boss = []
+        ang_diff = -0.75
+        for _ in range(5):
+            speed_x, speed_y = self._vel_atq * cos(angulo+ang_diff), self._vel_atq * sin(angulo+ang_diff)
+            bala = Bala(self._rect.x, self._rect.y, speed_x, speed_y, pygame.image.load("assets/isca.png"), 3, 20)
+            balas_boss.append(bala)
+            ang_diff += 0.35
         
-
-        balas_boss = [
-            Bala(self._rect.x, self._rect.y, speed_x1, speed_y1, pygame.image.load("assets/isca.png"), 3, 20),
-            Bala(self._rect.x, self._rect.y, speed_x2, speed_y2, pygame.image.load("assets/isca.png"), 3, 20),
-            Bala(self._rect.x, self._rect.y, speed_x3, speed_y3, pygame.image.load("assets/isca.png"), 3, 20),
-            Bala(self._rect.x, self._rect.y, speed_x4, speed_y4, pygame.image.load("assets/isca.png"), 3, 20),
-            Bala(self._rect.x, self._rect.y, speed_x5, speed_y5, pygame.image.load("assets/isca.png"), 3, 20)
-        ]
-
         return balas_boss
 
     def _ataque_proximo(self, x, y):
-
-        #signal = 1
-        #self._rect.x += signal
-        #self._rect.y += signal
-        #signal *= -1
-
         return BombaVeneno(x, y, pygame.image.load("assets/mancha_veneno.png"), 5)
 
     def _ataque_especial(self, x, y):

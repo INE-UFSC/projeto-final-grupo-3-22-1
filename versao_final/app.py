@@ -53,7 +53,7 @@ inimigos_rastreadores = [
 inimigos_direcionais = [InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")]
 
 # TESTE BOSS
-boss = Boss(400, 400, 5, 20, "assets/ChicoCunha.png", 10, 2)
+boss = Boss(400, 400, 5, 20, "assets/ChicoCunha.png", 10, 5)
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
@@ -163,11 +163,11 @@ while jogando:
     boss.mover()
     ataque = boss.atacar(jogador.rect.center[0], jogador.rect.center[1])
     if ataque:
-     #   if isinstance(ataque, list):
-        for atq in ataque:
-            grupoBalasInimigo.nova_bala(atq)
-        #else:
-           # grupoBalasInimigo.nova_bala(ataque)
+        if isinstance(ataque, list):
+            for atq in ataque:
+                grupoBalasInimigo.nova_bala(atq)
+        else:
+            grupoBalasInimigo.nova_bala(ataque)
 
     jogador.mover()
     jogador.mover_arma(mouse_x, mouse_y)
