@@ -11,7 +11,7 @@ from Globals import Globals
 from Bala import Bala
 from Bomba import Bomba
 
-class Boss(pygame.sprite.Sprite):
+class Boss(ABC, pygame.sprite.Sprite):
     def __init__(
         self,
         x: int,
@@ -96,6 +96,9 @@ class Boss(pygame.sprite.Sprite):
     
     def receber_dano(self, dano):
         self._vida -= dano
+
+        if self._vida <= 0:
+            self.kill()
     
     @property
     def sprite(self) -> str:
