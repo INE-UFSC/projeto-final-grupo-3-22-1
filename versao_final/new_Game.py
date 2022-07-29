@@ -83,8 +83,7 @@ class new_Game:
         self.__controleJogador = ControleJogador(self.jogador)
         self.__controleArmas = ControleArmas(self.jogador)
         self.__controlePowerUps = ControlePowerUps(self.jogador)
-        self.__grupoBalasJogador = GrupoAtaques()
-        self.__grupoBalasInimigo = GrupoAtaques()
+        self.__grupoAtaques = GrupoAtaques()
 
         self.__collisionHandler = CollisionHandler(self.jogador, self.controlePowerUps)
 
@@ -135,12 +134,8 @@ class new_Game:
         return self.__controlePowerUps
 
     @property
-    def grupoBalasJogador(self) -> GrupoBalasJogador:
-        return self.__grupoBalasJogador
-
-    @property
-    def grupoBalasInimigo(self) -> GrupoBalasInimigo:
-        return self.__grupoBalasInimigo
+    def grupoAtaques(self) -> GrupoAtaques:
+        return self.__grupoAtaques
 
     @property
     def collisionHandler(self) -> CollisionHandler:
