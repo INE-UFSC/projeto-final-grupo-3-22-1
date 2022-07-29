@@ -13,10 +13,10 @@ from DragaoAgua import DragaoAgua
 
 from ControleArmas import ControleArmas
 from ControleJogador import ControleJogador
-from GrupoBalasJogador import GrupoBalasJogador
-from GrupoBalasInimigo import GrupoBalasInimigo
+from GrupoAtaques import GrupoAtaques
 from CollisionHandler import CollisionHandler
 from ControlePowerUps import ControlePowerUps
+
 
 from Settings import Settings
 from Globals import Globals
@@ -64,7 +64,7 @@ inimigos_direcionais = [InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.
 
 # TESTE BOSS
 #boss = BossBoitata(400, 400, 5, 20, "assets/boitata.png", 10, 5)
-boss = BossBaleia(400, 400, 5, 20, "assets/baleia_braba.png", 10, 5)
+#boss = BossBaleia(400, 400, 5, 20, "assets/baleia_braba.png", 10, 5)
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
@@ -73,8 +73,8 @@ controleArmas.trocar_arma("arpao")
 
 controleArmas = ControleArmas(jogador)
 controleJogador = ControleJogador(jogador)
-grupoBalasJogador = GrupoBalasJogador()
-grupoBalasInimigo = GrupoBalasInimigo()
+grupoBalasJogador = GrupoAtaques()
+grupoBalasInimigo = GrupoAtaques()
 controle_powerUps = ControlePowerUps(jogador)
 collisionHandler = CollisionHandler(jogador, controle_powerUps)
 
@@ -94,10 +94,10 @@ grupo_inimigos = pygame.sprite.Group()
 #    sprites.add(inimigo)
 #    grupo_inimigos.add(inimigo)
 
-#for inimigo in inimigos_atiradores:
-#    grupo_inimigos_atiradores.add(inimigo)
-#    sprites.add(inimigo)
-#    grupo_inimigos.add(inimigo)
+for inimigo in inimigos_atiradores:
+    grupo_inimigos_atiradores.add(inimigo)
+    sprites.add(inimigo)
+    grupo_inimigos.add(inimigo)
 
 #for inimigo in inimigos_rastreadores:
 #    grupo_inimigos_rastreadores.add(inimigo)
@@ -110,8 +110,8 @@ grupo_inimigos = pygame.sprite.Group()
 #    grupo_inimigos.add(inimigo)
 
 # TESTE BOSS
-grupo_inimigos.add(boss)
-sprites.add(boss)
+#grupo_inimigos.add(boss)
+#sprites.add(boss)
 
 #######################################
 
@@ -172,18 +172,18 @@ while jogando:
     #    direcional.mover(x, y)
     
     # TESTE BOSS
-    boss.mover()
-    ataque = boss.atacar(jogador.rect.center[0], jogador.rect.center[1])
-    if ataque:
-        if isinstance(ataque, list):
-            for atq in ataque:
-                grupoBalasInimigo.nova_bala(atq)
-        else:
-            if isinstance(ataque, DragaoAgua):
-                grupo_inimigos.add(ataque)
-                sprites.add(ataque)
-            else:
-                grupoBalasInimigo.nova_bala(ataque)
+    #boss.mover()
+    #ataque = boss.atacar(jogador.rect.center[0], jogador.rect.center[1])
+    #if ataque:
+    #    if isinstance(ataque, list):
+    #        for atq in ataque:
+    #            grupoBalasInimigo.nova_bala(atq)
+    #    else:
+    #        if isinstance(ataque, DragaoAgua):
+    #            grupo_inimigos.add(ataque)
+    #            sprites.add(ataque)
+    #        else:
+    #            grupoBalasInimigo.nova_bala(ataque)
 
     jogador.mover()
     jogador.mover_arma(mouse_x, mouse_y)

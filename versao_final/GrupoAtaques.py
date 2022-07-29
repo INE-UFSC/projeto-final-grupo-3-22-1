@@ -1,5 +1,3 @@
-from abc import ABC, abstractmethod
-
 import pygame
 from pygame.locals import *
 
@@ -8,8 +6,7 @@ from Settings import Settings
 from Bala import Bala
 
 
-class GrupoBalas(ABC, pygame.sprite.Sprite):
-    @abstractmethod
+class GrupoAtaques(pygame.sprite.Sprite):
     def __init__(self):
         self.__grupo_balas = pygame.sprite.Group()
         self.__settings = Settings()

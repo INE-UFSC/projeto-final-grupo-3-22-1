@@ -48,10 +48,6 @@ class Bala(pygame.sprite.Sprite):
         self.__pos_y = posicao
 
     @property
-    def rect(self):
-        return self.__rect
-
-    @property
     def sprite(self):
         return self.__sprite
 
