@@ -6,6 +6,8 @@ from Settings import Settings
 from Globals import Globals
 
 from MainMenuInterface import MainMenuInterface
+from PauseMenuInterface import PauseMenuInterface
+from GameOverInterface import GameOverInterface
 
 from Jogador import Jogador
 from CollisionHandler import CollisionHandler
@@ -185,10 +187,7 @@ class new_Game:
         while self.jogando:
             if self.jogador.morto:
                 # TODO: trocar por tela de fim de jogo
-                for event in pygame.event.get():
-                    if event.type == QUIT:
-                        self.jogando = False
-                continue
+                self.finalizar_jogo()
 
             mouse_x, mouse_y = pygame.mouse.get_pos()
             for event in pygame.event.get():
@@ -259,3 +258,7 @@ class new_Game:
 
             self.render_screen()
             self.FPS.tick(self.settings.FPS_VALUE)
+
+    def finalizar_jogo(self):
+        game_over = GameOverInterface()
+        game_over.interfaceLoop()
