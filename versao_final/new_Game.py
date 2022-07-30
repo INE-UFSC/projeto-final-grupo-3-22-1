@@ -16,8 +16,7 @@ from ControleJogador import ControleJogador
 from ControleArmas import ControleArmas
 from ControlePowerUps import ControlePowerUps
 from GrupoAtaques import GrupoAtaques
-# TODO: remover e substituir pelas classes comentadas em jogar()
-# ! início código procedural para testes
+
 from InimigoBasico import InimigoBasico
 from InimigoAtirador import InimigoAtirador
 from InimigoRastreador import InimigoRastreador
@@ -67,7 +66,6 @@ for inimigo in inimigos_direcionais:
     grupo_inimigos_direcionais.add(inimigo)
     sprites.add(inimigo)
     grupo_inimigos.add(inimigo)
-# ! fim código procedural
 
 
 class new_Game:
@@ -107,10 +105,7 @@ class new_Game:
         def blocks(self):
             return self.__blocks
 
-        # ! início seção transitória; remover após implementação
-        # TODO: remover essa seção de código (implementação transitória)
         sprites.add(self.jogador)
-        # ! fim seção transitória
 
     # getters and setters
     @property
@@ -175,7 +170,6 @@ class new_Game:
         pygame.display.update()
 
     def jogar(self):
-        # TODO: chamar os menus primeiro
         self.render_screen()
         main_menu = MainMenuInterface()
         main_menu.interfaceLoop()
@@ -183,10 +177,8 @@ class new_Game:
         self.comecar_jogo()
 
     def comecar_jogo(self):
-        # TODO: criar outra função que inicie o main loop em si
         while self.jogando:
             if self.jogador.morto:
-                # TODO: trocar por tela de fim de jogo
                 self.finalizar_jogo()
 
             mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -204,12 +196,8 @@ class new_Game:
                     if tiro:
                         self.grupoAtaquesJogador.nova_bala(tiro)
 
-            # ! inicio seção transitória
-            # TODO: implementar mapa; substituir por função de renderizar o mapa
-            # fundo de tela branco
             self.globals.DISPLAY_SURF.fill((255, 255, 255))
 
-            # TODO: implementar controleInimigos
             # percorre todos os inimigos atiradores e executa suas funções
             for atirador in grupo_inimigos_atiradores:
                 # fazendo o atirador atirar
@@ -239,7 +227,6 @@ class new_Game:
 
                 # movendo o corredor com os resultados obtidos
                 direcional.mover(x, y)
-            # ! fim seção transitória
 
             self.jogador.mover()
             self.jogador.mover_arma(mouse_x, mouse_y)
@@ -254,7 +241,7 @@ class new_Game:
                 self.globals.DISPLAY_SURF.blit(entity.sprite, entity.rect)
 
             self.collisionHandler.verificar_colisoes(
-                grupo_inimigos,  # TODO: trocar pela implementação feita para o grupo de inimigos
+                grupo_inimigos,
                 self.grupoAtaquesJogador.grupo_balas,
                 self.grupoAtaquesInimigo.grupo_balas,
                 self.controlePowerUps.grupo_powerUps.grupo_todos_caidos,
