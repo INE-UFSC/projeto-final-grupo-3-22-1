@@ -85,7 +85,7 @@ class Game:
         self.__grupoAtaquesInimigo = GrupoAtaques()
         self.__grupoAtaquesJogador = GrupoAtaques()
 
-        self.__collisionHandler = CollisionHandler(self.jogador, self.controlePowerUps)
+        self.__collisionHandler = CollisionHandler(self.jogador, self.controlePowerUps, self.controleArmas)
 
         self.mapa = Mapa('teste', 2, 'teste2')
         self.background_sprites, self.blocks = self.mapa.change_map(["BBBBBBBBBBBBBBBBBBBB","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","BBBBBBBBBBBBBBBBBBBB"])

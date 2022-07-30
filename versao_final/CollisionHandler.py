@@ -1,13 +1,17 @@
 from Jogador import Jogador
 from ControlePowerUps import ControlePowerUps
+from ControleArmas import ControleArmas
+from Boss import Boss
+from random import choice
 
 import pygame
 from pygame.locals import *
 
 
 class CollisionHandler(pygame.sprite.Sprite):
-    def __init__(self, jogador: Jogador, controlePowerUps: ControlePowerUps):
+    def __init__(self, jogador: Jogador, controlePowerUps: ControlePowerUps, controleArmas: ControleArmas):
         self.__jogador = jogador
+        self.__controleArmas = controleArmas
         self.__controlePowerUps = controlePowerUps
 
     @property
@@ -17,6 +21,10 @@ class CollisionHandler(pygame.sprite.Sprite):
     @property
     def controlePowerUps(self) -> ControlePowerUps:
         return self.__controlePowerUps
+    
+    @property
+    def controleArmas(self) -> ControleArmas:
+        return self.__controleArmas
 
     # funcao que chama todas verificaoes de colisao necessarias
     def verificar_colisoes(
@@ -47,6 +55,9 @@ class CollisionHandler(pygame.sprite.Sprite):
 
                 if inimigo.vida <= 0:
                     self.controlePowerUps.calcular_drop(inimigo.x, inimigo.y)
+                    if isinstance(inimigo, Boss):
+                        lista_armas = ["isca", "rede", "arpao"]
+                        self.controleArmas.trocar_arma(choice(lista_armas))
 
     # colisao entre balas disparadas por inimigos e jogador
     def colisao_bala_jogador(self, grupo_balas_inimigos):
