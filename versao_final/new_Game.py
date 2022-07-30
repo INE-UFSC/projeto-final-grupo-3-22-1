@@ -190,10 +190,14 @@ class new_Game:
                 self.finalizar_jogo()
 
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            for event in pygame.event.get():
+            for event in pygame.event.get():              
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        self.pausar_jogo()
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     tiro = self.jogador.atirar(mouse_x, mouse_y)
@@ -262,3 +266,7 @@ class new_Game:
     def finalizar_jogo(self):
         game_over = GameOverInterface()
         game_over.interfaceLoop()
+
+    def pausar_jogo(self):
+        pausar_jogo = PauseMenuInterface()
+        pausar_jogo.interfaceLoop()

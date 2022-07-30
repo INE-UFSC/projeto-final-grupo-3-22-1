@@ -51,7 +51,6 @@ class MainMenuInterface(Interface):
                         comecou = button.nextStep(pygame.mouse.get_pos())
                         
                         if comecou:
-                            print("aqui dentor")
                             iniciar_jogo = True
                             break
                     button.changeColor(pygame.mouse.get_pos())
@@ -61,8 +60,5 @@ class MainMenuInterface(Interface):
                 break
             
             if iniciar_jogo:
-                print(64)
                 break
         return True
-
-   
