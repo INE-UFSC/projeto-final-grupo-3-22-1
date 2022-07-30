@@ -63,8 +63,8 @@ inimigos_rastreadores = [
 inimigos_direcionais = [InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")]
 
 # TESTE BOSS
-boss = BossBoitata(400, 400, 5, 20, "assets/boitata.png", 10, 5)
-#boss = BossBaleia(400, 400, 5, 20, "assets/baleia_braba.png", 10, 5)
+#boss = BossBoitata(400, 400, 5, 20, "assets/boitata.png", 10, 5)
+boss = BossBaleia(400, 400, 5, 20, "assets/baleia_braba.png", 10, 5)
 
 jogador = Jogador(vida=20, velocidade_movimento=8)
 
@@ -78,7 +78,7 @@ grupoBalasInimigo = GrupoAtaques()
 controle_powerUps = ControlePowerUps(jogador)
 collisionHandler = CollisionHandler(jogador, controle_powerUps)
 
-controle_powerUps.spawn_powerUp("pocao", 100, 100)
+controle_powerUps.spawn_powerUp("pureza", 100, 100)
 
 sprites = pygame.sprite.Group()
 sprites.add(jogador)
@@ -94,10 +94,10 @@ grupo_inimigos = pygame.sprite.Group()
 #    sprites.add(inimigo)
 #    grupo_inimigos.add(inimigo)
 
-#for inimigo in inimigos_atiradores:
-#    grupo_inimigos_atiradores.add(inimigo)
-#    sprites.add(inimigo)
-#    grupo_inimigos.add(inimigo)
+for inimigo in inimigos_atiradores:
+    grupo_inimigos_atiradores.add(inimigo)
+    sprites.add(inimigo)
+    grupo_inimigos.add(inimigo)
 
 #for inimigo in inimigos_rastreadores:
 #    grupo_inimigos_rastreadores.add(inimigo)
@@ -109,12 +109,9 @@ grupo_inimigos = pygame.sprite.Group()
 #    sprites.add(inimigo)
 #    grupo_inimigos.add(inimigo)
 
-# TESTE BOSS
-grupo_inimigos.add(boss)
-sprites.add(boss)
-
 #######################################
 
+boss_em_inimigos = False
 jogando = True
 while jogando:
     if jogador.morto:
@@ -138,6 +135,8 @@ while jogando:
             if tiro:
                 grupoBalasJogador.nova_bala(tiro)
 
+
+    n_inimigos_vivos = len(grupo_inimigos)
     # fundo branco
     globals.DISPLAY_SURF.fill((255, 255, 255))
 
@@ -154,36 +153,43 @@ while jogando:
         # movendo o atirador com os resultados obtidos anteriormente
         atirador.mover(x, y)
 
-    #for basico in grupo_inimigos_basicos:
-    #    basico.mover()
+        print(len(grupo_inimigos_atiradores), "grupo de inimigos atiradores")
 
-    #for rastreador in grupo_inimigos_rastreadores:
+    for basico in grupo_inimigos_basicos:
+        basico.mover()
+
+    for rastreador in grupo_inimigos_rastreadores:
         # achando o caminho do rastreador
-    #    x, y = rastreador.achar_caminho(jogador.x, jogador.y)
+        x, y = rastreador.achar_caminho(jogador.x, jogador.y)
 
         # movendo o rastreador com os resultados obtidos
-    #    rastreador.mover(x, y)
+        rastreador.mover(x, y)
 
-    #for direcional in grupo_inimigos_direcionais:
+    for direcional in grupo_inimigos_direcionais:
         # achando o caminho do corredor
-    #    x, y = direcional.achar_caminho(jogador.x, jogador.y)
+        x, y = direcional.achar_caminho(jogador.x, jogador.y)
 
         # movendo o corredor com os resultados obtidos
-    #    direcional.mover(x, y)
-    
-    # TESTE BOSS
-    boss.mover()
-    ataque = boss.atacar(jogador.rect.center[0], jogador.rect.center[1])
-    if ataque:
-        if isinstance(ataque, list):
-            for atq in ataque:
-                grupoBalasInimigo.nova_bala(atq)
-        else:
-            if isinstance(ataque, DragaoAgua):
-                grupo_inimigos.add(ataque)
-                sprites.add(ataque)
+        direcional.mover(x, y)
+
+    if n_inimigos_vivos == 0 or boss_em_inimigos:
+        # TESTE BOSS
+        boss_em_inimigos = True
+        grupo_inimigos.add(boss)
+        sprites.add(boss)
+        
+        boss.mover()
+        ataque = boss.atacar(jogador.rect.center[0], jogador.rect.center[1])
+        if ataque:
+            if isinstance(ataque, list):
+                for atq in ataque:
+                    grupoBalasInimigo.nova_bala(atq)
             else:
-                grupoBalasInimigo.nova_bala(ataque)
+                if isinstance(ataque, DragaoAgua):
+                    grupo_inimigos.add(ataque)
+                    sprites.add(ataque)
+                else:
+                    grupoBalasInimigo.nova_bala(ataque)
 
     jogador.mover()
     jogador.mover_arma(mouse_x, mouse_y)
