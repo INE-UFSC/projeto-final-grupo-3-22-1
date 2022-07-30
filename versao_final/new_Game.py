@@ -12,7 +12,6 @@ from GameOverInterface import GameOverInterface
 from Jogador import Jogador
 from CollisionHandler import CollisionHandler
 
-from ControleJogador import ControleJogador
 from ControleArmas import ControleArmas
 from ControlePowerUps import ControlePowerUps
 from GrupoAtaques import GrupoAtaques
@@ -81,7 +80,6 @@ class new_Game:
         self.__globals = Globals()
 
         # controladores e grupos
-        self.__controleJogador = ControleJogador(self.jogador)
         self.__controleArmas = ControleArmas(self.jogador)
         self.__controlePowerUps = ControlePowerUps(self.jogador)
         self.__grupoAtaquesInimigo = GrupoAtaques()
@@ -136,9 +134,6 @@ class new_Game:
     def globals(self) -> Globals:
         return self.__globals
 
-    @property
-    def controleJogador(self) -> ControleJogador:
-        return self.__controleJogador
 
     @property
     def controleArmas(self) -> ControleArmas:
