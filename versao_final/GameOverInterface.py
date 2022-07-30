@@ -1,7 +1,7 @@
 import pygame
 import sys
 from Interface import Interface
-from ToMenuButton import ToMenuButton
+from QuitButton import QuitButton
 
 
 class GameOverInterface(Interface):
@@ -13,7 +13,7 @@ class GameOverInterface(Interface):
         self.__background = pygame.image.load(
             "backgrounds/game_over_background.png"
         )
-        self.__buttons_list = [ToMenuButton(665, 450, "Menu Principal")
+        self.__buttons_list = [QuitButton(665, 450, "Sair")
                             ]
         self.__clock = pygame.time.Clock()
         self.__song = "songs/game_over_song.mp3"
