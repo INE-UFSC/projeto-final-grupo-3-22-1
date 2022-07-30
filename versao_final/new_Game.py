@@ -248,5 +248,5 @@ class new_Game:
                 self.controlePowerUps.grupo_powerUps.grupo_todos_caidos,
             )
 
-            pygame.display.update()
+            self.render_screen()
             self.FPS.tick(self.settings.FPS_VALUE)
