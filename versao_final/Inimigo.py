@@ -20,6 +20,7 @@ class Inimigo(pygame.sprite.Sprite, ABC):
         self._velocidade = velocidade
         self._dano = dano
         self._sprite = pygame.image.load(sprite)
+        self.image = self.sprite
         self._rect = self._sprite.get_rect(center=(self._x, self._y))
         self._vida = vida
         
