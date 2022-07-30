@@ -84,13 +84,12 @@ class new_Game:
         self.__controleJogador = ControleJogador(self.jogador)
         self.__controleArmas = ControleArmas(self.jogador)
         self.__controlePowerUps = ControlePowerUps(self.jogador)
-        self.grupoBalasJogador = GrupoAtaques()
-        self.grupoBalasInimigo = GrupoAtaques()
+        self.__grupoAtaques = GrupoAtaques()
 
         self.__collisionHandler = CollisionHandler(self.jogador, self.controlePowerUps)
 
         self.mapa = Mapa('teste', 2, 'teste2')
-        self.background_sprites, self.blocks = self.mapa.change_map(["BBBBBBBBBBBBBBBBBBBB","B.aaaaaa...........B","B.aaaaaa...........B","B.aaaaaa...........B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","BBBBBBBBBBBBBBBBBBBB"])
+        self.background_sprites, self.blocks = self.mapa.change_map(["BBBBBBBBBBBBBBBBBBBB","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","BBBBBBBBBBBBBBBBBBBB"])
         self.mapa.draw_map([self.background_sprites, self.blocks], self.globals.DISPLAY_SURF)
 
         @property
@@ -151,13 +150,9 @@ class new_Game:
     def controlePowerUps(self) -> ControlePowerUps:
         return self.__controlePowerUps
 
-    #@property
-    #def grupoBalasJogador(self) -> GrupoBalasJogador:
-    #    return self.__grupoBalasJogador
-
-    #@property
-    #def grupoBalasInimigo(self) -> GrupoBalasInimigo:
-    #    return self.__grupoBalasInimigo
+    @property
+    def grupoAtaques(self) -> GrupoAtaques:
+        return self.__grupoAtaques
 
     @property
     def collisionHandler(self) -> CollisionHandler:
@@ -167,8 +162,7 @@ class new_Game:
         self.globals.DISPLAY_SURF.fill((255, 255, 255))
         self.background_sprites.draw(self.globals.DISPLAY_SURF)
         sprites.draw(self.globals.DISPLAY_SURF)
-        self.grupoBalasJogador.desenhar()
-        self.grupoBalasInimigo.desenhar()
+        self.grupoAtaques.desenhar()
         self.blocks.draw(self.globals.DISPLAY_SURF)
         pygame.display.update()
 
