@@ -20,7 +20,6 @@ from InimigoBasico import InimigoBasico
 from InimigoAtirador import InimigoAtirador
 from InimigoRastreador import InimigoRastreador
 from InimigoDirecional import InimigoDirecional
-from Mapa import Mapa
 
 inimigos_basicos = [
     InimigoBasico(350, 350, 15, 2, "assets/peixe_palhaco.png"),
@@ -87,22 +86,6 @@ class new_Game:
 
         self.__collisionHandler = CollisionHandler(self.jogador, self.controlePowerUps, self.controleArmas)
 
-        self.mapa = Mapa('teste', 2, 'teste2')
-        self.background_sprites, self.blocks = self.mapa.change_map(["BBBBBBBBBBBBBBBBBBBB","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","BBBBBBBBBBBBBBBBBBBB"])
-        self.mapa.draw_map([self.background_sprites, self.blocks], self.globals.DISPLAY_SURF)
-
-        @property
-        def mapa(self) -> Mapa:
-            return self.__mapa
-
-        @property
-        def background_sprites(self):
-            return self.__background_sprites
-
-        @property 
-        def blocks(self):
-            return self.__blocks
-
         sprites.add(self.jogador)
 
     # getters and setters
@@ -155,17 +138,8 @@ class new_Game:
     def collisionHandler(self) -> CollisionHandler:
         return self.__collisionHandler
 
-    def render_screen(self):
-        self.globals.DISPLAY_SURF.fill((255, 255, 255))
-        self.background_sprites.draw(self.globals.DISPLAY_SURF)
-        sprites.draw(self.globals.DISPLAY_SURF)
-        self.grupoAtaquesInimigo.desenhar()
-        self.grupoAtaquesJogador.desenhar()
-        self.blocks.draw(self.globals.DISPLAY_SURF)
-        pygame.display.update()
 
     def jogar(self):
-        self.render_screen()
         main_menu = MainMenuInterface()
         main_menu.interfaceLoop()
         
@@ -241,8 +215,8 @@ class new_Game:
                 self.grupoAtaquesInimigo.grupo_balas,
                 self.controlePowerUps.grupo_powerUps.grupo_todos_caidos,
             )
-
-            self.render_screen()
+            
+            pygame.display.update()
             self.FPS.tick(self.settings.FPS_VALUE)
 
     def finalizar_jogo(self):

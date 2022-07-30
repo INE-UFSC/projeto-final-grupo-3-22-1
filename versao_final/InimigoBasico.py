@@ -24,9 +24,9 @@ class InimigoBasico(Inimigo):
 
         if self.rect.left <= 0:
             self._rect.x += self._velocidade
-        elif self.rect.right >= self.settings.largura_tela:
+        elif self.rect.right >= self.settings.largura_tela_interface:
             self._rect.x -= self._velocidade
-        elif self.rect.bottom >= self.settings.largura_tela:
+        elif self.rect.bottom >= self.settings.largura_tela_interface:
             self._rect.y -= self._velocidade
         elif self.rect.top <= 0:
             self._rect.y += self._velocidade

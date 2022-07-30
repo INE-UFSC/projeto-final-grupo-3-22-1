@@ -114,12 +114,12 @@ class Jogador(pygame.sprite.Sprite):
                 self.rect.move_ip(-(self.stats["velocidade_movimento"]), 0)
                 self.__andando = True
 
-        if self.rect.right < self.settings.largura_tela:
+        if self.rect.right < self.settings.largura_tela_interface:
             if pressed_keys[K_RIGHT] or pressed_keys[K_d]:
                 self.rect.move_ip(self.stats["velocidade_movimento"], 0)
                 self.__andando = True
 
-        if self.rect.bottom < self.settings.largura_tela:
+        if self.rect.bottom < self.settings.largura_tela_interface:
             if pressed_keys[K_DOWN] or pressed_keys[K_s]:
                 self.rect.move_ip(0, self.stats["velocidade_movimento"])
                 self.__andando = True

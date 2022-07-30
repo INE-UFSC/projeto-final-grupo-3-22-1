@@ -40,8 +40,8 @@ class GrupoAtaques(pygame.sprite.Sprite):
             if (
                 bala.pos_x < 0
                 or bala.pos_y < 0
-                or bala.pos_x > self.settings.largura_tela
-                or bala.pos_y > self.settings.largura_tela
+                or bala.pos_x > self.settings.largura_tela_interface
+                or bala.pos_y > self.settings.largura_tela_interface
             ):
                 bala.kill()
 

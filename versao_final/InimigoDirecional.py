@@ -41,9 +41,9 @@ class InimigoDirecional(Inimigo):
     def achar_caminho(self, jogador_x, jogador_y) -> int:
         # Checando se o inimigo atingiu a parede
         atingiuParede = False
-        if self._rect.x >= self._settings.largura_tela or self._rect.x <= 0:
+        if self._rect.x >= self._settings.largura_tela_interface or self._rect.x <= 0:
             atingiuParede = True
-        if self._rect.y >= self._settings.altura_tela or self._rect.y <= 0:
+        if self._rect.y >= self._settings.altura_tela_interface or self._rect.y <= 0:
             atingiuParede = True
 
         if self._inicio_movimento:

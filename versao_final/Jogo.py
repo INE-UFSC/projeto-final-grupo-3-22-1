@@ -49,7 +49,7 @@ class Jogo(pygame.sprite.Sprite):
         self.settings.FPS_VALUE = 20
         self.settings.largura_tela = 640
         self.settings.altura_tela = 640
-        self.settings.DISPLAY_SURF = pygame.display.set_mode((self.settings.largura_tela, self.settings.altura_tela))
+        self.settings.DISPLAY_SURF = pygame.display.set_mode((self.settings.largura_tela_interface, self.settings.largura_tela_interface))
 
         #inicializando entidades e controladores
         self.controleInimigo = ControladorInimigo()
