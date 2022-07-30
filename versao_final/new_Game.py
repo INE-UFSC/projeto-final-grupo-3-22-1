@@ -6,6 +6,8 @@ from Settings import Settings
 from Globals import Globals
 
 from MainMenuInterface import MainMenuInterface
+from PauseMenuInterface import PauseMenuInterface
+from GameOverInterface import GameOverInterface
 
 from Jogador import Jogador
 from CollisionHandler import CollisionHandler
@@ -20,6 +22,7 @@ from InimigoBasico import InimigoBasico
 from InimigoAtirador import InimigoAtirador
 from InimigoRastreador import InimigoRastreador
 from InimigoDirecional import InimigoDirecional
+from Mapa import Mapa
 
 inimigos_basicos = [
     InimigoBasico(350, 350, 15, 2, "assets/peixe_palhaco.png"),
@@ -37,13 +40,13 @@ inimigos_rastreadores = [
 ]
 inimigos_direcionais = [InimigoDirecional(610, 50, 10, 10, "assets/peixe_espada.png")]
 
-sprites = pygame.sprite.Group()
+sprites = pygame.sprite.RenderUpdates()
 
-grupo_inimigos_basicos = pygame.sprite.Group()
-grupo_inimigos_atiradores = pygame.sprite.Group()
-grupo_inimigos_rastreadores = pygame.sprite.Group()
-grupo_inimigos_direcionais = pygame.sprite.Group()
-grupo_inimigos = pygame.sprite.Group()
+grupo_inimigos_basicos = pygame.sprite.RenderUpdates()
+grupo_inimigos_atiradores = pygame.sprite.RenderUpdates()
+grupo_inimigos_rastreadores = pygame.sprite.RenderUpdates()
+grupo_inimigos_direcionais = pygame.sprite.RenderUpdates()
+grupo_inimigos = pygame.sprite.RenderUpdates()
 
 for inimigo in inimigos_basicos:
     grupo_inimigos_basicos.add(inimigo)
@@ -83,9 +86,26 @@ class new_Game:
         self.__controleJogador = ControleJogador(self.jogador)
         self.__controleArmas = ControleArmas(self.jogador)
         self.__controlePowerUps = ControlePowerUps(self.jogador)
-        self.__grupoAtaques = GrupoAtaques()
+        self.__grupoAtaquesInimigo = GrupoAtaques()
+        self.__grupoAtaquesJogador = GrupoAtaques()
 
         self.__collisionHandler = CollisionHandler(self.jogador, self.controlePowerUps)
+
+        self.mapa = Mapa('teste', 2, 'teste2')
+        self.background_sprites, self.blocks = self.mapa.change_map(["BBBBBBBBBBBBBBBBBBBB","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","B..................B","BBBBBBBBBBBBBBBBBBBB"])
+        self.mapa.draw_map([self.background_sprites, self.blocks], self.globals.DISPLAY_SURF)
+
+        @property
+        def mapa(self) -> Mapa:
+            return self.__mapa
+
+        @property
+        def background_sprites(self):
+            return self.__background_sprites
+
+        @property 
+        def blocks(self):
+            return self.__blocks
 
         # ! início seção transitória; remover após implementação
         # TODO: remover essa seção de código (implementação transitória)
@@ -134,37 +154,55 @@ class new_Game:
         return self.__controlePowerUps
 
     @property
-    def grupoAtaques(self) -> GrupoAtaques:
-        return self.__grupoAtaques
+    def grupoAtaquesInimigo(self) -> GrupoAtaques:
+        return self.__grupoAtaquesInimigo
+    
+    @property
+    def grupoAtaquesJogador(self) -> GrupoAtaques:
+        return self.__grupoAtaquesJogador
 
     @property
     def collisionHandler(self) -> CollisionHandler:
         return self.__collisionHandler
 
+    def render_screen(self):
+        self.globals.DISPLAY_SURF.fill((255, 255, 255))
+        self.background_sprites.draw(self.globals.DISPLAY_SURF)
+        sprites.draw(self.globals.DISPLAY_SURF)
+        self.grupoAtaquesInimigo.desenhar()
+        self.grupoAtaquesJogador.desenhar()
+        self.blocks.draw(self.globals.DISPLAY_SURF)
+        pygame.display.update()
+
     def jogar(self):
         # TODO: chamar os menus primeiro
+        self.render_screen()
         main_menu = MainMenuInterface()
         main_menu.interfaceLoop()
+        
+        self.comecar_jogo()
 
+    def comecar_jogo(self):
         # TODO: criar outra função que inicie o main loop em si
         while self.jogando:
             if self.jogador.morto:
                 # TODO: trocar por tela de fim de jogo
-                for event in pygame.event.get():
-                    if event.type == QUIT:
-                        self.jogando = False
-                continue
+                self.finalizar_jogo()
 
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            for event in pygame.event.get():
+            for event in pygame.event.get():              
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
 
+                if event.type == pygame.KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        self.pausar_jogo()
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     tiro = self.jogador.atirar(mouse_x, mouse_y)
                     if tiro:
-                        self.grupoBalasJogador.nova_bala(tiro)
+                        self.grupoAtaquesJogador.nova_bala(tiro)
 
             # ! inicio seção transitória
             # TODO: implementar mapa; substituir por função de renderizar o mapa
@@ -177,7 +215,7 @@ class new_Game:
                 # fazendo o atirador atirar
                 ataque_inimigo = atirador.atacar(self.jogador.x, self.jogador.y)
                 if ataque_inimigo:
-                    self.grupoBalasInimigo.nova_bala(ataque_inimigo)
+                    self.grupoAtaquesInimigo.nova_bala(ataque_inimigo)
 
                 # achando o caminho do atirador
                 x, y = atirador.achar_caminho(self.jogador.x, self.jogador.y, 250)
@@ -206,8 +244,8 @@ class new_Game:
             self.jogador.mover()
             self.jogador.mover_arma(mouse_x, mouse_y)
 
-            self.grupoBalasJogador.desenhar()
-            self.grupoBalasInimigo.desenhar()
+            self.grupoAtaquesJogador.desenhar()
+            self.grupoAtaquesInimigo.desenhar()
 
             self.controlePowerUps.grupo_powerUps.desenhar()
             self.controlePowerUps.verificar_fim_temporarios()
@@ -217,10 +255,18 @@ class new_Game:
 
             self.collisionHandler.verificar_colisoes(
                 grupo_inimigos,  # TODO: trocar pela implementação feita para o grupo de inimigos
-                self.grupoBalasJogador.grupo_balas,
-                self.grupoBalasInimigo.grupo_balas,
+                self.grupoAtaquesJogador.grupo_balas,
+                self.grupoAtaquesInimigo.grupo_balas,
                 self.controlePowerUps.grupo_powerUps.grupo_todos_caidos,
             )
 
-            pygame.display.update()
+            self.render_screen()
             self.FPS.tick(self.settings.FPS_VALUE)
+
+    def finalizar_jogo(self):
+        game_over = GameOverInterface()
+        game_over.interfaceLoop()
+
+    def pausar_jogo(self):
+        pausar_jogo = PauseMenuInterface()
+        pausar_jogo.interfaceLoop()

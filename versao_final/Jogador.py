@@ -26,6 +26,7 @@ class Jogador(pygame.sprite.Sprite):
         self.__morto = False
 
         self.__sprite = pygame.image.load("assets/ChicoCunha.png")
+        self.image = self.sprite
         self.__rect = self.__sprite.get_rect()
         self.__rect.center = (
             int(self.sprite.get_width() / 2),

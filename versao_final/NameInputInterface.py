@@ -52,14 +52,17 @@ class NameInputInterface(Interface):
 
     def interfaceLoop(self):
         self.settings.screen.blit(self.background, (0, 0))
-        while True:
+        jogando = False
+        while not jogando:
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
 
-                self.text_input.event_handler(event)
+                jogando = self.text_input.event_handler(event)
+                if jogando: 
+                    break
 
             self.settings.screen.blit(self.background, (0, 0))
             self.settings.screen.blit(self.line1_render, (350, 140))
@@ -69,3 +72,4 @@ class NameInputInterface(Interface):
             self.text_input.desenhar(self.settings.screen)
 
             pygame.display.update()
+        return True
