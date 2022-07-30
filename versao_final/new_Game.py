@@ -167,7 +167,8 @@ class new_Game:
         self.globals.DISPLAY_SURF.fill((255, 255, 255))
         self.background_sprites.draw(self.globals.DISPLAY_SURF)
         sprites.draw(self.globals.DISPLAY_SURF)
-        self.grupoAtaques.desenhar()
+        self.grupoAtaquesInimigo.desenhar()
+        self.grupoAtaquesJogador.desenhar()
         self.blocks.draw(self.globals.DISPLAY_SURF)
         pygame.display.update()
 
