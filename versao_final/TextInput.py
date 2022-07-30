@@ -87,7 +87,7 @@ class TextInput():
                 if event.key == pygame.K_RETURN:
                     print(self.texto) #salvar em uma variável ao invés de printar
                     self.texto = ''
-                    import app
+                    return True
                 elif event.key == pygame.K_BACKSPACE:
                     self.texto = self.texto[:-1]
                 else:

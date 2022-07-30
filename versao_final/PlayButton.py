@@ -14,3 +14,5 @@ class PlayButton(Button):
     def nextStep(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
             self.name_input.interfaceLoop()
+            return True
+        return False

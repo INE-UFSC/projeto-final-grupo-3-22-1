@@ -39,8 +39,8 @@ class MainMenuInterface(Interface):
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(self.settings.volume_musica)
 
-        while True:
-            
+        iniciar_jogo = False
+        while not iniciar_jogo:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -48,9 +48,21 @@ class MainMenuInterface(Interface):
                 
                 for button in self.buttons_list:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        button.nextStep(pygame.mouse.get_pos())
+                        comecou = button.nextStep(pygame.mouse.get_pos())
+                        
+                        if comecou:
+                            print("aqui dentor")
+                            iniciar_jogo = True
+                            break
                     button.changeColor(pygame.mouse.get_pos())
 
                     button.update()
+                pygame.display.update()
+                break
+            
+            if iniciar_jogo:
+                print(64)
+                break
+        return True
 
-            pygame.display.update()
+   

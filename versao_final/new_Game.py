@@ -83,7 +83,8 @@ class new_Game:
         self.__controleJogador = ControleJogador(self.jogador)
         self.__controleArmas = ControleArmas(self.jogador)
         self.__controlePowerUps = ControlePowerUps(self.jogador)
-        self.__grupoAtaques = GrupoAtaques()
+        self.__grupoAtaquesInimigo = GrupoAtaques()
+        self.__grupoAtaquesJogador = GrupoAtaques()
 
         self.__collisionHandler = CollisionHandler(self.jogador, self.controlePowerUps)
 
@@ -134,8 +135,12 @@ class new_Game:
         return self.__controlePowerUps
 
     @property
-    def grupoAtaques(self) -> GrupoAtaques:
-        return self.__grupoAtaques
+    def grupoAtaquesInimigo(self) -> GrupoAtaques:
+        return self.__grupoAtaquesInimigo
+    
+    @property
+    def grupoAtaquesJogador(self) -> GrupoAtaques:
+        return self.__grupoAtaquesJogador
 
     @property
     def collisionHandler(self) -> CollisionHandler:
@@ -167,7 +172,7 @@ class new_Game:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     tiro = self.jogador.atirar(mouse_x, mouse_y)
                     if tiro:
-                        self.grupoBalasJogador.nova_bala(tiro)
+                        self.grupoAtaquesJogador.nova_bala(tiro)
 
             # ! inicio seção transitória
             # TODO: implementar mapa; substituir por função de renderizar o mapa
@@ -180,7 +185,7 @@ class new_Game:
                 # fazendo o atirador atirar
                 ataque_inimigo = atirador.atacar(self.jogador.x, self.jogador.y)
                 if ataque_inimigo:
-                    self.grupoBalasInimigo.nova_bala(ataque_inimigo)
+                    self.grupoAtaquesInimigo.nova_bala(ataque_inimigo)
 
                 # achando o caminho do atirador
                 x, y = atirador.achar_caminho(self.jogador.x, self.jogador.y, 250)
@@ -209,8 +214,8 @@ class new_Game:
             self.jogador.mover()
             self.jogador.mover_arma(mouse_x, mouse_y)
 
-            self.grupoBalasJogador.desenhar()
-            self.grupoBalasInimigo.desenhar()
+            self.grupoAtaquesJogador.desenhar()
+            self.grupoAtaquesInimigo.desenhar()
 
             self.controlePowerUps.grupo_powerUps.desenhar()
             self.controlePowerUps.verificar_fim_temporarios()
@@ -220,8 +225,8 @@ class new_Game:
 
             self.collisionHandler.verificar_colisoes(
                 grupo_inimigos,  # TODO: trocar pela implementação feita para o grupo de inimigos
-                self.grupoBalasJogador.grupo_balas,
-                self.grupoBalasInimigo.grupo_balas,
+                self.grupoAtaquesJogador.grupo_balas,
+                self.grupoAtaquesInimigo.grupo_balas,
                 self.controlePowerUps.grupo_powerUps.grupo_todos_caidos,
             )
 
