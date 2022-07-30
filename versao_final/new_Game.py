@@ -85,7 +85,6 @@ class new_Game:
         # controladores e grupos
         self.__controleJogador = ControleJogador(self.jogador)
         self.__controleArmas = ControleArmas(self.jogador)
-        self.controleArmas.trocar_arma("arpao")
         self.__controlePowerUps = ControlePowerUps(self.jogador)
         self.__grupoAtaquesInimigo = GrupoAtaques()
         self.__grupoAtaquesJogador = GrupoAtaques()
