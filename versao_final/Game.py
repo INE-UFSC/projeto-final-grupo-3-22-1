@@ -67,7 +67,7 @@ for inimigo in inimigos_direcionais:
     grupo_inimigos.add(inimigo)
 
 
-class new_Game:
+class Game:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption("O mar não está pra gente")
