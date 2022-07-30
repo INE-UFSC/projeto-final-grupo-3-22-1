@@ -12,7 +12,6 @@ from BossBaleia import BossBaleia
 from DragaoAgua import DragaoAgua
 
 from ControleArmas import ControleArmas
-from ControleJogador import ControleJogador
 from GrupoAtaques import GrupoAtaques
 from CollisionHandler import CollisionHandler
 from ControlePowerUps import ControlePowerUps
@@ -72,11 +71,10 @@ controleArmas = ControleArmas(jogador)
 controleArmas.trocar_arma("arpao")
 
 controleArmas = ControleArmas(jogador)
-controleJogador = ControleJogador(jogador)
 grupoBalasJogador = GrupoAtaques()
 grupoBalasInimigo = GrupoAtaques()
 controle_powerUps = ControlePowerUps(jogador)
-collisionHandler = CollisionHandler(jogador, controle_powerUps)
+collisionHandler = CollisionHandler(jogador, controle_powerUps, controleArmas)
 
 controle_powerUps.spawn_powerUp("pureza", 100, 100)
 
