@@ -153,8 +153,6 @@ while jogando:
         # movendo o atirador com os resultados obtidos anteriormente
         atirador.mover(x, y)
 
-        print(len(grupo_inimigos_atiradores), "grupo de inimigos atiradores")
-
     for basico in grupo_inimigos_basicos:
         basico.mover()
 
