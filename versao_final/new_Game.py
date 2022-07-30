@@ -145,7 +145,10 @@ class new_Game:
         # TODO: chamar os menus primeiro
         main_menu = MainMenuInterface()
         main_menu.interfaceLoop()
+        
+        self.comecar_jogo()
 
+    def comecar_jogo(self):
         # TODO: criar outra função que inicie o main loop em si
         while self.jogando:
             if self.jogador.morto:
